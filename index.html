@@ -1,145 +1,104 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 
-<meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/index.css" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
 
-<script src="js/jquery.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<!-- boostrap -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-<!-- boostrap filestyle -->
-<script src="js/bootstrap-filestyle/src/bootstrap-filestyle.min.js"></script>
-<script src="js/bootstrap-filestyle.min.js"></script>
-<!--lectura de excel-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
-<script src="js/JSLINQ.js"></script>
-<!-- angular -->
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<!-- this app -->
-<script src="js/app/index.js"></script>
-<script src="js/app/excel.js"></script>
-<script src="js/app/graficas.js"></script>
-<script src="js/app/estadistica.js"></script>
 </head>
 
 <body ng-app="mainApp" ng-controller="mainControl">
-<!-- panel lateral izquierdo -->
-<div class="col-md-2" style="position:fixed; padding:12px; height: 100%; background-color: #CDC5C5; ">
-    <div style="text-align:center; margin-top:15px; margin-bottom:15px;">
-        <img width="180px" height="120px" src="images/logo.png"/>
-    </div>
-  <!--   panel -->
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <a data-toggle="collapse" href="#collapsePanel">Archivos</a>
-        </div>
-        <div id="collapsePanel" class="panel-collapse collapse">
-            <div class="panel-body" style="background-color: rgba(205, 197, 197, 0.8)">
-                <div style="margin-bottom: 12px;">
-                    <label class="btn btn-block btn-primary">
-                        Cargar Excel&hellip; <input type="file" id="fileExcel" style="display: none;">
-                    </label>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <div style="text-align:center; margin-top:25px; margin-bottom:25px;">
+                <img width="70%" height="25px" src="images/logo.png" />
+            </div>
+            <!-- panel -->
+            <div class="panel panel-default" style="margin:15px;">
+                <div class="panel-heading">
+                    <a data-toggle="collapse" href="#collapsePanel">Archivos</a>
                 </div>
-                <form role="form">
-                    <div class="form-group">
-                        <!-- file -->
-                        <label for="slFile">Seleccione el archivo</label>
-                        <select id="slFile" ng-model="slFile" class="form-control" ng-change="changeSelectFile()"></select>
-                        <!-- sheet -->
-                        <label for="slSheet">Seleccione la hoja</label>
-                        <select id="slSheet" ng-model="slSheet" class="form-control" ng-change="changeSelectSheet()">
-                            <option ng-repeat="s in sheets" value="{{ $index }}">{{ s.name }}</option>
-                        </select>
-                        <!-- atributo -->
-                        <label for="slAttr">Seleccione el atributo</label>
-                        <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
-                            <option ng-repeat="a in attrs" value="{{ a.normal }}">{{ a.name }}</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
+                <div id="collapsePanel" class="panel-collapse collapse">
+                    <div class="panel-body" style="background-color: rgba(205, 197, 197, 0.8)">
+                        <div style="margin-bottom: 12px;">
+                            <label class="btn btn-block btn-primary">
+                                Cargar Excel&hellip; <input type="file" id="fileExcel" style="display: none;">
+                            </label>
+                        </div>
+                        <form role="form">
+                            <div class="form-group">
+                                <!-- file -->
+                                <label for="slFile">Seleccione el archivo</label>
+                                <select id="slFile" ng-model="slFile" class="form-control" ng-change="changeSelectFile()"></select>
+                                <!-- sheet -->
+                                <label for="slSheet">Seleccione la hoja</label>
+                                <select id="slSheet" ng-model="slSheet" class="form-control" ng-change="changeSelectSheet()">
+                                    <option ng-repeat="s in sheets" value="{{ $index }}">{{ s.name }}</option>
+                                </select>
+                                <!-- atributo -->
+                                <label for="slAttr">Seleccione el atributo</label>
+                                <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
+                                    <option ng-repeat="a in attrs" value="{{ a.normal }}">{{ a.name }}</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div> <!-- fin panel body -->
+                </div>
+            </div> <!-- fin panel -->
         </div>
-    </div> <!-- fin panel Archivos  -->
-</div> <!-- fin panel izquierdo -->
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div ng-include="'content_intro.html'"></div>
+            <div ng-include="'content_main.html'"></div>
+        </div>
+    </div> <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
 
-<!-- contenido  -->
-<div class="col-md-10 col-md-offset-2" >
-<!-- titulo superior -->
-    <div id="infoFile" style="margin:20px;">
-        <h3 id="labelTitle">Seleccione un archivo</h3>
-    </div>
-<!-- contenido central (graficas) -->
-    <div style="float:left; width:62%; margin-right:20px;">
-        <div id="divDispersion"></div>
-        <div id="divFrecuencia"></div>
-    </div>
-    <!-- panel lateral derecho  -->
-    <div style="float:right; width:34%; padding:0px 20px 30px 20px; border-radius: 10px;">
+    <script src="js/jquery.js"></script>
 
-    <div class="panel-group">
-        <!--  panel calculo estadisticos -->
-        <div class="panel panel-info">
-            <div class="panel-heading">Calculos Estadisticos</div>
-            <div class="panel-body">
-                <div style="font-size:16; margin-top:8px;"> Elemento: {{ slAtrr }} </div> 
-                <div style="font-size:16; margin-top:8px;"> Promedio = {{ promedio }} </div>
-                <div style="font-size:16; margin-top:8px;"> Desviacion Estandar =  {{ desviacion }} </div>
-                <div style="font-size:16; margin-top:8px;"> Rango = {{ rango }} </div>
-            </div>
-        </div>
-        <!-- grafica ciruclar en panel lateral -->
-        <div class="panel panel-info">
-            <div class="panel-heading">Compocision Quimica</div>
-            <div class="panel-body">
-                <div id="divCircular" style=" min-width: 310px; height: 300px; max-width: 600px; margin: 20px 0px 20px 0px;"></div>
-            </div>
-        </div>
-        <!--panel informacion general -->
-        <div class="panel panel-info">
-            <div class="panel-heading">Datos Generales</div>
-            <div class="panel-body">
-                <span>
-                    No Analais: 34222<br>
-                    No Lote: 345666<br>
-                    Cantidad Fabricada: 3444<br>
-                </span>
-            </div>
-        </div>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <!-- boostrap -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- boostrap filestyle -->
+    <script src="js/bootstrap-filestyle/src/bootstrap-filestyle.min.js"></script>
+    <script src="js/bootstrap-filestyle.min.js"></script>
+    <!--lectura de excel-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="js/JSLINQ.js"></script>
+    <!-- angular -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <!-- this app -->
+    <script src="js/app/index.js"></script>
+    <script src="js/app/excel.js"></script>
+    <script src="js/app/graficas.js"></script>
+    <script src="js/app/estadistica.js"></script>
 
-        <div class="panel panel-info">
-            <div class="panel-heading">Embarques</div>
-            <div class="panel-body table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th style="width:20px;">Cliente</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>12/07/15</th>
-                            <th style="width:20px;">Metalurgica S.A.</th>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>        
-    </div> <!-- fin panel group -->
-    </div> <!-- fin panel lateral derecho -->
-</div>
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
 </body>
 
 </html>
