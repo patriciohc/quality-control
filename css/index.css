@@ -1,14 +1,3 @@
-.grafica {
-    min-width: 310px;
-    height: 450px; 
-    /*margin: 0 auto;*/
-    margin-bottom:20px; 
-    float:left; 
-    padding:20px;
-    background-color: aliceblue;
-    border-radius: 10px;
-    width: 100%
-}
 
     .btn-file {
         position: relative;
@@ -29,3 +18,8 @@
         cursor: inherit;
         display: block;
     }
+
+mark {
+    background-color: yellow;
+    color: black;
+}
