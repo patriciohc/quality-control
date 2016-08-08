@@ -1,3 +1,11 @@
+var excelInfo = null;
+
+$.getJSON("json/excel_info.json")
+    
+.done(function (json) {
+    excelInfo = json;
+    //console.log(excelInfo);
+});
 
 var excel = {
     /*books contien dos atributos 
@@ -13,12 +21,6 @@ var excel = {
     */
     books: [],
 
-// posicion donde se leera el excel 
-    configRead: {
-        colInitHead:  "A",
-        colEndHead: "R",
-        rowHead: 1,
-    },
 // array de sheets 
 
 // boton input file 
@@ -141,9 +143,9 @@ getXTipoResolutivo: function (data) {
 readTable: function (worksheet, head){
     var tableOutput = [];
     var address_of_cell;
-    var colInit = charToInt(excel.configRead.colInitHead); // columna actual
-    var colEnd = charToInt(excel.configRead.colEndHead); // columna final
-    var rowInit = excel.configRead.rowHead + 1;
+    var colInit = charToInt(excelInfo.configRead.colInitHead); // columna actual
+    var colEnd = charToInt(excelInfo.configRead.colEndHead); // columna final
+    var rowInit = excelInfo.configRead.rowHead + 1;
     var nRow = rowInit;
     var nextRow = true;
     while (nextRow){
@@ -172,11 +174,11 @@ readTable: function (worksheet, head){
 readHead: function (worksheet) {
     var head = [];
     var address_of_cell;
-    var colInit = charToInt(excel.configRead.colInitHead); // columna actual
-    var colEnd = charToInt(excel.configRead.colEndHead); // columna final
+    var colInit = charToInt(excelInfo.configRead.colInitHead); // columna actual
+    var colEnd = charToInt(excelInfo.configRead.colEndHead); // columna final
     for (var i = colInit; i <= colEnd; i++){
         var elemento = {};
-        address_of_cell = intToChar(i) + excel.configRead.rowHead;
+        address_of_cell = intToChar(i) + excelInfo.configRead.rowHead;
         /* Find desired cell */
         desired_cell = worksheet[address_of_cell];
         if (typeof desired_cell == 'undefined') return head; // se terminaron las columnas
@@ -185,7 +187,7 @@ readHead: function (worksheet) {
         elemento.normal = elemento.normal.replace(/ /g,"_");
         //elemento = elemento.replace(/./g,"");
         head.push(elemento);
-        console.log(elemento);
+        //console.log(elemento);
     }
     return head;
 }, 

@@ -14,10 +14,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
 
 </head>
 
-<body ng-app="mainApp" ng-controller="mainControl">
+<body id="mainApp" ng-app="mainApp" ng-controller="mainControl">
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
@@ -43,14 +44,27 @@
                                 <select id="slFile" ng-model="slFile" class="form-control" ng-change="changeSelectFile()"></select>
                                 <!-- sheet -->
                                 <label for="slSheet">Seleccione la hoja</label>
-                                <select id="slSheet" ng-model="slSheet" class="form-control" ng-change="changeSelectSheet()">
-                                    <option ng-repeat="s in sheets" value="{{ $index }}">{{ s.name }}</option>
-                                </select>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button ng-click="changeSelectSheet()" class="btn btn-default glyphicon glyphicon-hand-right" type="button"></button>
+                                    </span>
+                                    <select id="slSheet" ng-model="slSheet" class="form-control" ng-change="changeSelectSheet()">
+                                        <option ng-repeat="s in sheets" value="{{ $index }}">{{ s.name }}</option>
+                                    </select>
+                                </div>
+                                
                                 <!-- atributo -->
                                 <label for="slAttr">Seleccione el atributo</label>
-                                <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
-                                    <option ng-repeat="a in attrs" value="{{ a.normal }}">{{ a.name }}</option>
-                                </select>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button ng-click="changeSelectAtrr()" class="btn btn-default glyphicon glyphicon-hand-right" type="button"></button>
+                                    </span>
+                                    <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
+                                        <option ng-repeat="a in attrs" value="{{ a.normal }}">{{ a.name }}</option>
+                                    </select>
+                                </div>
+
+                                
                             </div>
                         </form>
                     </div> <!-- fin panel body -->
@@ -85,6 +99,7 @@
     <script src="js/JSLINQ.js"></script>
     <!-- angular -->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-sanitize.js"></script>
     <!-- this app -->
     <script src="js/app/index.js"></script>
     <script src="js/app/excel.js"></script>

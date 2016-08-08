@@ -1,31 +1,26 @@
 function getConfigPlotLines(title, value) {
     return {
-                label: { 
-                    text: title, // Content of the label. 
-                    align: 'left', // Positioning of the label. 
+        label: { 
+            text: title, // Content of the label. 
+            align: 'left', // Positioning of the label. 
                     //Default to center. x: +10 // Amount of pixels the label will be repositioned according to the alignment. 
-                },
-                color: 'red', // Color value
-                dashStyle: 'longdash', // Style of the plot line. Default to solid
-                value: value, // Value of where the line will appear
-                width: 1 // Width of the line    
-            }
+        },
+        color: 'red', // Color value
+        dashStyle: 'longdash', // Style of the plot line. Default to solid
+        value: value, // Value of where the line will appear
+        width: 1 // Width of the line    
+    }
 }
 // configuracion para grafica de dispercion
-var configDispersion = {
-        credits: {
-            enabled: false
-        },
+function getConfigScatter() 
+{
+    return {
+        credits: { enabled: false },
         chart: {
             type: 'scatter',
             zoomType: 'xy'
         },
-        title: {
-            text: "Grafica de Dispersion"
-        },
-        /*subtitle: {
-            text: 'Source: Heinz  2003'
-        },*/
+        title: { text: "Grafica de Dispersion" },
         xAxis: {
             title: {
                 enabled: true,
@@ -36,21 +31,9 @@ var configDispersion = {
             showLastLabel: true
         },
         yAxis: {
-            title: {
-                text: 'Cantidad (%)'
-            },
+            title: { text: 'Cantidad (%)' },
             plotLines: []
         },
-       /*legend: {
-            layout: 'vertical',
-            align: 'left',
-            verticalAlign: 'top',
-            x: 100,
-            y: 70,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-            borderWidth: 1
-        },*/
         plotOptions: {
             scatter: {
                 marker: {
@@ -72,67 +55,97 @@ var configDispersion = {
             series: {
                 cursor: 'pointer',
                 point: {
-                  events: {
-                      click: onClickSerie
-                  }
+                    events: { }
+                }
+            }
+        },
+        series: null
+    } 
+};
+// configuracion para grafica de frecuencia
+function getConfigColumn()
+{
+    return {
+        chart: {
+            type: 'column',
+            //margin: [60, 10, 40, 40]
+        },
+        title: {
+            text: 'Grafica de Frecuencia',
+            x: 25
+        },
+        legend: { enabled: false },
+        credits: { enabled: false },
+        exporting: { enabled: false },
+        tooltip: {},
+        plotOptions: {
+            series: {
+                pointPadding: 0,
+                groupPadding: 0,
+                borderWidth: 0.5,
+                borderColor: 'rgba(255,255,255,0.5)',
+                color: Highcharts.getOptions().colors[1]
+            }
+        },
+        xAxis: {
+            title: { text: 'Porciento en peso' }
+        },
+        yAxis: {
+          title: { text: 'Frecuencia' }
+        },
+        series: [{
+            name: 'Frecuencia',
+            color: 'rgba( 0, 154, 253, 0.9 )',
+            data: null
+        }]
+    }
+};
+
+function getConfigPie()
+{
+    return {
+        credits: {
+            enabled: false
+        },
+        chart: {
+            //plotBackgroundColor:'aliceblue',
+            //plotBorderWidth: null,
+            //plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: ''
+        },
+        exporting: { enabled: false },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                //allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    //enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    /*style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }*/
+                }
+            },
+            series: {
+                cursor: 'pointer',
+                point: {
+                  events: {}
                 }
             }
         },
         series: [{
-            name: '',
-            color: 'rgba(36, 43, 252, .6)',
-            data: null
+            //name: 'Brands',
+            colorByPoint: true,
+            data: null,
         }]
-}
-// configuracion para grafica de frecuencia
-var configHistograma = {
-    chart: {
-      type: 'column',
-      margin: [60, 10, 40, 40]
-    },
-    title: {
-      text: 'Grafica de Frecuencia',
-      x: 25
-    },
-    /*subtitle: {
-      text: 'Fisher\'s Iris Data: Sepal Width',
-      x: 25
-    },*/
-    legend: {
-      enabled: false
-    },
-    credits: {
-      enabled: false
-    },
-    exporting: {
-      enabled: false
-    },
-    tooltip: {},
-    plotOptions: {
-      series: {
-        pointPadding: 0,
-        groupPadding: 0,
-        borderWidth: 0.5,
-        borderColor: 'rgba(255,255,255,0.5)',
-        color: Highcharts.getOptions().colors[1]
-      }
-    },
-    xAxis: {
-      title: {
-        text: 'Porciento en peso'
-      }
-    },
-    yAxis: {
-      title: {
-        text: 'Frecuencia'
-      }
-    },
-    series: [{
-        name: 'Frecuencia',
-        color: 'rgba( 0, 154, 253, 0.9 )',
-        data: null
-    }]
-}
+    }
+};
 
 function binData(data) {
 
@@ -181,49 +194,19 @@ function binData(data) {
     return hData;
 }
 
-
-var configPie =  {
-        credits: {
-            enabled: false
-        },
-        chart: {
-            plotBackgroundColor:'aliceblue',
-            //plotBorderWidth: null,
-            //plotShadow: false,
-            type: 'pie'
-        },
-        title: {
-            text: 'Composicion Quimica'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                //allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }
-                }
-            }
-        },
-        series: [{
-            //name: 'Brands',
-            colorByPoint: true,
-            data: null,
-        }]
+function generarGraficas(arrayId, arrayConfig){
+    if (arrayId.length != arrayConfig.length) return; // datos incompletos
+    for(var i = 0; i < arrayId.length; i++){
+        $(arrayId[i]).highcharts(arrayConfig[i]);    
     }
-
-
-function generarGraficas(data){
-    $('#divDispersion').highcharts(configDispersion);
-    $('#divFrecuencia').highcharts(configHistograma);
+    //$('#divDispersion').highcharts(configDispersion);
+    //$('#divFrecuencia').highcharts(configHistograma);
 }
 
-function updatePie(){
-    $('#divCircular').highcharts(configPie);
+function makeChart(id, config){
+    $(id).highcharts(config);    
+}
+
+function updatePie(config){
+    $('#divCircular').highcharts(config);
 }

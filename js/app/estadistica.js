@@ -20,6 +20,11 @@ var estadistica = {
         }
         var desvStd = sumatoria / N;
         return Math.round(desvStd * 100) / 100;
+    },
+
+    rango: function (data) {
+        return Math.round(data[0] * 100) / 100;
     }
+
 
 }

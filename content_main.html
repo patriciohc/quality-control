@@ -1,13 +1,15 @@
-<div class="container-fluid" ng-hide="!showContent">
+
+<div class="container-fluid" ng-show="showMainContent">
     <!-- titulo superior -->
     <div id="infoFile" style="margin:20px;">
-        <h1 id="labelTitle">Simple Sidebar</h1>
+        <h4 id="labelTitle"></h4>
     </div>
     <!-- contenido central (graficas) -->
-    <div style="float:left; width:62%; margin-right:20px;">
-        <div id="divDispersion"></div>
-        <div id="divFrecuencia"></div>
-        <table id="tbResultadoGral" class="table table-bordered">
+    <div style="float:left; width:58%; margin-right:20px;">
+        <div id="divDispersion" ng-show="showGraficas"></div>
+        <div id="divFrecuencia" ng-show="showGraficas"></div>
+
+        <table id="tbResultadoGral" class="table table-bordered table-striped table-hover" ng-hide="showGraficas">
             <thead>
                 <tr>
                     <th>Elemento</th>
@@ -17,11 +19,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th>34</th>
-                    <th>12.4</th>
-                    <th>34</th>
-                    <th>12.4</th>
+                <tr ng-repeat="r in resumen" ng-click="clickTable()" value="{{ r.name }}" style="cursor:pointer;">
+                    <th>{{ r.name }}</th>
+                    <th>{{ r.value | number:2 }}</th>
+                    <th>{{ r.desvStd | number:2 }}</th>
+                    <th>{{ r.rango | number:2}}</th>
                 </tr>
             </tbody>
         </table>
@@ -29,37 +31,33 @@
 
 
     <!-- panel lateral derecho  -->
-    <div style="float:right; width:34%; padding:0px 20px 30px 20px; border-radius: 10px;" ng-hide="!showPanelDer">
+    <div style="float:right; width:40%; padding:0px 20px 30px 20px; border-radius: 10px;">
 
         <div class="panel-group">
             <!--  panel calculo estadisticos -->
-            <div class="panel panel-info" ng-hide="!slAttr">
+            <div class="panel panel-info" ng-show="slAttr">
                 <div class="panel-heading">Calculos Estadisticos</div>
                 <div class="panel-body">
-                    <div style="font-size:16; margin-top:8px;"> Elemento: {{ slAttr }} </div>
-                    <div style="font-size:16; margin-top:8px;"> Promedio = {{ promedio }} </div>
-                    <div style="font-size:16; margin-top:8px;"> Desviacion Estandar =  {{ desviacion }} </div>
-                    <div style="font-size:16; margin-top:8px;"> Rango = {{ rango }} </div>
-                </div>
-            </div>
-
-            <!-- grafica ciruclar en panel lateral -->
-            <div id="divChartPie" class="panel panel-info animate-hide" style="display:none">
-                <div class="panel-heading">Compocision Quimica</div>
-                <div class="panel-body">
-                    <div id="divCircular" style=" min-width 310px; height 300px; max-width 600px; margin 20px 0px 20px 0px;"></div>
+                    <div style="font-size:16; margin-top:8px;"> Elemento: <mark> {{ slAttr }} </mark></div>
+                    <div style="font-size:16; margin-top:8px;"> Promedio = <mark> {{ promedio }} </mark></div>
+                    <div style="font-size:16; margin-top:8px;"> Desviacion Estandar = <mark> {{ desviacion }} </mark></div>
+                    <div style="font-size:16; margin-top:8px;"> Rango = <mark> {{ rango }} </mark></div>
                 </div>
             </div>
 
             <!--panel informacion general -->
-            <div id="divInfoGral" class="panel panel-info" style="display:none">
+            <div id="divInfoGral" class="panel panel-info" ng-show="informacionGral">
                 <div class="panel-heading">Datos Generales</div>
                 <div class="panel-body">
-                    <span>
-                        No Analais: 12000<br>
-                        No Lote: 20/09/16-3<br>
-                        Cantidad Fabricada: 4000<br>
-                    </span>
+                    <span ng-bind-html="informacionGral"> </span>
+                </div>
+            </div>
+
+            <!-- grafica circular en panel lateral -->
+            <div id="divChartPie" class="panel panel-info animate-hide" ng-show="showPieChart">
+                <div class="panel-heading">Compocision Quimica</div>
+                <div class="panel-body">
+                    <div id="divCircular" style="width:340px; height:300px"></div> 
                 </div>
             </div>
 
@@ -83,6 +81,7 @@
                     </table>
                 </div>
             </div>
+
         </div> <!-- fin panel group -->
     </div> <!-- fin panel lateral derecho -->
 </div>
