@@ -1,0 +1,12 @@
+{
+    "configRead": "posicicion donde se leera el archivo excel",
+    "configRead": {
+        "colInitHead":  "A",
+        "colEndHead": "R",
+        "rowHead": 1
+    },
+
+    "elementos": "elementos del excel que se tomaran encuenta para calculos etc...",
+    "elementos": [ "SiO2", "Al2O3", "FeO", "CaO", "MgO", "C", "S", "H2O", "P_X_C" ]
+
+}
