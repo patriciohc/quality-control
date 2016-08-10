@@ -81,116 +81,70 @@ var excel = {
             .Where(function(x) { return x.ID_ANALISIS == id} )
             .Select(function(x){ return x}).ToArray();
     },
-/*
-getCategorias: function (data) {
-    var categorias = [];
-    if (data == null || data.length == 0) {
-        console.log("no hay datos");
-        return;
-    }
-    if (!data[0].hasOwnProperty('Estatus_tramite') || !data[0].hasOwnProperty('Rezago')) {
-        console.log("faltan columnas");
-        return categorias;
-    }
 
-    for (var i = 0; i < CATEGORIAS.estatus.length; i++){
-        // tramites por estatus
-        var elemento = {
-            nombre: CATEGORIAS.estatus[i],
-            data: JSLINQ(data)
-                .Where(function (x) { return x.Estatus_tramite == CATEGORIAS.estatus[i] })
-                .Select(function (x) { return x }).ToArray(),
-        }
-        categorias.push(elemento);
-    }
-    for (var i = 0; i < CATEGORIAS.tipo_rezago.length; i++){
-        // tramites por rezago 
-        var elemento = {
-            nombre: CATEGORIAS.tipo_rezago[i],
-            data: JSLINQ(data)
-                .Where(function (x) { return x.Rezago == CATEGORIAS.tipo_rezago[i] })
-                .Select(function (x){return x }).ToArray(),   
-        }
-        categorias.push(elemento);
-    }
-    return categorias;
-},
+    search: function (sheet, texto){
+        var regExp = new RegExp(texto.toUpperCase());
+        return JSLINQ(sheet.data)
+            .Where(function(x) {
+                return regExp.test(x.ID_ANALISIS) ||
+                regExp.test(x.LOTE) ||
+                regExp.test(x.CLIENTE.toUpperCase()) ||
+                regExp.test(x.FECHA_EMBARQUE);
+            })
+            .Select(function(x) {return x}).ToArray();
+    },
 
-getXTipoResolutivo: function (data) {
-    var tipoResolutivo = [];
-    if (data == null || data.length == 0) {
-        console.log("no hay datos");
-        return;
-    }
-    if (!data[0].hasOwnProperty('Tipo_resolutivo_no_procedente')) {
-        console.log("columna Tipo_resolutivo_no_procedente faltante");
-        return tipoResolutivo;
-    }
-
-    for (var i = 0; i < TIPO_RESOLUTIVO.length; i++) {
-        // tramites por tipo resolutivo
-        var elemento = {
-            nombre: TIPO_RESOLUTIVO[i],
-            data: JSLINQ(data)
-                .Where(function (x) { return x.Tipo_resolutivo_no_procedente == TIPO_RESOLUTIVO[i] })
-                .Select(function (x) { return x }).ToArray(),
-        }
-        tipoResolutivo.push(elemento);
-    }
-    return tipoResolutivo;
-},
-*/
-readTable: function (worksheet, head){
-    var tableOutput = [];
-    var address_of_cell;
-    var colInit = charToInt(excelInfo.configRead.colInitHead); // columna actual
-    var colEnd = charToInt(excelInfo.configRead.colEndHead); // columna final
-    var rowInit = excelInfo.configRead.rowHead + 1;
-    var nRow = rowInit;
-    var nextRow = true;
-    while (nextRow){
-        var row = {};
-        for (var nCol = colInit; nCol <= colEnd; nCol++) {
-            address_of_cell = intToChar(nCol) + nRow;
-            desired_cell = worksheet[address_of_cell];
-            var index = nCol - colInit;
-            var attr = head[index].normal  
-            if (typeof(desired_cell) == 'undefined'){
-                if (nCol == colInit){ // no hay No. se terminaron las filas
-                    nextRow = false;
-                    break;
+    readTable: function (worksheet, head){
+        var tableOutput = [];
+        var address_of_cell;
+        var colInit = charToInt(excelInfo.configRead.colInitHead); // columna actual
+        var colEnd = charToInt(excelInfo.configRead.colEndHead); // columna final
+        var rowInit = excelInfo.configRead.rowHead + 1;
+        var nRow = rowInit;
+        var nextRow = true;
+        while (nextRow){
+            var row = {};
+            for (var nCol = colInit; nCol <= colEnd; nCol++) {
+                address_of_cell = intToChar(nCol) + nRow;
+                desired_cell = worksheet[address_of_cell];
+                var index = nCol - colInit;
+                var attr = head[index].normal  
+                if (typeof(desired_cell) == 'undefined'){
+                    if (nCol == colInit){ // no hay No. se terminaron las filas
+                        nextRow = false;
+                        break;
+                    }
+                    row[attr] = "";
+                } else {
+                    row[attr] = desired_cell.v;
                 }
-                row[attr] = "";
-            } else {
-                row[attr] = desired_cell.v;
             }
+            nRow += 1;
+            if (nextRow) tableOutput.push(row);
         }
-        nRow += 1;
-        if (nextRow) tableOutput.push(row);
-    }
-    return tableOutput;
-}, // fin readTable
+        return tableOutput;
+    }, // fin readTable 
 
-readHead: function (worksheet) {
-    var head = [];
-    var address_of_cell;
-    var colInit = charToInt(excelInfo.configRead.colInitHead); // columna actual
-    var colEnd = charToInt(excelInfo.configRead.colEndHead); // columna final
-    for (var i = colInit; i <= colEnd; i++){
-        var elemento = {};
-        address_of_cell = intToChar(i) + excelInfo.configRead.rowHead;
-        /* Find desired cell */
-        desired_cell = worksheet[address_of_cell];
-        if (typeof desired_cell == 'undefined') return head; // se terminaron las columnas
-        elemento.name = desired_cell.v
-        elemento.normal = normalize(desired_cell.v).trim();
-        elemento.normal = elemento.normal.replace(/ /g,"_");
-        //elemento = elemento.replace(/./g,"");
-        head.push(elemento);
-        //console.log(elemento);
-    }
-    return head;
-}, 
+    readHead: function (worksheet) {
+        var head = [];
+        var address_of_cell;
+        var colInit = charToInt(excelInfo.configRead.colInitHead); // columna actual
+        var colEnd = charToInt(excelInfo.configRead.colEndHead); // columna final
+        for (var i = colInit; i <= colEnd; i++){
+            var elemento = {};
+            address_of_cell = intToChar(i) + excelInfo.configRead.rowHead;
+            /* Find desired cell */
+            desired_cell = worksheet[address_of_cell];
+            if (typeof desired_cell == 'undefined') return head; // se terminaron las columnas
+            elemento.name = desired_cell.v
+            elemento.normal = normalize(desired_cell.v).trim();
+            elemento.normal = elemento.normal.replace(/ /g,"_");
+            //elemento = elemento.replace(/./g,"");
+            head.push(elemento);
+            //console.log(elemento);
+        }
+        return head;
+    }, 
 
 } // fin excel 
 

@@ -52,6 +52,7 @@ app.controller('mainControl', function($scope) {
     $scope.showPanelDer = false;
     $scope.showGraficas = false;
 
+    /* eventos en select */
     $scope.changeSelectAtrr = function () {
         sheet = $scope.sheets[$scope.slSheet];
         var dataColumn = excel.getColumn(sheet, $scope.slAttr);
@@ -63,27 +64,35 @@ app.controller('mainControl', function($scope) {
         // rango
         $scope.rango = 232;
         // graficas
-        $scope.makeScatterChart(sheet, $scope.slAttr);
-        $scope.makeColumnChart(sheet, $scope.slAttr);
+        makeScatterChart(sheet, $scope.slAttr);
+        makeColumnChart(sheet, $scope.slAttr);
 
         // mostrar contenido
         $scope.showMainContent = true;
         $scope.showPanelDer = true;
-        $scope.showPieChart = false;
+        $scope.pieCharts = null;
         $scope.informacionGral = false;
+        $scope.grupos = false;
+        $scope.resultadoBusqueda = false;
     }
 
     $scope.changeSelectSheet = function(){
         var sheet = $scope.sheets[$scope.slSheet];
         $scope.attrs = sheet.head;
-        $scope.resumen = getResumenExcel(sheet);
+        $scope.grupos = getResumenExcel(sheet);
         $scope.showMainContent = true;
-        var data = getDataPieChart($scope.resumen);
-        $scope.makePieChart(data);
+        var dataPieCharts = [];
+        for (var i = 0; i < excelInfo.grupos.length; i++){
+            var data = getDataPieChart($scope.grupos[i], excelInfo.grupos[i].elementos);
+            dataPieCharts.push(data);
+        }
+        makePieChart(dataPieCharts);
 
+        $scope.pieCharts = excelInfo.grupos;
         $scope.slAttr = false;
         $scope.informacionGral =  false;
-        $scope.showGraficas = false; 
+        $scope.showGraficas = false;
+        $scope.resultadoBusqueda = false;
     }
 
     $scope.changeSelectFile = function(){
@@ -93,33 +102,37 @@ app.controller('mainControl', function($scope) {
             $scope.slSheet = 0;
             $scope.changeSelectSheet();
         }
+
         $scope.showContent = true;
     }
 
-    $scope.makePieChart = function(data) {
-        var config = getConfigPie();
-        config.series[0].data = data;
-        config.plotOptions.series.point.events.click = function(){
-            $scope.slAttr = this.name;
-            $scope.$apply($scope.changeSelectAtrr());
+    /* Creacion de graficas,  recibe como parametro grupos de datos, dataGrupos.length = cantidad de graficas */
+    makePieChart = function(dataGrupos) {
+        for (var i = 0; i < dataGrupos.length; i++){
+            var config = getConfigPie();
+            config.series[0].data = dataGrupos[i];
+            config.plotOptions.series.point.events.click = function(){
+                $scope.slAttr = this.name;
+                $scope.$apply($scope.changeSelectAtrr());
+            }
+            makeChart("#divCircular" + i, config);
         }
-        makeChart("#divCircular", config);
-
-        $scope.showPieChart = true;
     }
 
-    $scope.makeScatterChart = function(sheet, campo){
+    makeScatterChart = function(sheet, campo){
         var config = getConfigScatter();
         config.series = getDataScatter(sheet, campo);
         config.yAxis.plotLines = getPlotLinesScatter(sheet, campo); 
         config.plotOptions.series.point.events.click = function(){
-            var info = excel.getRow(sheet, this.category)[0];
-            var data = getDataPieChart(dicToArray(info));
+            $scope.informacionGral = excel.getRow(sheet, this.category)[0];
+            var dataPieCharts = [];
+            for (var i = 0; i < excelInfo.grupos.length; i++){
+                var data = getDataPieChart(dicToArray($scope.informacionGral), excelInfo.grupos[i].elementos);
+                dataPieCharts.push(data);
+            }
             $scope.$apply( function(){
-                $scope.makePieChart(data);
-                $scope.informacionGral = "No Analisis:  " + "<b>" + info.ID_ANALISIS + "</b><br/>";
-                $scope.informacionGral +=  "No Lote:  " + "<b>" + info.LOTE + "</b><br/>";
-                $scope.informacionGral +=  "Cantidad:  " + "<b>" + info.CANTIDAD + "</b><br/>";
+                makePieChart(dataPieCharts);
+                $scope.pieCharts = excelInfo.grupos;
             });
         }
         makeChart("#divDispersion", config);
@@ -127,7 +140,7 @@ app.controller('mainControl', function($scope) {
         $scope.showGraficas = true;
     }
 
-    $scope.makeColumnChart = function(sheet, campo){
+    makeColumnChart = function(sheet, campo){
         var dataColumn = excel.getColumn(sheet, campo);
         var serie = binData(dataColumn);
         var config = getConfigColumn();
@@ -138,9 +151,46 @@ app.controller('mainControl', function($scope) {
         $scope.showGraficas = true;
     }
 
+    /* evento en tabla de informacion general del sheet*/
     $scope.clickTable = function () {
         $scope.slAttr = this.r.name;
         $scope.changeSelectAtrr();
+    }
+
+    /* busqueda de productos */
+    $scope.BusquedaProductos = function () {
+        if ($scope.txtBusqueda == null || 
+            typeof($scope.txtBusqueda) == "undefined" || 
+            $scope.txtBusqueda.length <= 3 ) {
+            alert("Texto muy corto");
+            return;
+        }
+        var sheet = $scope.sheets[$scope.slSheet];
+        var resultados = excel.search(sheet, $scope.txtBusqueda);
+        if (resultados == null || resultados.length == 0){
+            alert("No se encontraron resultados...");
+            return;
+        }
+        $scope.resultadoBusqueda = excel.search(sheet, $scope.txtBusqueda);
+
+        $scope.grupos = false;
+        $scope.showPanelDer = false;
+        $scope.pieCharts = null;
+        $scope.informacionGral = false;
+        $scope.showGraficas = false;
+
+    }
+
+    $scope.clickOnTableResumen = function(){
+        $scope.informacionGral = this.r;
+        var dataPieCharts = [];
+        for (var i = 0; i < excelInfo.grupos.length; i++){
+            var data = getDataPieChart(dicToArray($scope.informacionGral), excelInfo.grupos[i].elementos);
+            dataPieCharts.push(data);
+        }
+        makePieChart(dataPieCharts);
+
+        $scope.pieCharts = excelInfo.grupos;
     }
 
 });
@@ -163,13 +213,23 @@ var updateSelectFiles = function(book) {
         select.add(option);
     }
     $("#slFile").slideDown();
-
-    //$("#tbResultadoGral").slideDown();
 }
 
 function getResumenExcel(sheet){
+    var grupos = [];
+    for (var i = 0; i < excelInfo.grupos.length; i++){
+        var includeElemt = excelInfo.grupos[i].elementos; // elementos a incluir en calculos
+        grupos.push( auxGetResumenExcel(sheet, includeElemt) );
+    }
+    return grupos
+
+
+}
+// funcion axuliar a getResumenExcel
+function auxGetResumenExcel(sheet, includeElemt) {
     var resumen = [];
-    for (var i = 3; i < sheet.head.length; i++ ){
+     for (var i = 3; i < sheet.head.length; i++ ){
+        if (includeElemt.indexOf(sheet.head[i].normal) == -1) continue;
         var column = excel.getColumn(sheet, sheet.head[i].normal);
         var newItem =  {
             name: sheet.head[i].name,
@@ -179,11 +239,10 @@ function getResumenExcel(sheet){
         }
         resumen.push(newItem);
     }
-    return resumen;
+    return resumen;   
 }
 
-function getDataPieChart(info) {
-    var includeElemt = excelInfo.elementos; // elementos a incluir en calculos
+function getDataPieChart(info, includeElemt) {
     var data = []
     for (var i = 0; i < info.length; i++){
         if (includeElemt.indexOf(info[i].name) >= 0){
@@ -192,7 +251,6 @@ function getDataPieChart(info) {
             item.y = info[i].value;
             data.push(item);
         }
-
     }
     /*var total = 0;
     for (var i = 0; i < info.length; i++) {
@@ -264,3 +322,4 @@ function clickTry(){
 $( document ).ready(function() {
     excel.init("fileExcel", updateSelectFiles);
 });
+

@@ -2,11 +2,18 @@
     "configRead": "posicicion donde se leera el archivo excel",
     "configRead": {
         "colInitHead":  "A",
-        "colEndHead": "R",
+        "colEndHead": "W",
         "rowHead": 1
     },
 
-    "elementos": "elementos del excel que se tomaran encuenta para calculos etc...",
-    "elementos": [ "SiO2", "Al2O3", "FeO", "CaO", "MgO", "C", "S", "H2O", "P_X_C" ]
+    "grupos": "grupos de analisis en el excel que se tomaran encuenta para calculos etc...",
+    "grupos": [{
+        "name": "Composicion Qumica",
+        "elementos": [ "SiO2", "Al2O3", "FeO", "CaO", "MgO", "C", "S", "H2O", "P_X_C" ]
+    }, {
+        "name": "Analisis Granolumetrico",
+        "elementos": [ "M4", "M10", "M20", "M50", "M60", "M80", "100", "PAN" ]
+    }]
+
 
 }

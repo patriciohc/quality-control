@@ -22,6 +22,8 @@
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
+            <!-- panel lateral izquierdo -->
+            <!-- <div ng-include="'panel.html'" onload="initExcel()"></div> -->
             <div style="text-align:center; margin-top:25px; margin-bottom:25px;">
                 <img width="70%" height="25px" src="images/logo.png" />
             </div>
@@ -46,30 +48,37 @@
                                 <label for="slSheet">Seleccione la hoja</label>
                                 <div class="input-group">
                                     <span class="input-group-btn">
-                                        <button ng-click="changeSelectSheet()" class="btn btn-default glyphicon glyphicon-hand-right" type="button"></button>
+                                        <button ng-click="changeSelectSheet()" class="btn btn-primary glyphicon glyphicon-hand-right" type="button"></button>
                                     </span>
                                     <select id="slSheet" ng-model="slSheet" class="form-control" ng-change="changeSelectSheet()">
                                         <option ng-repeat="s in sheets" value="{{ $index }}">{{ s.name }}</option>
                                     </select>
                                 </div>
-                                
                                 <!-- atributo -->
                                 <label for="slAttr">Seleccione el atributo</label>
                                 <div class="input-group">
                                     <span class="input-group-btn">
-                                        <button ng-click="changeSelectAtrr()" class="btn btn-default glyphicon glyphicon-hand-right" type="button"></button>
+                                        <button ng-click="changeSelectAtrr()" class="btn btn-primary glyphicon glyphicon-hand-right" type="button"></button>
                                     </span>
                                     <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
                                         <option ng-repeat="a in attrs" value="{{ a.normal }}">{{ a.name }}</option>
                                     </select>
                                 </div>
-
+                                <!-- busqueda -->
+                                <label>Busqueda</label>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button ng-click="BusquedaProductos()" class="btn btn-primary glyphicon glyphicon-search" type="button"></button>
+                                    </span>
+                                    <input type="text" ng-model="txtBusqueda" class="form-control"/>
+                                </div>
                                 
                             </div>
                         </form>
                     </div> <!-- fin panel body -->
                 </div>
             </div> <!-- fin panel -->
+
         </div>
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
