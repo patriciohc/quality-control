@@ -48,12 +48,12 @@ app.directive('scatterChart', function () {
 
 app.controller('mainControl', function($scope) {
 
-    $scope.showMainContent = false;
-    $scope.showPanelDer = false;
-    $scope.showGraficas = false;
+    $scope.gruposElementos = excelInfo.grupos;
+
 
     /* eventos en select */
     $scope.changeSelectAtrr = function () {
+        hidenAll();
         sheet = $scope.sheets[$scope.slSheet];
         var dataColumn = excel.getColumn(sheet, $scope.slAttr);
         $scope.titlePanel = excel.books[$scope.slFile].name.split(".")[0];
@@ -63,36 +63,29 @@ app.controller('mainControl', function($scope) {
         $scope.desviacion = estadistica.desvStd(dataColumn);
         // rango
         $scope.rango = 232;
-        // graficas
-        makeScatterChart(sheet, $scope.slAttr);
-        makeColumnChart(sheet, $scope.slAttr);
-
         // mostrar contenido
         $scope.showMainContent = true;
         $scope.showPanelDer = true;
-        $scope.pieCharts = null;
-        $scope.informacionGral = false;
-        $scope.grupos = false;
-        $scope.resultadoBusqueda = false;
+        // graficas
+        makeScatterChart(sheet, $scope.slAttr);
+        makeColumnChart(sheet, $scope.slAttr);
     }
 
     $scope.changeSelectSheet = function(){
+        hidenAll();
         var sheet = $scope.sheets[$scope.slSheet];
         $scope.attrs = sheet.head;
+
         $scope.grupos = getResumenExcel(sheet);
         $scope.showMainContent = true;
         var dataPieCharts = [];
         for (var i = 0; i < excelInfo.grupos.length; i++){
-            var data = getDataPieChart($scope.grupos[i], excelInfo.grupos[i].elementos);
+            var data = getDataPieChart($scope.grupos[i].data, excelInfo.grupos[i].elementos);
             dataPieCharts.push(data);
         }
+
         makePieChart(dataPieCharts);
 
-        $scope.pieCharts = excelInfo.grupos;
-        $scope.slAttr = false;
-        $scope.informacionGral =  false;
-        $scope.showGraficas = false;
-        $scope.resultadoBusqueda = false;
     }
 
     $scope.changeSelectFile = function(){
@@ -100,7 +93,6 @@ app.controller('mainControl', function($scope) {
         $scope.sheets = book.sheets;
         if (excel.books.length == 1){
             $scope.slSheet = 0;
-            $scope.changeSelectSheet();
         }
 
         $scope.showContent = true;
@@ -117,6 +109,8 @@ app.controller('mainControl', function($scope) {
             }
             makeChart("#divCircular" + i, config);
         }
+
+        $scope.showPieCharts = true;
     }
 
     makeScatterChart = function(sheet, campo){
@@ -171,13 +165,9 @@ app.controller('mainControl', function($scope) {
             alert("No se encontraron resultados...");
             return;
         }
+        hidenAll();
         $scope.resultadoBusqueda = excel.search(sheet, $scope.txtBusqueda);
-
-        $scope.grupos = false;
-        $scope.showPanelDer = false;
-        $scope.pieCharts = null;
-        $scope.informacionGral = false;
-        $scope.showGraficas = false;
+        $scope.showMainContent = true;
 
     }
 
@@ -191,6 +181,16 @@ app.controller('mainControl', function($scope) {
         makePieChart(dataPieCharts);
 
         $scope.pieCharts = excelInfo.grupos;
+    }
+
+    function hidenAll(){
+        $scope.showMainContent = false;
+        $scope.showPanelDer = false;
+        $scope.showGraficas = false;
+        $scope.grupos = false;
+        $scope.informacionGral = false;
+        $scope.showPieCharts = false;
+        $scope.resultadoBusqueda = false;
     }
 
 });
@@ -219,7 +219,9 @@ function getResumenExcel(sheet){
     var grupos = [];
     for (var i = 0; i < excelInfo.grupos.length; i++){
         var includeElemt = excelInfo.grupos[i].elementos; // elementos a incluir en calculos
-        grupos.push( auxGetResumenExcel(sheet, includeElemt) );
+        var g = auxGetResumenExcel(sheet, includeElemt);
+        g.name = excelInfo.grupos[i].name;
+        grupos.push( g );
     }
     return grupos
 
@@ -227,7 +229,10 @@ function getResumenExcel(sheet){
 }
 // funcion axuliar a getResumenExcel
 function auxGetResumenExcel(sheet, includeElemt) {
-    var resumen = [];
+    var resumen = {
+        name: "",
+        data:[]
+    };
      for (var i = 3; i < sheet.head.length; i++ ){
         if (includeElemt.indexOf(sheet.head[i].normal) == -1) continue;
         var column = excel.getColumn(sheet, sheet.head[i].normal);
@@ -237,9 +242,9 @@ function auxGetResumenExcel(sheet, includeElemt) {
             desvStd: estadistica.desvStd(column),
             rango: estadistica.rango(column),
         }
-        resumen.push(newItem);
+        resumen.data.push(newItem);
     }
-    return resumen;   
+    return resumen;
 }
 
 function getDataPieChart(info, includeElemt) {

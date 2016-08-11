@@ -10,6 +10,7 @@
         <div id="divFrecuencia" ng-show="showGraficas"></div>
 
         <table ng-repeat="resumen in grupos" id="tbResultadoGral" class="table table-bordered table-striped table-hover" ng-show="grupos">
+            <caption>{{ resumen.name }}</caption>
             <thead>
                 <tr>
                     <th>Elemento</th>
@@ -19,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="r in resumen " ng-click="clickTable()" value="{{ r.name }}" style="cursor:pointer;">
+                <tr ng-repeat="r in resumen.data " ng-click="clickTable()" value="{{ r.name }}" style="cursor:pointer;">
                     <th>{{ r.name }}</th>
                     <th>{{ r.value | number:2 }}</th>
                     <th>{{ r.desvStd | number:2 }}</th>
@@ -72,7 +73,7 @@
                     <tbody>
                     <tr>
                         <th>No analisis</th>
-                        <th>{{ informacionGral.ID_ALAISIS }}</th>
+                        <th>{{ informacionGral.ID_ANALISIS }}</th>
                     </tr>
                     <tr>
                         <th>Lote</th>
@@ -88,12 +89,14 @@
                     </tr>
                     </tbody>
                     </table>
-                    <buton type="button">Materia prima usada</buton>
+                    <buton type="button" class="btn btn-info"> 
+                        <span class="glyphicon glyphicon-eye-open"></span> Materia prima usada
+                    </buton>
                 </div>
             </div>
 
             <!-- grafica circular en panel lateral -->
-            <div ng-repeat="chart in pieCharts" id="divChartPie" class="panel panel-info animate-hide">
+            <div ng-repeat="chart in gruposElementos" class="panel panel-info animate-hide" ng-show="showPieCharts">
                 <div class="panel-heading">{{ chart.name }}</div>
                 <div class="panel-body">
                     <div id="divCircular{{ $index }}" style="width:340px; height:250px"></div> 
