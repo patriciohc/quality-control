@@ -1,50 +1,6 @@
 var sheet = null; // hoja de trabajo actual
 
 var app = angular.module('mainApp', ['ngSanitize']);
-/*
-app.directive('pieChart', function () {
-    return {
-        restrict: 'E',
-        template: '<div></div>',
-        scope: {
-            title: '@',
-            data: '=',
-            plotLines: '=',
-            clickSerie: '&',
-        },
-        link: function (scope, element) {
-            var config = getConfigPie();
-            config.series[0].data = scope.data;
-            config.plotOptions.series.point.events.click = scope.clickSerie;
-            config.title.text = scope.title;
-            config.yAxis.plotLines = scope.plotLines;
-
-            Highcharts.chart(element[0], config);
-        } // fin link
-    };
-});
-
-
-app.directive('scatterChart', function () {
-    return {
-        restrict: 'E',
-        template: '<div></div>',
-        scope: {
-            title: '@',
-            data: '=',
-            clickSerie: '&',
-        },
-        link: function (scope, element) {
-            var config = getConfigScatter();
-            config.series = scope.series;
-            config.plotOptions.series.point.events.click = scope.clickSerie;
-            config.title.text = scope.title;
-
-            Highcharts.chart(element[0], config);
-        } // fin link
-    };
-});
-*/
 
 app.controller('mainControl', function($scope) {
 
@@ -257,11 +213,11 @@ function getDataPieChart(info, includeElemt) {
             data.push(item);
         }
     }
-    /*var total = 0;
-    for (var i = 0; i < info.length; i++) {
-        total += info[i].y;
-    }*/
-    //data.push({name:"otros", y: 100 - total});
+    var total = 0;
+    for (var i = 0; i < data.length; i++) {
+        total += data[i].y;
+    }
+    data.push({name:"otros", y: 100 - total});
     return data;
 }
 
