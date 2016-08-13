@@ -5,7 +5,11 @@ var app = angular.module('mainApp', ['ngSanitize']);
 app.controller('mainControl', function($scope) {
 
     $scope.gruposElementos = excelInfo.grupos;
+    $scope.checksTable = [];
 
+    $scope.initContenetMain = function(){
+        excel.init("fileExcel", updateSelectFiles);
+    }
 
     /* eventos en select */
     $scope.changeSelectAtrr = function () {
@@ -116,13 +120,13 @@ app.controller('mainControl', function($scope) {
             return;
         }
         var sheet = $scope.sheets[$scope.slSheet];
-        var resultados = excel.search(sheet, $scope.txtBusqueda);
+        var resultados = excel.search( $scope.txtBusqueda);
         if (resultados == null || resultados.length == 0){
             alert("No se encontraron resultados...");
             return;
         }
         hidenAll();
-        $scope.resultadoBusqueda = excel.search(sheet, $scope.txtBusqueda);
+        $scope.resultadoBusqueda = excel.search($scope.txtBusqueda);
         $scope.showMainContent = true;
 
     }
@@ -149,6 +153,43 @@ app.controller('mainControl', function($scope) {
         $scope.resultadoBusqueda = false;
     }
 
+     $scope.exportToExcelTableSearch = function(){
+        var c = $scope.checksTable;
+        var arrayIds = [];
+        for ( var index in $scope.checksTable ){
+            arrayIds.push($scope.resultadoBusqueda[index].ID_ANALISIS);
+        }
+        var rows = excel.getRowsInList(arrayIds);
+        var head = arrayDicToArray(excel.books[0].sheets[0].head, "name");
+        var xml = excel.jsonToSsXml(rows, head);
+        excel.download(xml, "expoert.xls", 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    }
+
+    $scope.selectAllChecks = function(){
+        for (var i = 0; i < $scope.resultadoBusqueda.length ; i++){
+            $scope.checksTable[i] = this.checkAll;
+        }
+    }
+
+    $scope.exportToExcelTableResumen = function(){
+        var header = "";
+        var body = "";
+        for (var i = 0; i < excelInfo.grupos.length; i++){
+            header += excel.emitXmlHeader(excelInfo.grupos[i].elementos); 
+            body += excel.jsonToSsXmlRow($scope.grupos[i].data);
+            //var data = getDataPieChart($scope.grupos[i].data, excelInfo.grupos[i].elementos);
+            //dataPieCharts.push(data);
+        }
+
+        var xml = excel.emitXmlInfo() + header;
+        xml += body;
+        xml += excel.emitXmlFooter();
+
+        excel.download(xml, 'test.xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+
+    }
+
 });
 
 
@@ -168,7 +209,7 @@ var updateSelectFiles = function(book) {
         option.value = i;
         select.add(option);
     }
-    $("#slFile").slideDown();
+    //$("#slFile").slideDown();
 }
 
 function getResumenExcel(sheet){
@@ -233,6 +274,16 @@ function dicToArray(dic){
     return array;
 }
 
+function arrayDicToArray(arrayDic, campo){
+    var array = [];
+    for (var i = 0; i < arrayDic.length; i++){
+        var item = arrayDic[i]
+        var value = item[campo];
+        array.push(value);
+    }
+    return array;
+}
+
 
 
 function getDataScatter(sheet, campo){
@@ -280,7 +331,7 @@ function clickTry(){
 }
 */
 
-$( document ).ready(function() {
+/*$( document ).ready(function() {
     excel.init("fileExcel", updateSelectFiles);
-});
+});*/
 

@@ -28,10 +28,12 @@
                 </tr>
             </tbody>
         </table>
+        <button type="button" class="btn btn-info" ng-show="grupos" ng-click="exportToExcelTableResumen()">Exportar a PDF</button>
         <!-- tabla busqueda --> 
         <table class="table table-bordered table-striped table-hover" ng-show="resultadoBusqueda">
             <thead>
                 <tr>
+                    <th><input type="checkbox" ng-model="checkAll" ng-click="selectAllChecks()" name="checkAllItem"/></th>
                     <th>No Analisis</th>
                     <th>Lote</th>
                     <th>Envado a </th>
@@ -40,6 +42,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="r in resultadoBusqueda" ng-click="clickOnTableResumen()" value="{{ r.ID_ANALISIS }}" style="cursor:pointer;">
+                    <th><input type="checkbox" name="checkitem" ng-model="checksTable[$index]"/></th>
                     <th>{{ r.ID_ANALISIS }}</th>   
                     <th>{{ r.LOTE }}</th>
                     <th>{{ r.CLIENTE }}</th>
@@ -47,6 +50,7 @@
                 </tr>
             </tbody>
         </table>
+        <button type="button" class="btn btn-info" ng-click="exportToExcelTableSearch()" ng-show="resultadoBusqueda">Exportar a PDF</button>
     </div>
 
 
@@ -85,7 +89,7 @@
                     </tr>
                     <tr>
                         <th>Certificado</th>
-                        <th>{{ informacionGral.CERTIFICADO }}<span class="glyphicon glyphicon-eye-open" style="margin-left:20px; cursor:pointer;"></span></th>
+                        <th>{{ informacionGral.CERTIFICADO }}<a <a href="files/certificado.pdf" content="aplication/pdf" target="_blank" class="glyphicon glyphicon-eye-open" style="margin-left:20px; cursor:pointer;"></a></th>
                     </tr>
                     </tbody>
                     </table>
@@ -126,4 +130,5 @@
 
         </div> <!-- fin panel group -->
     </div> <!-- fin panel lateral derecho -->
+    <a id="tmpdownload" style="display:none;"></a>
 </div>

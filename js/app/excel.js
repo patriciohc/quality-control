@@ -29,8 +29,16 @@ var excel = {
     functionExecute: null,
 // inicialia controles
     init: function (idInputFile, f){
-        inputFile = document.getElementById(idInputFile); 
         excel.functionExecute = f;
+        inputFile = document.getElementById(idInputFile); 
+
+        $.getJSON("files/excel.json")
+        .done(function (json) {
+            excel.books = json;
+            excel.functionExecute(excel.books[0]);
+            //console.log(excelInfo);
+        });
+        
         if (window.File && window.FileReader && window.FileList && window.Blob) {
             inputFile.addEventListener('change', this.loadFile, false);
         } else {
@@ -51,6 +59,13 @@ var excel = {
                 var base64 = btoa(binaryString);
                 book.sheets = excel.readExcel(base64);
                 excel.books.push(book);
+                /******** descargar en forma de json ************/
+                //var a = document.getElementById('tmpdownload');
+                //var encode = encodeURIComponent( JSON.stringify(excel.books) );
+                //a.href = 'data:text/plain;charset=utf-8,' + encode;
+                //a.download = "excel.json";
+                //a.click();
+
                 if (excel.functionExecute != null) excel.functionExecute(book);
             };
             reader.readAsBinaryString(file);
@@ -75,23 +90,41 @@ var excel = {
         return JSLINQ(sheet.data)
             .Select(function (x) { return x[campo]}).ToArray();
     },
-
+    // Rregra una fila con el ID indicado 
     getRow: function (sheet, id){
         return JSLINQ(sheet.data)
             .Where(function(x) { return x.ID_ANALISIS == id} )
             .Select(function(x){ return x}).ToArray();
     },
+    // Regresa un array con las filas que estan en arrayIds
+    getRowsInList: function (arrayIds){
+        var result = [];
+        for (var index in excel.books[0].sheets){
+            var sheet = excel.books[0].sheets[index]; 
+            var temp = JSLINQ(sheet.data)
+                .Where(function(x) { return arrayIds.indexOf(x.ID_ANALISIS) >= 0 } )
+                .Select(function(x){ return x}).ToArray();
+            result = result.concat(temp);
+        }
+        return result;
+    },
 
-    search: function (sheet, texto){
+    search: function (texto){
+        var result = [];
         var regExp = new RegExp(texto.toUpperCase());
-        return JSLINQ(sheet.data)
-            .Where(function(x) {
-                return regExp.test(x.ID_ANALISIS) ||
-                regExp.test(x.LOTE) ||
-                regExp.test(x.CLIENTE.toUpperCase()) ||
-                regExp.test(x.FECHA_EMBARQUE);
-            })
-            .Select(function(x) {return x}).ToArray();
+        for (index in excel.books[0].sheets){
+            var sheet = excel.books[0].sheets[index]; 
+            var temp = JSLINQ(sheet.data)
+                .Where(function(x) {
+                    return regExp.test(x.ID_ANALISIS) ||
+                    regExp.test(x.LOTE) ||
+                    regExp.test(x.CLIENTE.toUpperCase()) ||
+                    regExp.test(x.FECHA_EMBARQUE);
+                })
+                .Select(function(x) {return x}).ToArray();
+            result = result.concat(temp);
+        }
+        return result;
     },
 
     readTable: function (worksheet, head){
@@ -146,53 +179,27 @@ var excel = {
         return head;
     }, 
 
-// Test script to generate a file from JavaScript such
-// that MS Excel will honor non-ASCII characters.
-
-/*testJson = [
-    {
-        "name": "Tony Peña",
-        "city": "New York",
-        "country": "United States",
-        "birthdate": "1978-03-15",
-        "amount": 42
-
-    },
-    {
-        "name": "Ζαλώνης Thessaloniki",
-        "city": "Athens",
-        "country": "Greece",
-        "birthdate": "1987-11-23",
-        "amount": 42
-    }
-];
-
-// Simple type mapping; dates can be hard
-// and I would prefer to simply use `datevalue`
-// ... you could even add the formula in here.
-testTypes = {
-    "name": "String",
-    "city": "String",
-    "country": "String",
-    "birthdate": "String",
-    "amount": "Number"
-};
-*/
-
-    emitXmlHeader: function () {
+    emitXmlHeader: function (nameColumns) {
         var headerRow =  '<ss:Row>\n';
-        for (var colName in testTypes) {
+        for (var i in nameColumns) {
             headerRow += '  <ss:Cell>\n';
             headerRow += '    <ss:Data ss:Type="String">';
-            headerRow += colName + '</ss:Data>\n';
+            headerRow += nameColumns[i] + '</ss:Data>\n';
             headerRow += '  </ss:Cell>\n';        
         }
-        headerRow += '</ss:Row>\n';    
+        return headerRow += '</ss:Row>\n';   
+        /*return '<?xml version="1.0"?>\n' +
+               '<ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n' +
+               '<ss:Worksheet ss:Name="Sheet1">\n' +
+               '<ss:Table>\n\n' + headerRow;*/
+    },  
+
+    emitXmlInfo: function () {
         return '<?xml version="1.0"?>\n' +
                '<ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n' +
                '<ss:Worksheet ss:Name="Sheet1">\n' +
-               '<ss:Table>\n\n' + headerRow;
-    },  
+               '<ss:Table>\n\n';
+    },
 
     emitXmlFooter: function() {
         return '\n</ss:Table>\n' +
@@ -200,28 +207,51 @@ testTypes = {
                '</ss:Workbook>\n';
     },  
 
-    jsonToSsXml: function (jsonObject) {
+    jsonToSsXmlRow: function (jsonObject) {
         var row;
         var col;
         var xml;
         var data = typeof jsonObject != "object" ? JSON.parse(jsonObject) : jsonObject;
         
-        xml = emitXmlHeader();  
+        xml = "";
 
         for (row = 0; row < data.length; row++) {
             xml += '<ss:Row>\n';
           
             for (col in data[row]) {
                 xml += '  <ss:Cell>\n';
-                xml += '    <ss:Data ss:Type="' + testTypes[col]  + '">';
+                xml += '    <ss:Data ss:Type="String">';// + testTypes[col]  + '">';
                 xml += data[row][col] + '</ss:Data>\n';
                 xml += '  </ss:Cell>\n';
             }   
-
             xml += '</ss:Row>\n';
         }
         
-        xml += emitXmlFooter();
+        //xml += excel.emitXmlFooter();
+        return xml;  
+    },
+
+    jsonToSsXml: function (jsonObject, header) {
+        var row;
+        var col;
+        var xml;
+        var data = typeof jsonObject != "object" ? JSON.parse(jsonObject) : jsonObject;
+        
+        xml = excel.emitXmlHeader(header);  
+
+        for (row = 0; row < data.length; row++) {
+            xml += '<ss:Row>\n';
+          
+            for (col in data[row]) {
+                xml += '  <ss:Cell>\n';
+                xml += '    <ss:Data ss:Type="String">';// + testTypes[col]  + '">';
+                xml += data[row][col] + '</ss:Data>\n';
+                xml += '  </ss:Cell>\n';
+            }   
+            xml += '</ss:Row>\n';
+        }
+        
+        xml += excel.emitXmlFooter();
         return xml;  
     },  
 
@@ -229,12 +259,16 @@ testTypes = {
 
     download: function (content, filename, contentType) {
         if (!contentType) contentType = 'application/octet-stream';
-        var a = document.getElementById('test');
+        var a = document.getElementById('tmpdownload');
         var blob = new Blob([content], {
             'type': contentType
         });
-        a.href = window.URL.createObjectURL(blob);
+        var url = window.URL.createObjectURL(blob);
+        a.href = url;
         a.download = filename;
+        a.click();
+        //window.URL.revokeObjectURL(url);
+        //window.location.href=url;
     },
 
 //download(jsonToSsXml(testJson), 'test.xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
