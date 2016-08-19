@@ -4,10 +4,11 @@ var app = angular.module('mainApp', ['ngSanitize']);
 
 app.controller('mainControl', function($scope) {
 
-    $scope.gruposElementos = excelInfo.grupos;
     $scope.checksTable = [];
 
     $scope.initContenetMain = function(){
+        
+        $scope.gruposElementos = excelInfo.grupos;
         excel.init("fileExcel", updateSelectFiles);
     }
 

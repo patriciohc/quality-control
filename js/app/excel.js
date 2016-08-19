@@ -48,7 +48,7 @@ var excel = {
 // carga de archivo 
     loadFile: function () {
         var book = {};
-        book.name = inputFile.value;
+        book.name = inputFile.value.split(".")[0];
         var files = inputFile.files;
         //var files = evt.target.files;
         var file = files[0];
@@ -59,20 +59,22 @@ var excel = {
                 var base64 = btoa(binaryString);
                 book.sheets = excel.readExcel(base64);
                 excel.books.push(book);
-                /******** descargar en forma de json ************/
-                //var a = document.getElementById('tmpdownload');
-                //var encode = encodeURIComponent( JSON.stringify(excel.books) );
-                //a.href = 'data:text/plain;charset=utf-8,' + encode;
-                //a.download = "excel.json";
-                //a.click();
-
                 if (excel.functionExecute != null) excel.functionExecute(book);
             };
             reader.readAsBinaryString(file);
         }
     },
 
-    readExcel: function (fileBase64){
+    excelToJson: function(){
+        /******** descargar en forma de json ************/
+        var a = document.getElementById('tmpdownload');
+        var encode = encodeURIComponent( JSON.stringify(excel.books) );
+        a.href = 'data:text/plain;charset=utf-8,' + encode;
+        a.download = "excel.json";
+        a.click();
+    },
+
+    readExcel: function (fileBase64) {
         var sheets = [];
         var workbook = XLSX.read(fileBase64, { type: 'base64' });
         workbook.SheetNames.forEach(function (sheetName) {
