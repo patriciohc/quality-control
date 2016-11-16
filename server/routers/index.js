@@ -9,6 +9,7 @@ const productoCtrl = require('../controllers/producto');
 //api.get('/producto/:id', folioCtrl.getFolio);
 api.get('/producto/', productoCtrl.getProductos);
 api.post('/producto/',productoCtrl.saveProducto);
+api.get('/atributo',productoCtrl.getAtributo);
 //api.put('/prodcuto/', folioCtrl.updateFolio);
 //api.delete('/producto/:id', folioCtrl.deleteFolio );
 

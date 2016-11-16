@@ -7,7 +7,7 @@ const ProductoSchema = Schema({
     nombre: String,
     identificador: {type: String, unique: true },
     fechaDeRegistro: { type: Date, default: Date.now },
-    atributos: [{name: String, value: Number}]
+    atributos: {}
 });
 
 module.exports = mongoose.model('Producto', ProductoSchema);
