@@ -24,46 +24,46 @@ var excel = {
 // array de sheets 
 
 // boton input file 
-    inputFile: null,
+//    inputFile: null,
 // function a ejecutar al funalizar lectura
-    functionExecute: null,
+//    functionExecute: null,
 // inicialia controles
-    init: function (idInputFile, f){
-        excel.functionExecute = f;
-        inputFile = document.getElementById(idInputFile); 
+//     init: function (idInputFile, f){
+//         excel.functionExecute = f;
+//         inputFile = document.getElementById(idInputFile); 
 
-        $.getJSON("files/excel.json")
-        .done(function (json) {
-            excel.books = json;
-            excel.functionExecute(excel.books[0]);
-            //console.log(excelInfo);
-        });
+//         $.getJSON("files/excel.json")
+//         .done(function (json) {
+//             excel.books = json;
+//             excel.functionExecute(excel.books[0]);
+//             //console.log(excelInfo);
+//         });
         
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-            inputFile.addEventListener('change', this.loadFile, false);
-        } else {
-            alert("Explorador no Compatible");
-        }
-    },
-// carga de archivo 
-    loadFile: function () {
-        var book = {};
-        book.name = inputFile.value.split(".")[0];
-        var files = inputFile.files;
-        //var files = evt.target.files;
-        var file = files[0];
-        if (files && file) {
-            var reader = new FileReader();
-            reader.onload = function(readerEvt) {
-                var binaryString = readerEvt.target.result;
-                var base64 = btoa(binaryString);
-                book.sheets = excel.readExcel(base64);
-                excel.books.push(book);
-                if (excel.functionExecute != null) excel.functionExecute(book);
-            };
-            reader.readAsBinaryString(file);
-        }
-    },
+//         if (window.File && window.FileReader && window.FileList && window.Blob) {
+//             inputFile.addEventListener('change', this.loadFile, false);
+//         } else {
+//             alert("Explorador no Compatible");
+//         }
+//     },
+// // carga de archivo 
+//     loadFile: function () {
+//         var book = {};
+//         book.name = inputFile.value.split(".")[0];
+//         var files = inputFile.files;
+//         //var files = evt.target.files;
+//         var file = files[0];
+//         if (files && file) {
+//             var reader = new FileReader();
+//             reader.onload = function(readerEvt) {
+//                 var binaryString = readerEvt.target.result;
+//                 var base64 = btoa(binaryString);
+//                 book.sheets = excel.readExcel(base64);
+//                 excel.books.push(book);
+//                 if (excel.functionExecute != null) excel.functionExecute(book);
+//             };
+//             reader.readAsBinaryString(file);
+//         }
+//     },
 
     excelToJson: function(){
         /******** descargar en forma de json ************/

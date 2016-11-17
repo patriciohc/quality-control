@@ -3,6 +3,11 @@
 // vista uploadExcel
 app.controller('uploadExcel', function($scope) {
     $scope.nombreProduc = "texto de prueba";
+
+    $scope.onLoadFile = function(fileBase64){
+        var sheets = excel.readExcel(fileBase64);
+        var p = 0;
+    };
 })
 
 .controller('mainControl', function($scope) {
