@@ -18,7 +18,7 @@
 
 </head>
 
-<body id="mainApp" ng-app="mainApp" ng-controller="mainControl">
+<body id="mainApp" ng-app="mainApp">
 
 <nav class="navbar navbar-default no-margin">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -46,41 +46,23 @@
             <!-- panel lateral izquierdo -->
             <!-- <div ng-include="'panel.html'" onload="initExcel()"></div> -->
             <!-- panel -->
-            
-
             <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
  
                 <li class="active">
-                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-file-excel-o fa-stack-1x "></i></span> Cargar Excel&hellip; <input type="file" id="fileExcel" style="display: none;"></a>
+                    <a ui-sref="uploadExcel">
+                        <span class="fa-stack fa-lg pull-left"><i class="fa fa-file-excel-o fa-stack-1x "></i></span> 
+                        Cargar Excel <!--<input type="file" id="fileExcel" style="display: none;">-->
+                    </a>
                 </li>
                 <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-gears fa-stack-1x "></i></span> Mas opciones</a>
-                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                        <div>
-                        	  <!-- atributo -->
-                                <label for="slAttr">Seleccione el atributo</label>
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button ng-click="changeSelectAtrr()" class="btn btn-primary glyphicon glyphicon-hand-right" type="button"></button>
-                                    </span>
-                                    <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
-                                        <option ng-repeat="a in attrs" value="{{ a.normal }}">{{ a.name }}</option>
-                                    </select>
-                                </div>
-                                <!-- busqueda -->
-                                <label>Busqueda</label>
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button ng-click="BusquedaProductos()" class="btn btn-primary glyphicon glyphicon-search" type="button"></button>
-                                    </span>
-                                    <input type="text" ng-model="txtBusqueda" class="form-control"/>
-                                </div>
-                        </div>
- 						
-                    </ul>
+                    <a ui-sref="home">
+                        <span class="fa-stack fa-lg pull-left"><i class="fa fa-gears fa-stack-1x "></i></span> Mas opciones
+                    </a>
                 </li>
                 <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Overview</a>
+                    <a ui-sref="">
+                        <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Overview
+                    </a>
                 </li>
                 <li>
                     <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Events</a>
@@ -97,12 +79,14 @@
             </ul>
 
         </div>
+
+        <div ui-view></div>
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
-        <div id="page-content-wrapper">
+        <!-- <div id="page-content-wrapper">
             <div ng-include="'content_intro.html'"></div>
             <div ng-include="'content_main.html'" onload="initContenetMain()"></div>
-        </div>
+        </div> -->
     </div> <!-- /#wrapper -->
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -123,11 +107,13 @@
     <!-- angular -->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-sanitize.js"></script>
+    <script src="js/angular-ui-router.min.js"></script>
     <!-- this app -->
-    <script src="js/app/index.js"></script>
-    <script src="js/app/excel.js"></script>
+    <script src="js/app/app.js"></script>
+    <script src="js/app/routers.js"></script>
+    <!-- <script src="js/app/excel.js"></script>
     <script src="js/app/graficas.js"></script>
-    <script src="js/app/estadistica.js"></script>
+    <script src="js/app/estadistica.js"></script> -->
     <script src="js/sidebar_menu.js"></script>
 
     <!-- Menu Toggle Script -->

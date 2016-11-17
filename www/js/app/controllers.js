@@ -1,6 +1,6 @@
 var sheet = null; // hoja de trabajo actual
 
-var app = angular.module('mainApp', ['ngSanitize']);
+
 
 app.controller('mainControl', function($scope) {
 
@@ -144,7 +144,7 @@ app.controller('mainControl', function($scope) {
         $scope.pieCharts = excelInfo.grupos;
     }
 
-    function hidenAll(){
+    function hidenAll() {
         $scope.showMainContent = false;
         $scope.showPanelDer = false;
         $scope.showGraficas = false;

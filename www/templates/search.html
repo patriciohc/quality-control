@@ -1,0 +1,23 @@
+
+<ul class="nav-pills nav-stacked" style="list-style-type:none;">
+    <div>
+          <!-- atributo -->
+            <label for="slAttr">Seleccione el atributo</label>
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button ng-click="changeSelectAtrr()" class="btn btn-primary glyphicon glyphicon-hand-right" type="button"></button>
+                </span>
+                <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
+                    <option ng-repeat="a in attrs" value="{{ a.normal }}">{{ a.name }}</option>
+                </select>
+            </div>
+            <!-- busqueda -->
+            <label>Busqueda</label>
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button ng-click="BusquedaProductos()" class="btn btn-primary glyphicon glyphicon-search" type="button"></button>
+                </span>
+                <input type="text" ng-model="txtBusqueda" class="form-control"/>
+            </div>
+    </div>
+</ul>
