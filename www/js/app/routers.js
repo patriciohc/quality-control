@@ -1,12 +1,19 @@
 app
 .config(['$stateProvider','$urlRouterProvider', function($stateProvider, $urlRouterProvider){
     $stateProvider
-        .state('home', {
+        .state('menu.home', {
             url:'/home',
             templateUrl: 'templates/home.html'
         })
-        .state('uploadExcel',{
+        .state('menu.uploadExcel',{
             url:'/upload-excel',
             templateUrl: 'templates/upload_excel.html'
+        })
+        .state('menu',{
+            url:'/menu',
+            templateUrl: 'templates/menu.html'
         });
+
+    $urlRouterProvider.otherwise('/menu/home');
+
 }]);

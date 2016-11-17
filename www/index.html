@@ -41,53 +41,9 @@
 
 
     <div id="wrapper">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <!-- panel lateral izquierdo -->
-            <!-- <div ng-include="'panel.html'" onload="initExcel()"></div> -->
-            <!-- panel -->
-            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
- 
-                <li class="active">
-                    <a ui-sref="uploadExcel">
-                        <span class="fa-stack fa-lg pull-left"><i class="fa fa-file-excel-o fa-stack-1x "></i></span> 
-                        Cargar Excel <!--<input type="file" id="fileExcel" style="display: none;">-->
-                    </a>
-                </li>
-                <li>
-                    <a ui-sref="home">
-                        <span class="fa-stack fa-lg pull-left"><i class="fa fa-gears fa-stack-1x "></i></span> Mas opciones
-                    </a>
-                </li>
-                <li>
-                    <a ui-sref="">
-                        <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Overview
-                    </a>
-                </li>
-                <li>
-                    <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Events</a>
-                </li>
-                <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span>About</a>
-                </li>
-                <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Services</a>
-                </li>
-                <li>
-                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>Contact</a>
-                </li>
-            </ul>
-
-        </div>
-
         <div ui-view></div>
-        <!-- /#sidebar-wrapper -->
-        <!-- Page Content -->
-        <!-- <div id="page-content-wrapper">
-            <div ng-include="'content_intro.html'"></div>
-            <div ng-include="'content_main.html'" onload="initContenetMain()"></div>
-        </div> -->
     </div> <!-- /#wrapper -->
+
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
