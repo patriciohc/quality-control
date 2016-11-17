@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!--iconos Font Awesome-->
+    <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
@@ -17,42 +19,45 @@
 </head>
 
 <body id="mainApp" ng-app="mainApp" ng-controller="mainControl">
+
+<nav class="navbar navbar-default no-margin">
+    <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header fixed-brand">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+                      <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                    </button>
+                    <div style="text-align:center; margin-top:25px; margin-bottom:25px;">
+                		<img width="70%" height="25px" src="images/logo.png" />
+            		</div>
+                </div><!-- navbar-header-->
+ 
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+                            </ul>
+                </div><!-- bs-example-navbar-collapse-1 -->
+    </nav>
+
+
+
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <!-- panel lateral izquierdo -->
             <!-- <div ng-include="'panel.html'" onload="initExcel()"></div> -->
-            <div style="text-align:center; margin-top:25px; margin-bottom:25px;">
-                <img width="70%" height="25px" src="images/logo.png" />
-            </div>
             <!-- panel -->
-            <div class="panel panel-default" style="margin:15px;">
-                <div class="panel-heading">
-                    <a data-toggle="collapse" href="#collapsePanel">Productos y Materi Prima</a>
-                </div>
-                <div id="collapsePanel" class="panel-collapse collapse">
-                    <div class="panel-body" style="background-color: rgba(205, 197, 197, 0.8)">
-                        <div style="margin-bottom: 12px;">
-                            <label class="btn btn-block btn-primary">
-                                Cargar Excel&hellip; <input type="file" id="fileExcel" style="display: none;">
-                            </label>
-                        </div>
-                        <form role="form">
-                            <div class="form-group">
-                                <!-- file -->
-                                <label for="slFile">Seleccione el archivo</label>
-                                <select id="slFile" ng-model="slFile" class="form-control" ng-change="changeSelectFile()"></select>
-                                <!-- sheet -->
-                                <label for="slSheet">Seleccione la hoja</label>
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button ng-click="changeSelectSheet()" class="btn btn-primary glyphicon glyphicon-hand-right" type="button"></button>
-                                    </span>
-                                    <select id="slSheet" ng-model="slSheet" class="form-control" ng-change="changeSelectSheet()">
-                                        <option ng-repeat="s in sheets" value="{{ $index }}">{{ s.name }}</option>
-                                    </select>
-                                </div>
-                                <!-- atributo -->
+            
+
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+ 
+                <li class="active">
+                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span> Cargar Excel&hellip; <input type="file" id="fileExcel" style="display: none;"></a>
+                </li>
+                <li>
+                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span> Shortcut</a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <div>
+                        	  <!-- atributo -->
                                 <label for="slAttr">Seleccione el atributo</label>
                                 <div class="input-group">
                                     <span class="input-group-btn">
@@ -70,12 +75,26 @@
                                     </span>
                                     <input type="text" ng-model="txtBusqueda" class="form-control"/>
                                 </div>
-                                
-                            </div>
-                        </form>
-                    </div> <!-- fin panel body -->
-                </div>
-            </div> <!-- fin panel -->
+                        </div>
+ 						
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Overview</a>
+                </li>
+                <li>
+                    <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Events</a>
+                </li>
+                <li>
+                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span>About</a>
+                </li>
+                <li>
+                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Services</a>
+                </li>
+                <li>
+                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>Contact</a>
+                </li>
+            </ul>
 
         </div>
         <!-- /#sidebar-wrapper -->
@@ -109,6 +128,7 @@
     <script src="js/app/excel.js"></script>
     <script src="js/app/graficas.js"></script>
     <script src="js/app/estadistica.js"></script>
+    <script src="js/sidebar_menu.js"></script>
 
     <!-- Menu Toggle Script -->
     <script>
