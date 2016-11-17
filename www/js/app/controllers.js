@@ -1,8 +1,11 @@
-var sheet = null; // hoja de trabajo actual
+//var sheet = null; // hoja de trabajo actual
+
+app.controller('uploadExcel', function($scope) {
+
+})
 
 
-
-app.controller('mainControl', function($scope) {
+.controller('mainControl', function($scope) {
 
     $scope.checksTable = [];
 
