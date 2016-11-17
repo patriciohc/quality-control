@@ -7,6 +7,7 @@ app
         })
         .state('menu.uploadExcel',{
             url:'/upload-excel',
+            controller: 'uploadExcel',
             templateUrl: 'templates/upload_excel.html'
         })
         .state('menu',{
