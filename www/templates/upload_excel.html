@@ -1,2 +1,32 @@
-
-<h3>formulario<h3>
+<div class="container" style="width: 70%;">
+			  <h2>Llena los datos solicitados</h2>
+			  <form>
+			    <div class="form-group">
+			      <label for="email">Nombre Producto:</label>
+			      <input type="text" class="form-control" id="nameProduct" placeholder="Nombre del producto" ng-model="nombreProduc">
+			      <label id="cabinet0" class="cabinet"><span class="label label-warning">Cargar Excel</span>
+				    <input type="file" name="file" class="file" style="display: none;"/>
+				  </label>
+			    </div>
+			    <div class="form-group">
+			      <label for="pwd">Identificador de producto:</label>
+			      <select class="form-control" data-live-search="true" ng-model="selectProd">
+					  <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+					  <option data-tokens="mustard">Burger, Shake and a Smile</option>
+					  <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+				  </select>
+			    </div>
+			    <div class="form-group">
+			      <label for="pwd">Lote:</label>
+			      <select class="form-control" data-live-search="true" ng-model="selectLote">
+					  <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+					  <option data-tokens="mustard">Burger, Shake and a Smile</option>
+					  <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+				  </select>
+			    </div>
+			    <div class="checkbox">
+			      <label><input type="checkbox" ng-model="checkboxAttrib"> Checkbox</label>
+			    </div>
+			    <button type="submit" class="btn btn-default">Guardar</button>
+			  </form>
+			</div>
