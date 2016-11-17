@@ -1,9 +1,9 @@
 //var sheet = null; // hoja de trabajo actual
 
+// vista uploadExcel
 app.controller('uploadExcel', function($scope) {
-
+    $scope.nombreProduc = "texto de prueba";
 })
-
 
 .controller('mainControl', function($scope) {
 
