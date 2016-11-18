@@ -17,7 +17,7 @@ function getAtributo(req, res){
         if (err) 
             return res.status(500).send({message: `Error al realizar la peticion ${err}`});
         if (!producto) 
-            return res.status(404).send({message: "No existen folios."});
+            return res.status(404).send({message: "No existen productos."});
 
         let attrs = producto.map(function(obj){
             if (req.query.atributo)
@@ -46,12 +46,18 @@ function updateFolio(req, res){
 }
 
 function saveProducto(req, res){
-    let producto = new Producto(req.body);
-    producto.save(function(err, productoStored){
+    Producto.collection.insert(req.body, function(err, docs){
         if (err) return res.status(500).send({message:"error al guardar" });
 
-        return res.status(200).send({folio: productoStored});
+        return res.status(200).send({message:"Se guardo correctamente"});
     });
+
+    // let producto = new Producto(req.body);
+    // producto.save(function(err, productoStored){
+    //     if (err) return res.status(500).send({message:"error al guardar" });
+
+    //     return res.status(200).send({folio: productoStored});
+    // });
 }
 
 module.exports = {

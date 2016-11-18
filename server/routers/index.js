@@ -3,15 +3,18 @@
 const express = require('express');
 const api = express.Router()
 const productoCtrl = require('../controllers/producto');
+const catProductoCtrl = require('../controllers/cat_producto');
 //const middleware = require('../middleware');
 
-// folios
-//api.get('/producto/:id', folioCtrl.getFolio);
+// productos 
 api.get('/producto/', productoCtrl.getProductos);
 api.post('/producto/',productoCtrl.saveProducto);
 api.get('/atributo',productoCtrl.getAtributo);
-//api.put('/prodcuto/', folioCtrl.updateFolio);
-//api.delete('/producto/:id', folioCtrl.deleteFolio );
+// catalogo de productos
+api.get('/cat-producto/', catProductoCtrl.getCatProductos);
+api.post('/cat-producto/', catProductoCtrl.saveCatProducto);
+api.get('/cat-atributo/:id', catProductoCtrl.getCatProducto);
+
 
 
 module.exports = api
