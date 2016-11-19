@@ -40,6 +40,7 @@ app.controller('uploadExcel', function($scope, $http) {
             var sheet = sheets[$scope.nameHojaExcel];
             $scope.identificador = sheet.head;
             $scope.lotes = sheet.head;
+            $scope.ElementosChk = sheet.head;
         }
 })
 
