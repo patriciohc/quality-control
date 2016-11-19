@@ -2,7 +2,6 @@
 			  <h2>Llena los datos solicitados</h2>
 			  <form>
 			    <div class="form-group">
-			      <label for="email">Nombre Producto:</label>
 			     <label for="newProducto">Seleccione un producto</label>
 	            	<select class="form-control" id="newProducto">
 	                	<option ng-repeat="p in productos" value="{{ p.nombre }}">{{ p.nombre }}</option>
@@ -10,7 +9,7 @@
 			      <label id="cabinet0" class="cabinet" title="Abre el buscador de archivos"><span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
 				    <input type="file" fileread="onLoadFile" name="file" class="file" style="display: none;"/>
 				  </label>
-				   <button type="button" title="Agrega nombre a nuevo producto" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">Cargar Nuevo</button>
+				   <button type="button" title="Agrega nombre a nuevo producto" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">Crear Nuevo</button>
 			    </div>
 			    <div class="form-group">
 			      <label for="pwd">Nombre de hoja:</label>
