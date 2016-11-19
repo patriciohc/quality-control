@@ -1,36 +1,36 @@
 var excelInfo = null;
 
 $.getJSON("json/excel_info.json")
-    
+
 .done(function (json) {
     excelInfo = json;
     //console.log(excelInfo);
 });
 
 var excel = {
-    /*books contien dos atributos 
+    /*books contien dos atributos
     * name: "", // nombre del archivo
     * sheets: [] // hojas del archivo
     *
     * los sheets tienen la siguientes estructura
     *    {
-    *        name: "", 
-    *        head: {name: "", normal: ""}, 
+    *        name: "",
+    *        head: {name: "", normal: ""},
     *        data: [],
     *    },
     */
     books: [],
 
-// array de sheets 
+// array de sheets
 
-// boton input file 
+// boton input file
 //    inputFile: null,
 // function a ejecutar al funalizar lectura
 //    functionExecute: null,
 // inicialia controles
 //     init: function (idInputFile, f){
 //         excel.functionExecute = f;
-//         inputFile = document.getElementById(idInputFile); 
+//         inputFile = document.getElementById(idInputFile);
 
 //         $.getJSON("files/excel.json")
 //         .done(function (json) {
@@ -38,14 +38,14 @@ var excel = {
 //             excel.functionExecute(excel.books[0]);
 //             //console.log(excelInfo);
 //         });
-        
+
 //         if (window.File && window.FileReader && window.FileList && window.Blob) {
 //             inputFile.addEventListener('change', this.loadFile, false);
 //         } else {
 //             alert("Explorador no Compatible");
 //         }
 //     },
-// // carga de archivo 
+// // carga de archivo
 //     loadFile: function () {
 //         var book = {};
 //         book.name = inputFile.value.split(".")[0];
@@ -92,7 +92,7 @@ var excel = {
         return JSLINQ(sheet.data)
             .Select(function (x) { return x[campo]}).ToArray();
     },
-    // Rregra una fila con el ID indicado 
+    // Rregra una fila con el ID indicado
     getRow: function (sheet, id){
         return JSLINQ(sheet.data)
             .Where(function(x) { return x.ID_ANALISIS == id} )
@@ -102,7 +102,7 @@ var excel = {
     getRowsInList: function (arrayIds){
         var result = [];
         for (var index in excel.books[0].sheets){
-            var sheet = excel.books[0].sheets[index]; 
+            var sheet = excel.books[0].sheets[index];
             var temp = JSLINQ(sheet.data)
                 .Where(function(x) { return arrayIds.indexOf(x.ID_ANALISIS) >= 0 } )
                 .Select(function(x){ return x}).ToArray();
@@ -115,7 +115,7 @@ var excel = {
         var result = [];
         var regExp = new RegExp(texto.toUpperCase());
         for (index in excel.books[0].sheets){
-            var sheet = excel.books[0].sheets[index]; 
+            var sheet = excel.books[0].sheets[index];
             var temp = JSLINQ(sheet.data)
                 .Where(function(x) {
                     return regExp.test(x.ID_ANALISIS) ||
@@ -143,7 +143,7 @@ var excel = {
                 address_of_cell = intToChar(nCol) + nRow;
                 desired_cell = worksheet[address_of_cell];
                 var index = nCol - colInit;
-                var attr = head[index].normal  
+                var attr = head[index].normal
                 if (typeof(desired_cell) == 'undefined'){
                     if (nCol == colInit){ // no hay No. se terminaron las filas
                         nextRow = false;
@@ -158,7 +158,7 @@ var excel = {
             if (nextRow) tableOutput.push(row);
         }
         return tableOutput;
-    }, // fin readTable 
+    }, // fin readTable
 
     readHead: function (worksheet) {
         var head = [];
@@ -179,7 +179,7 @@ var excel = {
             //console.log(elemento);
         }
         return head;
-    }, 
+    },
 
     emitXmlHeader: function (nameColumns) {
         var headerRow =  '<ss:Row>\n';
@@ -187,14 +187,14 @@ var excel = {
             headerRow += '  <ss:Cell>\n';
             headerRow += '    <ss:Data ss:Type="String">';
             headerRow += nameColumns[i] + '</ss:Data>\n';
-            headerRow += '  </ss:Cell>\n';        
+            headerRow += '  </ss:Cell>\n';
         }
-        return headerRow += '</ss:Row>\n';   
+        return headerRow += '</ss:Row>\n';
         /*return '<?xml version="1.0"?>\n' +
                '<ss:Workbook xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n' +
                '<ss:Worksheet ss:Name="Sheet1">\n' +
                '<ss:Table>\n\n' + headerRow;*/
-    },  
+    },
 
     emitXmlInfo: function () {
         return '<?xml version="1.0"?>\n' +
@@ -207,30 +207,30 @@ var excel = {
         return '\n</ss:Table>\n' +
                '</ss:Worksheet>\n' +
                '</ss:Workbook>\n';
-    },  
+    },
 
     jsonToSsXmlRow: function (jsonObject) {
         var row;
         var col;
         var xml;
         var data = typeof jsonObject != "object" ? JSON.parse(jsonObject) : jsonObject;
-        
+
         xml = "";
 
         for (row = 0; row < data.length; row++) {
             xml += '<ss:Row>\n';
-          
+
             for (col in data[row]) {
                 xml += '  <ss:Cell>\n';
                 xml += '    <ss:Data ss:Type="String">';// + testTypes[col]  + '">';
                 xml += data[row][col] + '</ss:Data>\n';
                 xml += '  </ss:Cell>\n';
-            }   
+            }
             xml += '</ss:Row>\n';
         }
-        
+
         //xml += excel.emitXmlFooter();
-        return xml;  
+        return xml;
     },
 
     jsonToSsXml: function (jsonObject, header) {
@@ -238,26 +238,26 @@ var excel = {
         var col;
         var xml;
         var data = typeof jsonObject != "object" ? JSON.parse(jsonObject) : jsonObject;
-        
-        xml = excel.emitXmlHeader(header);  
+
+        xml = excel.emitXmlHeader(header);
 
         for (row = 0; row < data.length; row++) {
             xml += '<ss:Row>\n';
-          
+
             for (col in data[row]) {
                 xml += '  <ss:Cell>\n';
                 xml += '    <ss:Data ss:Type="String">';// + testTypes[col]  + '">';
                 xml += data[row][col] + '</ss:Data>\n';
                 xml += '  </ss:Cell>\n';
-            }   
+            }
             xml += '</ss:Row>\n';
         }
-        
-        xml += excel.emitXmlFooter();
-        return xml;  
-    },  
 
-    //console.log(jsonToSsXml(testJson)); 
+        xml += excel.emitXmlFooter();
+        return xml;
+    },
+
+    //console.log(jsonToSsXml(testJson));
 
     download: function (content, filename, contentType) {
         if (!contentType) contentType = 'application/octet-stream';
@@ -275,7 +275,7 @@ var excel = {
 
 //download(jsonToSsXml(testJson), 'test.xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-} // fin excel 
+} // fin excel
 
 ///// funciones de proposito general ////
 function intToChar(i) {
@@ -283,17 +283,17 @@ function intToChar(i) {
 }
 
 function charToInt(c){
-    return c.charCodeAt(0);   
+    return c.charCodeAt(0);
 }
 
 var normalize = (function() {
-  var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç.", 
+  var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç.",
       to   = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc ",
       mapping = {};
- 
+
   for(var i = 0, j = from.length; i < j; i++ )
       mapping[ from.charAt( i ) ] = to.charAt( i );
- 
+
   return function( str ) {
       var ret = [];
       for( var i = 0, j = str.length; i < j; i++ ) {
@@ -302,8 +302,8 @@ var normalize = (function() {
               ret.push( mapping[ c ] );
           else
               ret.push( c );
-      }      
+      }
       return ret.join( '' );
   }
- 
+
 })();

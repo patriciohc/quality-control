@@ -16,7 +16,7 @@ var estadistica = {
         var sumatoria = 0;
         for (var i = 0; i < data.length; i++){
             var x_i = data[i];
-            sumatoria += Math.pow( x_i - x_p , 2); 
+            sumatoria += Math.pow( x_i - x_p , 2);
         }
         var desvStd = sumatoria / N;
         return Math.round(desvStd * 100) / 100;

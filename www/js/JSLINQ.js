@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // Part of the LINQ to JavaScript (JSLINQ) v2.20 Project - http://jslinq.codeplex.com
 // Copyright (C) 2012 Chris Pietschmann (http://pietschsoft.com). All rights reserved.
 // This license can be found here: http://jslinq.codeplex.com/license
@@ -294,4 +294,4 @@
     })(JSLINQ.fn);
 
     JSLINQ.fn.init.prototype = JSLINQ.fn;
-})();
+})();  =

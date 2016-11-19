@@ -14,9 +14,9 @@ function getAtributo(req, res){
     .find(query)
     .select({atributos: 1, _id: 0})
     .exec(function(err, producto){
-        if (err) 
+        if (err)
             return res.status(500).send({message: `Error al realizar la peticion ${err}`});
-        if (!producto) 
+        if (!producto)
             return res.status(404).send({message: "No existen productos."});
 
         let attrs = producto.map(function(obj){

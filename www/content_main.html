@@ -29,7 +29,7 @@
             </tbody>
         </table>
         <button type="button" class="btn btn-info" ng-show="grupos" ng-click="exportToExcelTableResumen()">Exportar a PDF</button>
-        <!-- tabla busqueda --> 
+        <!-- tabla busqueda -->
         <table class="table table-bordered table-striped table-hover" ng-show="resultadoBusqueda">
             <thead>
                 <tr>
@@ -43,7 +43,7 @@
             <tbody>
                 <tr ng-repeat="r in resultadoBusqueda" ng-click="clickOnTableResumen()" value="{{ r.ID_ANALISIS }}" style="cursor:pointer;">
                     <th><input type="checkbox" name="checkitem" ng-model="checksTable[$index]"/></th>
-                    <th>{{ r.ID_ANALISIS }}</th>   
+                    <th>{{ r.ID_ANALISIS }}</th>
                     <th>{{ r.LOTE }}</th>
                     <th>{{ r.CLIENTE }}</th>
                     <th>{{ r.FECHA_EMBARQUE }}</th>
@@ -93,7 +93,7 @@
                     </tr>
                     </tbody>
                     </table>
-                    <buton type="button" class="btn btn-info"> 
+                    <buton type="button" class="btn btn-info">
                         <span class="glyphicon glyphicon-eye-open"></span> Materia prima usada
                     </buton>
                 </div>
@@ -103,7 +103,7 @@
             <div ng-repeat="chart in gruposElementos" class="panel panel-info animate-hide" ng-show="showPieCharts">
                 <div class="panel-heading">{{ chart.name }}</div>
                 <div class="panel-body">
-                    <div id="divCircular{{ $index }}" style="width:340px; height:250px"></div> 
+                    <div id="divCircular{{ $index }}" style="width:340px; height:250px"></div>
                 </div>
             </div>
 

@@ -9,6 +9,11 @@ app
             url:'/upload-excel',
             controller: 'uploadExcel',
             templateUrl: 'templates/upload_excel.html'
+        }).
+        state('menu.search',{
+            url:'/search',
+            controller: 'search',
+            templateUrl: 'templates/search.html'
         })
         .state('menu',{
             url:'/menu',

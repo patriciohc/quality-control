@@ -6,7 +6,7 @@ const productoCtrl = require('../controllers/producto');
 const catProductoCtrl = require('../controllers/cat_producto');
 //const middleware = require('../middleware');
 
-// productos 
+// productos
 api.get('/producto/', productoCtrl.getProductos);
 api.post('/producto/',productoCtrl.saveProducto);
 api.get('/atributo',productoCtrl.getAtributo);

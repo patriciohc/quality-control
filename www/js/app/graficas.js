@@ -1,18 +1,18 @@
 function getConfigPlotLines(title, value) {
     return {
-        label: { 
-            text: title, // Content of the label. 
-            align: 'left', // Positioning of the label. 
-                    //Default to center. x: +10 // Amount of pixels the label will be repositioned according to the alignment. 
+        label: {
+            text: title, // Content of the label.
+            align: 'left', // Positioning of the label.
+                    //Default to center. x: +10 // Amount of pixels the label will be repositioned according to the alignment.
         },
         color: 'red', // Color value
         dashStyle: 'longdash', // Style of the plot line. Default to solid
         value: value, // Value of where the line will appear
-        width: 1 // Width of the line    
+        width: 1 // Width of the line
     }
 }
 // configuracion para grafica de dispercion
-function getConfigScatter() 
+function getConfigScatter()
 {
     return {
         credits: { enabled: false },
@@ -60,7 +60,7 @@ function getConfigScatter()
             }
         },
         series: null
-    } 
+    }
 };
 // configuracion para grafica de frecuencia
 function getConfigColumn()
@@ -197,14 +197,14 @@ function binData(data) {
 function generarGraficas(arrayId, arrayConfig){
     if (arrayId.length != arrayConfig.length) return; // datos incompletos
     for(var i = 0; i < arrayId.length; i++){
-        $(arrayId[i]).highcharts(arrayConfig[i]);    
+        $(arrayId[i]).highcharts(arrayConfig[i]);
     }
     //$('#divDispersion').highcharts(configDispersion);
     //$('#divFrecuencia').highcharts(configHistograma);
 }
 
 function makeChart(id, config){
-    $(id).highcharts(config);    
+    $(id).highcharts(config);
 }
 
 function updatePie(config){
