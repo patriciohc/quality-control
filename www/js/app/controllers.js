@@ -1,12 +1,44 @@
 //var sheet = null; // hoja de trabajo actual
 
 // vista uploadExcel
-app.controller('uploadExcel', function($scope) {
-    $scope.nombreProduc = "texto de prueba";
-
+app.controller('uploadExcel', function($scope, $http) {
+    var sheets;
     $scope.onLoadFile = function(fileBase64){
-        var sheets = excel.readExcel(fileBase64);
+        sheets = excel.readExcel(fileBase64);
+        $scope.hojas = sheets;
     };
+
+    $http.get("/api/cat-producto").then(function(response){
+        $scope.productos = response.data;
+    });
+
+     //funcion de llenado de select "Nombre producto"
+    $scope.llenadoSelectNameProd = function(){
+        var nombreProducto = $scope.nameProduc;
+        var producto = { nombre: nombreProducto, atributos: [] };
+        $http.post("/api/cat-producto", producto).then( function(response){
+        var result =  response.data;
+         if (result.message)
+         {
+            alert("Hubo un problema al guardar.");
+
+         }else
+         actualizaSelectProd();
+    });
+    }
+
+        function actualizaSelectProd(){
+             $http.get("/api/cat-producto").then(function(response){
+                $scope.productos = response.data;
+            });
+        }
+
+        $scope.ObtenerHojaexc = function(){
+            var nombreHoja = $scope.nameHojaExcel;
+            var sheet = sheets[$scope.nameHojaExcel];
+            $scope.identificador = sheet.head;
+            $scope.lotes = sheet.head;
+        }
 })
 // vista search
 .controller('search', function($scope, $http) {
@@ -15,6 +47,11 @@ app.controller('uploadExcel', function($scope) {
         $scope.productos = response.data;
         $scope.attrs = $scope.productos[0].atributos;
     });
+})
+
+.controller('mainControl', function($scope) {
+
+    $scope.checksTable = [];
 
     $scope.chnageSlProdcuto = function(){
         $scope.attrs = $scope.productos[$scope.slProducto].atributos;
@@ -353,6 +390,8 @@ function getPlotLinesScatter(sheets, campo){
     //configDispersion.yAxis.plotLines = linesPlot;
     return linesPlot;
 }
+
+
 
 /*
 function clickTry(){
