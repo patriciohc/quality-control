@@ -3,32 +3,26 @@
 			  <form>
 			    <div class="form-group">
 			      <label for="email">Nombre Producto:</label>
-			     <label for="newProducto">Seleccione un producto</label>
-	            	<select class="form-control" id="newProducto">
-	                	<option ng-repeat="p in productos" value="{{ p.nombre }}">{{ p.nombre }}</option>
-	            	</select>
+			      <input type="text" class="form-control" id="nameProduct" placeholder="Nombre del producto" ng-model="nombreProduc">
 			      <label id="cabinet0" class="cabinet" title="Abre el buscador de archivos"><span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
 				    <input type="file" fileread="onLoadFile" name="file" class="file" style="display: none;"/>
 				  </label>
-				   <button type="button" title="Agrega nombre a nuevo producto" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">Cargar Nuevo</button>
-			    </div>
-			    <div class="form-group">
-			      <label for="pwd">Nombre de hoja:</label>
-			      <select class="form-control" id="cargaHojaExcel" ng-model="nameHojaExcel" ng-change="ObtenerHojaexc()">
-	                	<option ng-repeat="h in hojas" value="{{ $index  }}">{{ h.name }}</option>
-	              </select>
 			    </div>
 			    <div class="form-group">
 			      <label for="pwd">Identificador de producto:</label>
-			      <select class="form-control" id="idIdentificador">
-	                	<option ng-repeat="Ip in identificador" value="{{ Ip.name }}">{{ Ip.name }}</option>
-	              </select>
+			      <select class="form-control" data-live-search="true" ng-model="selectProd">
+					  <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+					  <option data-tokens="mustard">Burger, Shake and a Smile</option>
+					  <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+				  </select>
 			    </div>
 			    <div class="form-group">
 			      <label for="pwd">Lote:</label>
-			      <select class="form-control" id="idLote">
-	                	<option ng-repeat="L in lotes" value="{{ L.name }}">{{ L.name }}</option>
-	              </select>
+			      <select class="form-control" data-live-search="true" ng-model="selectLote">
+					  <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+					  <option data-tokens="mustard">Burger, Shake and a Smile</option>
+					  <option data-tokens="frosting">Sugar, Spice and all things nice</option>
+				  </select>
 			    </div>
                   <div class="form-group">
                    <label for="fancy-checkbox-default-custom-icons" class="[ btn btn-default active ]" ng-repeat="Chk in ElementosChk">
@@ -37,26 +31,4 @@
                   </div>
 			    <button type="submit" class="btn btn-success">Guardar</button>
 			  </form>
-
-				  <!-- Modal -->
-				  <div class="modal fade" id="myModal" role="dialog">
-				    <div class="modal-dialog">
-
-				      <!-- Modal content-->
-				      <div class="modal-content">
-				        <div class="modal-header">
-				          <button type="button" class="close" data-dismiss="modal">&times;</button>
-				          <h4 class="modal-title">Agregar nuevo producto</h4>
-				        </div>
-				        <div class="modal-body">
-			      		<input type="text" class="form-control" id="nameProduct" placeholder="Nombre del producto" ng-model="nameProduc">
-				        </div>
-				        <div class="modal-footer">
-				          <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="llenadoSelectNameProd()">Guardar</button>
-				          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				        </div>
-				      </div>
-
-				    </div>
-				  </div>
-</div>
+			</div>
