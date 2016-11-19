@@ -6,39 +6,61 @@ app.controller('uploadExcel', function($scope) {
 
     $scope.onLoadFile = function(fileBase64){
         var sheets = excel.readExcel(fileBase64);
-        var p = 0;
     };
+})
+// vista search
+.controller('search', function($scope, $http) {
+
+    $http.get("/api/cat-producto").then(function(response){
+        $scope.productos = response.data;
+        $scope.attrs = $scope.productos[0].atributos;
+    });
+
+    $scope.chnageSlProdcuto = function(){
+        $scope.attrs = $scope.productos[$scope.slProducto].atributos;
+    };
+
+    $scope.changeSelectAtrr = function () {
+        //hidenAll();
+        var producto = $scope.productos[$scope.slProducto].name;
+        var atributo = $scope.slAttr;
+        var parms = "?nameProducto=" + producto + "&" + "atributo=" + atributo;
+        $http.get("/api/getAtributo/" + parms).then(function(response) {
+            var dataColumn = response.data;
+            // promedio
+            $scope.promedio = estadistica.getPromedio(dataColumn);
+            // desviacion estandar
+            $scope.desviacion = estadistica.desvStd(dataColumn);
+            // rango
+            $scope.rango = 232;
+            //makeScatterChart(sheet, $scope.slAttr);
+            //makeColumnChart(sheet, $scope.slAttr);
+        });
+
+        //sheet = $scope.sheets[$scope.slSheet];
+        //var dataColumn = excel.getColumn(sheet, $scope.slAttr);
+        //$scope.titlePanel = excel.books[$scope.slFile].name.split(".")[0];
+        // promedio
+        //$scope.promedio = estadistica.getPromedio(dataColumn);
+        // desviacion estandar
+        //$scope.desviacion = estadistica.desvStd(dataColumn);
+        // rango
+        //$scope.rango = 232;
+        // mostrar contenido
+        //$scope.showMainContent = true;
+        //$scope.showPanelDer = true;
+        // graficas
+        //makeScatterChart(sheet, $scope.slAttr);
+        //makeColumnChart(sheet, $scope.slAttr);
+    }
+
 })
 
 .controller('mainControl', function($scope) {
 
     $scope.checksTable = [];
 
-    $scope.initContenetMain = function(){
-        
-        $scope.gruposElementos = excelInfo.grupos;
-        excel.init("fileExcel", updateSelectFiles);
-    }
-
     /* eventos en select */
-    $scope.changeSelectAtrr = function () {
-        hidenAll();
-        sheet = $scope.sheets[$scope.slSheet];
-        var dataColumn = excel.getColumn(sheet, $scope.slAttr);
-        $scope.titlePanel = excel.books[$scope.slFile].name.split(".")[0];
-        // promedio
-        $scope.promedio = estadistica.getPromedio(dataColumn);
-        // desviacion estandar
-        $scope.desviacion = estadistica.desvStd(dataColumn);
-        // rango
-        $scope.rango = 232;
-        // mostrar contenido
-        $scope.showMainContent = true;
-        $scope.showPanelDer = true;
-        // graficas
-        makeScatterChart(sheet, $scope.slAttr);
-        makeColumnChart(sheet, $scope.slAttr);
-    }
 
     $scope.changeSelectSheet = function(){
         hidenAll();
@@ -85,7 +107,7 @@ app.controller('uploadExcel', function($scope) {
     makeScatterChart = function(sheet, campo){
         var config = getConfigScatter();
         config.series = getDataScatter(sheet, campo);
-        config.yAxis.plotLines = getPlotLinesScatter(sheet, campo); 
+        config.yAxis.plotLines = getPlotLinesScatter(sheet, campo);
         config.plotOptions.series.point.events.click = function(){
             $scope.informacionGral = excel.getRow(sheet, this.category)[0];
             var dataPieCharts = [];
@@ -122,8 +144,8 @@ app.controller('uploadExcel', function($scope) {
 
     /* busqueda de productos */
     $scope.BusquedaProductos = function () {
-        if ($scope.txtBusqueda == null || 
-            typeof($scope.txtBusqueda) == "undefined" || 
+        if ($scope.txtBusqueda == null ||
+            typeof($scope.txtBusqueda) == "undefined" ||
             $scope.txtBusqueda.length <= 3 ) {
             alert("Texto muy corto");
             return;
@@ -184,7 +206,7 @@ app.controller('uploadExcel', function($scope) {
         var header = "";
         var body = "";
         for (var i = 0; i < excelInfo.grupos.length; i++){
-            header += excel.emitXmlHeader(excelInfo.grupos[i].elementos); 
+            header += excel.emitXmlHeader(excelInfo.grupos[i].elementos);
             body += excel.jsonToSsXmlRow($scope.grupos[i].data);
             //var data = getDataPieChart($scope.grupos[i].data, excelInfo.grupos[i].elementos);
             //dataPieCharts.push(data);
@@ -319,7 +341,7 @@ function getPlotLinesScatter(sheets, campo){
     linesPlot.push(line)
     // desviacion estandar
     var desvStd = estadistica.desvStd(dataColumn);
-    // abajo 
+    // abajo
     line = getConfigPlotLines("Desviacion STD: " + desvStd, promedio - desvStd);
     line.color = "blue";
     linesPlot.push(line);
