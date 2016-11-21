@@ -52,14 +52,11 @@ app.controller('uploadExcel', function($scope, $http) {
             var lotJson = $scope.loteName;
 
 
-            var accounting = [];
             var JsonExcel = {
                 "Identificador" : nombreProducto,
                 "Hoja" : namHojaJson,
                 "Identifiador" : idenProdJson,
             };
-
-
 
             var Chequeados = [];
             var Elementos = [];
@@ -68,42 +65,20 @@ app.controller('uploadExcel', function($scope, $http) {
                     angular.forEach(chks, function (value, key) {
                         if (chks[key].selected == chks[key].name) {
                             Chequeados.push(chks[key].selected);
-                                    //var item = elementsChk[i];
                         }
                     });
 
-            for(var i in sheet.data) {
+            for(var i in elementsChk)
+                {
+                    for(var j = 0; j <= Chequeados.length; j++)
+                        {
+                         var name = Chequeados[j];
+                         Elementos = Elementos.push({name : elementsChk[i][name]});
+                    }
+                }
 
-                var item = sheet.data[i];
 
-               accounting.push({
-                    "ELEMENTOS" : [
-                        {"SiO2" : item.SiO2},
-                        {"Al2O3" : item.Al2O3},
-                        {"FeO" : item.FeO},
-                        {"CaO" : item.CaO},
-                        {"MgO" : item.MgO},
-                        {"C" : item.C},
-                        {"S" : item.S},
-                        {"H2O" : item.H2O},
-                        {"P_X_C" : item.P_X_C},
-                        {"M4" : item.M4},
-                        {"M10" : item.M10},
-                        {"M20" : item.M20},
-                        {"M50" : item.M50},
-                        {"M60" : item.M60},
-                        {"M80" : item.M80},
-                        {"M100" : item.M100},
-                        {"PAN" : item.PAN},
-                        {"CLIENTE"  : item.CLIENTE},
-                        {"FECHA_EMBARQUE" : item.FECHA_EMBARQUE},
-                        {"CERTIFICADO" : item.CERTIFICADO}
-                    ]
-
-                });
-            }
-
-            JsonExcel.accounting = accounting;
+            JsonExcel.accounting = Elementos;
 		var res = $http.post('/savecompany_json', JsonExcel);
 		res.success(function(data, status, headers, config) {
 			$scope.message = data;
