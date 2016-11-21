@@ -33,14 +33,94 @@ app.controller('uploadExcel', function($scope, $http) {
             });
         }
 
+    var nombreHoja;
+    var sheet;
         $scope.ObtenerHojaexc = function(){
-            var nombreHoja = $scope.nameHojaExcel;
-            var sheet = sheets[$scope.nameHojaExcel];
-            $scope.identificador = sheet.head;
+            //var nombreHoja = $scope.nameHojaExcel;
+            nombreHoja = $scope.nameHojaExcel;
+            sheet = sheets[$scope.nameHojaExcel];
+            $scope.identificadores = sheet.head;
             $scope.lotes = sheet.head;
             $scope.ElementosChk = sheet.head;
         }
+
+        //funcion de crear y guardar Json
+        $scope.guardarJson = function(){
+            var nombreProducto = $scope.nuevProducto;
+            var namHojaJson = sheets[nombreHoja].name;
+            var idenProdJson = $scope.identificaProd;
+            var lotJson = $scope.loteName;
+
+
+            var accounting = [];
+            var JsonExcel = {
+                "Identificador" : nombreProducto,
+                "Hoja" : namHojaJson,
+                "Identifiador" : idenProdJson,
+            };
+
+
+
+            var Chequeados = [];
+            var Elementos = [];
+            var chks = sheet.head;
+            var elementsChk = sheet.data;
+                    angular.forEach(chks, function (value, key) {
+                        if (chks[key].selected == chks[key].name) {
+                            Chequeados.push(chks[key].selected);
+                                    //var item = elementsChk[i];
+                        }
+                    });
+
+            for(var i in sheet.data) {
+
+                var item = sheet.data[i];
+
+               accounting.push({
+                    "ELEMENTOS" : [
+                        {"SiO2" : item.SiO2},
+                        {"Al2O3" : item.Al2O3},
+                        {"FeO" : item.FeO},
+                        {"CaO" : item.CaO},
+                        {"MgO" : item.MgO},
+                        {"C" : item.C},
+                        {"S" : item.S},
+                        {"H2O" : item.H2O},
+                        {"P_X_C" : item.P_X_C},
+                        {"M4" : item.M4},
+                        {"M10" : item.M10},
+                        {"M20" : item.M20},
+                        {"M50" : item.M50},
+                        {"M60" : item.M60},
+                        {"M80" : item.M80},
+                        {"M100" : item.M100},
+                        {"PAN" : item.PAN},
+                        {"CLIENTE"  : item.CLIENTE},
+                        {"FECHA_EMBARQUE" : item.FECHA_EMBARQUE},
+                        {"CERTIFICADO" : item.CERTIFICADO}
+                    ]
+
+                });
+            }
+
+            JsonExcel.accounting = accounting;
+		var res = $http.post('/savecompany_json', JsonExcel);
+		res.success(function(data, status, headers, config) {
+			$scope.message = data;
+		});
+		res.error(function(data, status, headers, config) {
+			alert( "Fallo la insercion: " + JSON.stringify({data: data}));
+		});
+        }
+
+        //$scope.validarChecks = function(){
+
+
+        //}
+
+
 })
+
 // vista search
 .controller('search', function($scope, $http) {
 
