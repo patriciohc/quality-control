@@ -5,7 +5,8 @@ const Schema = mongoose.Schema
 
 const ProductoSchema = Schema({
     nombre: String,
-    identificador: {type: String, unique: true },
+    //identificador: {type: String, unique: true },
+    identificador: String,
     fechaDeRegistro: { type: Date, default: Date.now },
     atributos: {}
 });

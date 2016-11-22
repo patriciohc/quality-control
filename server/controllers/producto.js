@@ -46,8 +46,12 @@ function updateFolio(req, res){
 }
 
 function saveProducto(req, res){
+    console.log(req.body);
     Producto.collection.insert(req.body, function(err, docs){
-        if (err) return res.status(500).send({message:"error al guardar" });
+        if (err){ 
+            console.log(err);
+            return res.status(500).send({message:"error al guardar" });
+        }
 
         return res.status(200).send({message:"Se guardo correctamente"});
     });

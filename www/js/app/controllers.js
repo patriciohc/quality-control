@@ -13,80 +13,96 @@ app.controller('uploadExcel', function($scope, $http) {
     });
 
      //funcion de llenado de select "Nombre producto"
-    $scope.llenadoSelectNameProd = function(){
+    $scope.llenadoSelectNameProd = function() {
         var nombreProducto = $scope.nameProduc;
         var producto = { nombre: nombreProducto, atributos: [] };
         $http.post("/api/cat-producto", producto).then( function(response){
-        var result =  response.data;
-         if (result.message)
-         {
-            alert("Hubo un problema al guardar.");
-
-         }else
-         actualizaSelectProd();
-    });
+            var result =  response.data;
+            if (result.message) {
+                alert("Hubo un problema al guardar.");
+            } else
+            actualizaSelectProd();
+        });
     }
 
-        function actualizaSelectProd(){
-             $http.get("/api/cat-producto").then(function(response){
-                $scope.productos = response.data;
-            });
-        }
+    function actualizaSelectProd(){
+        $http.get("/api/cat-producto").then(function(response){
+            $scope.productos = response.data;
+        });
+    }
 
-    var nombreHoja;
-    var sheet;
-        $scope.ObtenerHojaexc = function(){
-            //var nombreHoja = $scope.nameHojaExcel;
-            nombreHoja = $scope.nameHojaExcel;
-            sheet = sheets[$scope.nameHojaExcel];
-            $scope.identificadores = sheet.head;
-            $scope.lotes = sheet.head;
-            $scope.ElementosChk = sheet.head;
-        }
+    //var nombreHoja;
+    //var sheet;
+    $scope.ObtenerHojaexc = function(){
+        //var nombreHoja = $scope.nameHojaExcel;
+        //nombreHoja = $scope.nameHojaExcel;
+        var sheet = sheets[$scope.nameHojaExcel];
+        $scope.identificadores = sheet.head;
+        $scope.lotes = sheet.head;
+        $scope.ElementosChk = sheet.head;
+    }
 
         //funcion de crear y guardar Json
-        $scope.guardarJson = function(){
-            var nombreProducto = $scope.nuevProducto;
-            var namHojaJson = sheets[nombreHoja].name;
-            var idenProdJson = $scope.identificaProd;
-            var lotJson = $scope.loteName;
+    $scope.guardarJson = function() {
+        var sheet = sheets[$scope.nameHojaExcel];
+        var nombreProducto = $scope.nuevProducto;
+        //var namHojaJson = sheets[nombreHoja].name;
+        var idenProdJson = $scope.identificaProd;
+        //var lotJson = $scope.loteName;
 
+        var jsonExcel = []//{
+        //        "Identificador" : nombreProducto,
+        //       "Hoja" : namHojaJson,
+        //        "Identifiador" : idenProdJson,
+        //};
 
-            var JsonExcel = {
-                "Identificador" : nombreProducto,
-                "Hoja" : namHojaJson,
-                "Identifiador" : idenProdJson,
-            };
-
-            var Chequeados = [];
-            var Elementos = [];
-            var chks = sheet.head;
-            var elementsChk = sheet.data;
-                    angular.forEach(chks, function (value, key) {
-                        if (chks[key].selected == chks[key].name) {
-                            Chequeados.push(chks[key].selected);
-                        }
-                    });
-
-            for(var i in elementsChk)
-                {
-                    for(var j = 0; j <= Chequeados.length; j++)
-                        {
-                         var name = Chequeados[j];
-                         Elementos = Elementos.push({name : elementsChk[i][name]});
-                    }
+        for (var i in sheet.data) {
+            var item = sheet.data[i];
+            var row = {
+                nombre: nombreProducto,
+                identificador: item[idenProdJson],
+                atributos: []
+            }
+            for (var j in $scope.ElementosChk) {
+                var chk = $scope.ElementosChk[j];
+                if (chk.selected){
+                    var elemento = {}
+                    elemento[chk.name] = item[chk.name];
+                    row.atributos.push(elemento);
                 }
+            }
+            jsonExcel.push(row);
+        }
+
+        //var Chequeados = [];
+        //var Elementos = [];
+        //var chks = sheet.head;
+        //var elementsChk = sheet.data;
+        //angular.forEach(chks, function (value, key) {
+        //    if (chks[key].selected == chks[key].name) {
+        //        Chequeados.push(chks[key].selected);
+        //    }
+        //});
+
+        //    for(var i in elementsChk)
+        //        {
+        //            for(var j = 0; j <= Chequeados.length; j++)
+        //                {
+        //                 var name = Chequeados[j];
+        //                 Elementos = Elementos.push({name : elementsChk[i][name]});
+        //            }
+        //        }
 
 
-            JsonExcel.accounting = Elementos;
-		var res = $http.post('/savecompany_json', JsonExcel);
-		res.success(function(data, status, headers, config) {
+        //JsonExcel.accounting = Elementos;
+	   $http.post('/api/producto/', jsonExcel)
+        .success(function(data, status, headers, config) {
 			$scope.message = data;
-		});
-		res.error(function(data, status, headers, config) {
+		})
+        .error(function(data, status, headers, config) {
 			alert( "Fallo la insercion: " + JSON.stringify({data: data}));
 		});
-        }
+    }
 
         //$scope.validarChecks = function(){
 
