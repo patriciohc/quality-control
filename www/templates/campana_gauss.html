@@ -1,0 +1,28 @@
+<div role="form" class="form-inline" >
+        <div class="form-group">
+            <label for="slProducto">Seleccione un producto</label>
+            <select class="form-control" id="slProducto" ng-model="slProducto" ng-change="chnageSlProdcuto()" >
+                <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
+            </select>
+        </div>
+        <!-- atributo -->
+
+        <div class="form-group">
+<!--        <span class="input-group-btn">
+                <button ng-click="changeSelectAtrr()" class="btn btn-primary glyphicon glyphicon-hand-right" type="button"></button>
+            </span> -->
+            <label for="slAttr">Seleccione el atributo</label>
+            <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
+                <option ng-repeat="name in attrs" value="{{ name }}">{{ name }}</option>
+            </select>
+        </div>
+
+        <!-- busqueda -->
+<!--         <label>Busqueda</label>
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button ng-click="BusquedaProductos()" class="btn btn-primary glyphicon glyphicon-search" type="button"></button>
+            </span>
+            <input type="text" ng-model="txtBusqueda" class="form-control"/>
+        </div> -->
+    </div>

@@ -56,42 +56,22 @@ app.controller('uploadExcel', function($scope, $http) {
         //        "Identifiador" : idenProdJson,
         //};
 
-        for (var i in sheet.data) {
+         for (var i in sheet.data) {
             var item = sheet.data[i];
             var row = {
                 nombre: nombreProducto,
                 identificador: item[idenProdJson],
-                atributos: []
+                atributos: {}
             }
             for (var j in $scope.ElementosChk) {
                 var chk = $scope.ElementosChk[j];
                 if (chk.selected){
-                    var elemento = {}
-                    elemento[chk.name] = item[chk.name];
-                    row.atributos.push(elemento);
+                    row.atributos[chk.name] = item[chk.name];
                 }
             }
             jsonExcel.push(row);
         }
 
-        //var Chequeados = [];
-        //var Elementos = [];
-        //var chks = sheet.head;
-        //var elementsChk = sheet.data;
-        //angular.forEach(chks, function (value, key) {
-        //    if (chks[key].selected == chks[key].name) {
-        //        Chequeados.push(chks[key].selected);
-        //    }
-        //});
-
-        //    for(var i in elementsChk)
-        //        {
-        //            for(var j = 0; j <= Chequeados.length; j++)
-        //                {
-        //                 var name = Chequeados[j];
-        //                 Elementos = Elementos.push({name : elementsChk[i][name]});
-        //            }
-        //        }
 
 
         //JsonExcel.accounting = Elementos;
@@ -104,10 +84,6 @@ app.controller('uploadExcel', function($scope, $http) {
 		});
     }
 
-        //$scope.validarChecks = function(){
-
-
-        //}
 
 
 })

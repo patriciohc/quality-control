@@ -15,6 +15,10 @@ app
             controller: 'search',
             templateUrl: 'templates/search.html'
         })
+        .state('menu.curvaNormal',{
+            url:'/curva-normal',
+            templateUrl: 'templates/campana_gauss.html'
+        })
         .state('menu',{
             url:'/menu',
             templateUrl: 'templates/menu.html'
