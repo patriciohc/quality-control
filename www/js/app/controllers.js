@@ -61,14 +61,12 @@ app.controller('uploadExcel', function($scope, $http) {
             var row = {
                 nombre: nombreProducto,
                 identificador: item[idenProdJson],
-                atributos: []
+                atributos: {}
             }
             for (var j in $scope.ElementosChk) {
                 var chk = $scope.ElementosChk[j];
                 if (chk.selected){
-                    var elemento = {}
-                    elemento[chk.name] = item[chk.name];
-                    row.atributos.push(elemento);
+                    row.atributos[chk.name] = item[chk.name];
                 }
             }
             jsonExcel.push(row);
@@ -117,17 +115,18 @@ app.controller('uploadExcel', function($scope, $http) {
 
     $http.get("/api/cat-producto").then(function(response){
         $scope.productos = response.data;
-        $scope.attrs = $scope.productos[0].atributos;
+        //$scope.attrs = $scope.productos[0].atributos;
     });
-})
 
-.controller('mainControl', function($scope) {
+    $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+    $scope.series = ['Series A', 'Series B'];
 
-    $scope.checksTable = [];
+    $scope.data = [
+        [65, 59, 80, 81, 56, 55, 40],
+        [28, 48, 40, 19, 86, 27, 90]
+    ];
 
-    $scope.chnageSlProdcuto = function(){
-        $scope.attrs = $scope.productos[$scope.slProducto].atributos;
-    };
+    $scope.attrs = ["SiO2", "Al2O3", "FeO", "CaO"];
 
     $scope.changeSelectAtrr = function () {
         //hidenAll();
@@ -145,6 +144,19 @@ app.controller('uploadExcel', function($scope, $http) {
             //makeScatterChart(sheet, $scope.slAttr);
             //makeColumnChart(sheet, $scope.slAttr);
         });
+    }
+
+})
+
+//.controller('mainControl', function($scope) {
+
+//    $scope.checksTable = [];
+
+//    $scope.chnageSlProdcuto = function(){
+//        $scope.attrs = $scope.productos[$scope.slProducto].atributos;
+//    };
+
+
 
         //sheet = $scope.sheets[$scope.slSheet];
         //var dataColumn = excel.getColumn(sheet, $scope.slAttr);
@@ -161,9 +173,9 @@ app.controller('uploadExcel', function($scope, $http) {
         // graficas
         //makeScatterChart(sheet, $scope.slAttr);
         //makeColumnChart(sheet, $scope.slAttr);
-    }
 
-})
+
+//})
 
 .controller('mainControl', function($scope) {
 
