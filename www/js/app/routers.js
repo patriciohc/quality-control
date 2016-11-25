@@ -17,6 +17,7 @@ app
         })
         .state('menu.curvaNormal',{
             url:'/curva-normal',
+            controller:'curva_Gauss',
             templateUrl: 'templates/campana_gauss.html'
         })
         .state('menu',{

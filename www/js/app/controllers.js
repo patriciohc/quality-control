@@ -72,8 +72,6 @@ app.controller('uploadExcel', function($scope, $http) {
             jsonExcel.push(row);
         }
 
-
-
         //JsonExcel.accounting = Elementos;
 	   $http.post('/api/producto/', jsonExcel)
         .success(function(data, status, headers, config) {
@@ -83,7 +81,6 @@ app.controller('uploadExcel', function($scope, $http) {
 			alert( "Fallo la insercion: " + JSON.stringify({data: data}));
 		});
     }
-
 
 
 })
@@ -304,6 +301,31 @@ app.controller('uploadExcel', function($scope, $http) {
         excel.download(xml, 'test.xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
 
+    }
+
+})
+
+//vista curvaNormal
+.controller('curva_Gauss', function($scope, $http) {
+
+    $http.get("/api/cat-producto").then(function(response){
+        $scope.productosG = response.data;
+        //$scope.attrs = $scope.productosG[0].atributos;
+    });
+
+    $scope.seleccionPrudGauss = function() {
+       var parms = "?nameProducto=" + producto;
+        $http.get("/api/getAtributo/" + parms).then(function(response) {
+            var dataColumn = response.data;
+            // promedio
+            //$scope.promedio = estadistica.getPromedio(dataColumn);
+            // desviacion estandar
+            //$scope.desviacion = estadistica.desvStd(dataColumn);
+            // rango
+            //$scope.rango = 232;
+            //makeScatterChart(sheet, $scope.slAttr);
+            //makeColumnChart(sheet, $scope.slAttr);
+        });
     }
 
 });
