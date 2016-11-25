@@ -327,20 +327,36 @@ app.controller('uploadExcel', function($scope, $http) {
         //$scope.attrs = $scope.productosG[0].atributos;
     });
 
-    $scope.seleccionPrudGauss = function() {
-       var parms = "?nameProducto=" + producto;
-        $http.get("/api/getAtributo/" + parms).then(function(response) {
-            var dataColumn = response.data;
-            // promedio
-            //$scope.promedio = estadistica.getPromedio(dataColumn);
-            // desviacion estandar
-            //$scope.desviacion = estadistica.desvStd(dataColumn);
-            // rango
-            //$scope.rango = 232;
-            //makeScatterChart(sheet, $scope.slAttr);
-            //makeColumnChart(sheet, $scope.slAttr);
+    $scope.dataG = [
+        [65, 59, 80, 81, 56, 55, 40],
+        [28, 48, 40, 19, 86, 27, 90]
+    ];
+
+    $scope.attrsG = ["SiO2", "Al2O3", "FeO", "CaO"];
+
+    $scope.changeAtribGauss = function() {
+        var producto = $scope.productosG[$scope.slProductoG].nombre;
+        var atributo = $scope.slAttrG;
+        var parms = "?nameProducto=" + producto + "&" + "atributo=" + atributo;
+        $http.get("/api/atributo" + parms).then(function(response) {
+            var datosG = response.data;
+            alert(datosG);
+             // promedio
+                    $scope.promedio = estadistica.getPromedio(datosG);
+                     //desviacion estandar
+                    $scope.desviacion = estadistica.desvStd(datosG);
+            var multiplicando = 1/Math.sqrt(2*Math.PI);
+
+            for(var i = 0; i < datosG.length; i++)
+                {
+                    var x = datosG[i];
+                    var z = ($scope.promedio - x)/$scope.desviacion;
+                    var multiplicador = Math.pow(Math.E-1/2*Math.pow(z,2));
+                    var resultado = multiplicando * multiplicador;
+                }
         });
     }
+
 
 });
 

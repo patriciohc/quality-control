@@ -1,3 +1,5 @@
+
+<h1>Curva Normal</h1>
 <div role="form" class="form-inline" >
         <div class="form-group">
             <label for="slProductoG">Seleccione un producto</label>
@@ -12,7 +14,7 @@
                 <button ng-click="changeSelectAtrr()" class="btn btn-primary glyphicon glyphicon-hand-right" type="button"></button>
             </span> -->
             <label for="slAttrG">Seleccione el atributo</label>
-            <select id="slAttrG" ng-model="slAttrG" ng-change="" class="form-control">
+            <select id="slAttrG" ng-model="slAttrG" ng-change="changeAtribGauss()" class="form-control">
                 <option ng-repeat="name in attrsG" value="{{ name }}">{{ name }}</option>
             </select>
         </div>
