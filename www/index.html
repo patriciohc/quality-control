@@ -6,12 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
     <!--iconos Font Awesome-->
-    <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
@@ -20,61 +18,69 @@
 
 <body id="mainApp" ng-app="mainApp">
 
-<nav class="navbar navbar-default no-margin">
-    <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header fixed-brand">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
-                      <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+    <nav class="navbar navbar-default no-margin">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header fixed-brand">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+                <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+            </button>
+            <div style="text-align:center; margin-top:25px; margin-bottom:25px;">
+                <img width="70%" height="25px" src="images/logo.png" />
+            </div>
+        </div><!-- navbar-header-->
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active" >
+                    <button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2">
+                        <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
                     </button>
-                    <div style="text-align:center; margin-top:25px; margin-bottom:25px;">
-                		<img width="70%" height="25px" src="images/logo.png" />
-            		</div>
-                </div><!-- navbar-header-->
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav">
-                                <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
-                            </ul>
-                </div><!-- bs-example-navbar-collapse-1 -->
+                </li>
+            </ul>
+        </div>
     </nav>
-
-
 
     <div id="wrapper">
         <div ui-view></div>
-    </div> <!-- /#wrapper -->
+    </div>
 
     <!-- jQuery -->
-    <script src="js/libs/jquery.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-
- <!--   <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>-->
+    <script src="libs/jquery/dist/jquery.min.js"></script>
     <!-- boostrap -->
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- boostrap filestyle -->
-    <script src="js/libs/bootstrap-filestyle.min.js"></script>
+    <script src="libs/bootstrap-filestyle-1.2.1/src/bootstrap-filestyle.min.js"></script>
+    <!--jslinq-->
+    <script src="libs/JSLINQ.js"></script>
     <!--lectura de excel-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
-    <script src="js/libs/JSLINQ.js"></script>
     <!-- angular -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-sanitize.js"></script>
-    <script src="js/libs/angular-ui-router.min.js"></script>
-    <!--chart js-->
-    <script src="js/libs/Chart.js"></script>
-    <script src="js/libs/angular-chart.js"></script>
-    <!-- this app -->
-    <script src="js/app/app.js"></script>
+    <script src="libs/angular/angular.min.js"></script>
+    <script src="libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <!--highchart-->
+    <script src="libs/highcharts/highcharts.js"></script>
+    <script src="libs/highcharts/modules/exporting.js"></script>
+    <script src="libs/highcharts-ng/dist/highcharts-ng.min.js"></script>
+
+    <!-- this app angular-->
+    <script src="js/app/index.js"></script>
+    <script src="js/app/controllers/seguimiento.js"></script>
     <script src="js/app/controllers.js"></script>
     <script src="js/app/routers.js"></script>
     <script src="js/app/directives.js"></script>
+<<<<<<< HEAD
     <script src="js/app/excel.js"></script>
     <script src="js/app/graficas.js"></script>
     <script src="js/app/estadistica.js"></script>
+=======
+
+    <script src="js/excel.js"></script>
+    <script src="js/graficas.js"></script>
+    <script src="js/tools.js"></script>
+    <script src="utilities/estadistica.js"></script>
+>>>>>>> 1c6995f03d17d8f874534e9e31020424abd55eb0
     <script src="js/sidebar_menu.js"></script>
 
     <!-- Menu Toggle Script -->
