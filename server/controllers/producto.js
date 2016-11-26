@@ -1,6 +1,8 @@
 'use strict'
 
 const Producto = require('../models/producto');
+const CatProducto = require('../models/cat_producto');
+const estadistica = require('../../utilities/estadistica.js');
 
 function getAtributo(req, res){
     var nameProducto = req.query.nameProducto;
@@ -9,6 +11,13 @@ function getAtributo(req, res){
         return res.status(404).send({message: "especifique el nombre del producto"});
 
     var query = {nombre: nameProducto}
+
+    var getValuesAtributo = function (data, atributo){
+        let values = data.map(function(obj){
+            return obj.atributos[atributo];
+        });
+        return values;
+    }
 
     Producto
     .find(query)
@@ -19,13 +28,21 @@ function getAtributo(req, res){
         if (!producto)
             return res.status(404).send({message: "No existen productos."});
 
-        let attrs = producto.map(function(obj){
-            if (req.query.atributo)
-                return obj.atributos[req.query.atributo];
-            else
-                return obj.atributos;
-        });
-        return res.status(200).send( attrs )
+        if (req.query.atributo){
+            var response = getValuesAtributo(producto, req.query.atributo);
+        } else {
+            var catProducto = CatProducto.find({nombre: nameProducto});
+            var response = [];
+            for (var i in catProducto.atributos) {
+                var atributo = catProducto.atributos[i];
+                var item = {};
+                item.nombreAtributo = atributo;
+                item.data = getValuesAtributo(producto, atributo);
+                response.push(item);
+            }
+        }
+
+        return res.status(200).send( response )
     });
 }
 

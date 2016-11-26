@@ -1,4 +1,4 @@
-
+'use strict'
 
 var estadistica = {
 
@@ -26,5 +26,6 @@ var estadistica = {
         return Math.round(data[0] * 100) / 100;
     }
 
-
 }
+
+module.exports = estadistica;

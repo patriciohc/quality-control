@@ -14,7 +14,6 @@ api.get('/atributo',productoCtrl.getAtributo);
 api.get('/cat-producto/', catProductoCtrl.getCatProductos);
 api.post('/cat-producto/', catProductoCtrl.saveCatProducto);
 api.get('/cat-atributo/:id', catProductoCtrl.getCatProducto);
-
-
+api.put('/cat-producto/', catProductoCtrl.updataCatProducto);
 
 module.exports = api
