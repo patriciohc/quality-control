@@ -1,42 +1,47 @@
 <div class="container" style="width: 70%;">
-			  <h2>Llena los datos solicitados</h2>
-			  <form>
-			    <div class="form-group">
-			     <label for="newProducto">Seleccione un producto</label>
-	            	<select class="form-control" id="newProducto" ng-model="nuevProducto">
-	                	<option ng-repeat="p in productos" value="{{ p.nombre }}">{{ p.nombre }}</option>
-	            	</select>
-			      <label id="cabinet0" class="cabinet" title="Abre el buscador de archivos"><span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
-				    <input type="file" fileread="onLoadFile" name="file" class="file" style="display: none;"/>
-				  </label>
-				   <button type="button" title="Agrega nombre a nuevo producto" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">Crear Nuevo</button>
-			    </div>
-			    <div class="form-group">
-			      <label for="pwd">Nombre de hoja:</label>
-			      <select class="form-control" id="cargaHojaExcel" ng-model="nameHojaExcel" ng-change="ObtenerHojaexc()">
-	                	<option ng-repeat="h in hojas" value="{{ $index  }}">{{ h.name }}</option>
-	              </select>
-			    </div>
-			    <div class="form-group">
-			      <label for="pwd">Identificador de producto:</label>
-			      <select class="form-control" id="idIdentificador" ng-model="identificaProd">
-	                	<option ng-repeat="Ip in identificadores" value="{{ Ip.name }}">{{ Ip.name }}</option>
-	              </select>
-			    </div>
-			    <div class="form-group">
-			      <label for="pwd">Lote:</label>
-			      <select class="form-control" id="idLote" ng-model="loteName">
-	                	<option ng-repeat="L in lotes" value="{{ L.name }}">{{ L.name }}</option>
-	              </select>
-			    </div>
-                  <div class="form-group">
-                  <label for="pwd">Elementos:</label></br>
-                   <label for="fancy-checkbox-default-custom-icons" class="[ btn btn-default active ]" ng-repeat="Chk in ElementosChk">
-                        <input type="checkbox" ng-model="Chk.selected" value="{{$index}}" ng-true-value="'{{Chk.name}}'">{{Chk.name}} &nbsp;
-                    </label>
-                  </div>
-			    <button type="submit" ng-model="btnsaveForm" ng-click="guardarJson()" class="btn btn-success">Guardar</button>
-			  </form>
+	<h2>Llena los datos solicitados</h2>
+		<div role="form">
+			<div class="form-group">
+			    <label for="newProducto">Seleccione un producto</label>
+	            <select class="form-control" id="newProducto" ng-model="nuevProducto">
+	                <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
+	            </select>
+			    <label id="cabinet0" class="cabinet" title="Abre el buscador de archivos">
+			   		<span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
+					<input type="file" fileread="onLoadFile" name="file" class="file" style="display: none;"/>
+				</label>
+				<button type="button" title="Agrega nombre a nuevo producto" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">Crear Nuevo</button>
+			</div>
+
+			<div class="form-group">
+			   	<label for="pwd">Nombre de hoja:</label>
+			   	<select class="form-control" id="cargaHojaExcel" ng-model="nameHojaExcel" ng-change="ObtenerHojaexc()">
+	               	<option ng-repeat="h in hojas" value="{{ $index  }}">{{ h.name }}</option>
+	           	</select>
+			</div>
+
+			<div class="form-group">
+			  	<label for="pwd">Identificador de producto:</label>
+			  	<select class="form-control" id="idIdentificador" ng-model="identificaProd">
+	               	<option ng-repeat="Ip in identificadores" value="{{ Ip.name }}">{{ Ip.name }}</option>
+	           	</select>
+			</div>
+
+			<div class="form-group">
+			  	<label for="pwd">Lote:</label>
+			   	<select class="form-control" id="idLote" ng-model="loteName">
+	               	<option ng-repeat="L in lotes" value="{{ L.name }}">{{ L.name }}</option>
+	           	</select>
+			</div>
+
+           	<div class="form-group">
+              	<label for="pwd">Elementos:</label></br>
+               	<label for="fancy-checkbox-default-custom-icons" class="[ btn btn-default active ]" ng-repeat="Chk in ElementosChk">
+              	<input type="checkbox" ng-model="Chk.selected" value="{{$index}}" ng-true-value="'{{Chk.name}}'">{{Chk.name}} &nbsp;
+              	</label>
+          	</div>
+			<button type="submit" ng-model="btnsaveForm" ng-click="guardarJson()" class="btn btn-success">Guardar</button>
+		</div>
 
 				  <!-- Modal -->
 				  <div class="modal fade" id="myModal" role="dialog">

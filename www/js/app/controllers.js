@@ -31,11 +31,7 @@ app.controller('uploadExcel', function($scope, $http) {
         });
     }
 
-    //var nombreHoja;
-    //var sheet;
     $scope.ObtenerHojaexc = function(){
-        //var nombreHoja = $scope.nameHojaExcel;
-        //nombreHoja = $scope.nameHojaExcel;
         var sheet = sheets[$scope.nameHojaExcel];
         $scope.identificadores = sheet.head;
         $scope.lotes = sheet.head;
@@ -45,34 +41,39 @@ app.controller('uploadExcel', function($scope, $http) {
         //funcion de crear y guardar Json
     $scope.guardarJson = function() {
         var sheet = sheets[$scope.nameHojaExcel];
-        var nombreProducto = $scope.nuevProducto;
-        //var namHojaJson = sheets[nombreHoja].name;
+        var producto = $scope.productos[$scope.nuevProducto];
         var idenProdJson = $scope.identificaProd;
-        //var lotJson = $scope.loteName;
 
-        var jsonExcel = []//{
-        //        "Identificador" : nombreProducto,
-        //       "Hoja" : namHojaJson,
-        //        "Identifiador" : idenProdJson,
-        //};
-
-         for (var i in sheet.data) {
+        var jsonExcel = [];
+        var checks = $scope.ElementosChk.map(function(obj){
+            if(obj.selected) return obj.name;
+        });
+        checks = checks.filter(Boolean);
+        for (var i in sheet.data) {
             var item = sheet.data[i];
             var row = {
-                nombre: nombreProducto,
+                nombre: producto.nombre,
                 identificador: item[idenProdJson],
                 atributos: {}
             }
-            for (var j in $scope.ElementosChk) {
-                var chk = $scope.ElementosChk[j];
-                if (chk.selected){
-                    row.atributos[chk.name] = item[chk.name];
-                }
-            }
+            for (var j in checks)
+                row.atributos[checks[j].name] = item[checks[j].name];
             jsonExcel.push(row);
         }
 
-        //JsonExcel.accounting = Elementos;
+        var parametros = {
+            id: producto._id,
+            atributos: checks,
+        }
+
+       $http.put('/api/cat-producto/', parametros)
+        .success(function(data, status) {
+            $scope.message = data;
+        })
+        .error(function(data, status) {
+            alert( "Fallo la insercion: " + JSON.stringify({data: data}));
+        });
+
 	   $http.post('/api/producto/', jsonExcel)
         .success(function(data, status, headers, config) {
 			$scope.message = data;
@@ -84,73 +85,6 @@ app.controller('uploadExcel', function($scope, $http) {
 
 
 })
-
-// vista search
-.controller('search', function($scope, $http) {
-
-    $http.get("/api/cat-producto").then(function(response){
-        $scope.productos = response.data;
-        //$scope.attrs = $scope.productos[0].atributos;
-    });
-
-    $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-    $scope.series = ['Series A', 'Series B'];
-
-    $scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-    ];
-
-    $scope.attrs = ["SiO2", "Al2O3", "FeO", "CaO"];
-
-    $scope.changeSelectAtrr = function () {
-        //hidenAll();
-        var producto = $scope.productos[$scope.slProducto].name;
-        var atributo = $scope.slAttr;
-        var parms = "?nameProducto=" + producto + "&" + "atributo=" + atributo;
-        $http.get("/api/getAtributo/" + parms).then(function(response) {
-            var dataColumn = response.data;
-            // promedio
-            $scope.promedio = estadistica.getPromedio(dataColumn);
-            // desviacion estandar
-            $scope.desviacion = estadistica.desvStd(dataColumn);
-            // rango
-            $scope.rango = 232;
-            //makeScatterChart(sheet, $scope.slAttr);
-            //makeColumnChart(sheet, $scope.slAttr);
-        });
-    }
-
-})
-
-//.controller('mainControl', function($scope) {
-
-//    $scope.checksTable = [];
-
-//    $scope.chnageSlProdcuto = function(){
-//        $scope.attrs = $scope.productos[$scope.slProducto].atributos;
-//    };
-
-
-
-        //sheet = $scope.sheets[$scope.slSheet];
-        //var dataColumn = excel.getColumn(sheet, $scope.slAttr);
-        //$scope.titlePanel = excel.books[$scope.slFile].name.split(".")[0];
-        // promedio
-        //$scope.promedio = estadistica.getPromedio(dataColumn);
-        // desviacion estandar
-        //$scope.desviacion = estadistica.desvStd(dataColumn);
-        // rango
-        //$scope.rango = 232;
-        // mostrar contenido
-        //$scope.showMainContent = true;
-        //$scope.showPanelDer = true;
-        // graficas
-        //makeScatterChart(sheet, $scope.slAttr);
-        //makeColumnChart(sheet, $scope.slAttr);
-
-
-//})
 
 .controller('mainControl', function($scope) {
 

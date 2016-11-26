@@ -1,9 +1,3 @@
 /node_modules/
-/www/files/ACONDICIONADOR.xls
-/www/files/DESOXIDANTE.xls
-/www/files/DESULFURANTE.xls
-/www/files/EXOTERMICO.xls
-/www/files/MATERIA PRIMA F1.xls
-/www/files/MATERIA PRIMA F2.xls
-/www/files/MATERIA PRIMA F3.xls
-/www/files/MATERIA PRIMA F4.xls
+/www/libs/
+/www/files/

@@ -71,4 +71,5 @@ var tools = {
         }
         return array;
     }
+
 } // fin tools

@@ -3,7 +3,7 @@
     <div role="form" class="form-inline" >
         <div class="form-group">
             <label for="slProducto">Seleccione un producto</label>
-            <select class="form-control" id="slProducto" ng-model="slProducto" ng-change="chnageSlProdcuto()" >
+            <select class="form-control" id="slProducto" ng-model="slProducto" ng-change="changeSelectProducto()" >
                 <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
             </select>
         </div>
@@ -15,10 +15,41 @@
             </span> -->
             <label for="slAttr">Seleccione el atributo</label>
             <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
-                <option ng-repeat="name in attrs" value="{{ name }}">{{ name }}</option>
+                <option ng-repeat="name in productos.atributos" value="{{ name }}">{{ name }}</option>
             </select>
         </div>
 
+
+<div class="row">
+    <div class="col-md-8">
+        <canvas id="line"
+            class="chart chart-line"
+            chart-data="scatter.data"
+            chart-labels="scatter.labels"
+            chart-series="scatter.series"
+            chart-options="scatter.options"
+            chart-click="onClick">
+        </canvas>
+        <br>
+        <canvas id="bar"
+            class="chart chart-bar"
+            chart-data="histogram.data"
+            chart-labels="histogram.labels"
+            chart-series="histogram.series">
+        </canvas>
+    </div>
+
+    <div class="col-md-4">
+        <highchart id="chart1" config="pie"></highchart>
+
+        <div>
+            <h5>Promedio: {{gralData.promedio}}</h5>
+            <h5>Desviacion estandar: {{gralData.desviacion}}</h5>
+            <h5>Rango: {{gralData.rango}}</h5>
+        </div>
+
+    </div>
+</div>
         <!-- busqueda -->
 <!--         <label>Busqueda</label>
         <div class="input-group">

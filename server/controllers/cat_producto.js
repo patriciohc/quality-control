@@ -35,8 +35,33 @@ function saveCatProducto(req, res) {
     });
 }
 
+
+function updataCatProducto(req, res) {
+    var id = req.body.id;
+    var atributos = req.body.atributos;
+    CatProducto
+    .findOne({_id: id})
+    .exec(function(err, obj){
+        if (err) return res.status(500).send({message: `error en el servidor ${err}`});
+
+        if (!obj) return res.status(404).send({message: "no se encontro el elemento"});
+
+        for (var i in atributos){
+            var a = atributos[i];
+            if (obj.atributos.indexOf(a) != 0){
+                obj.atributos.push(a);
+            }
+        }
+        obj.save((err, obj) =>{});
+    });
+
+}
+
+
+
 module.exports = {
     getCatProductos,
     getCatProducto,
     saveCatProducto,
+    updataCatProducto,
 }
