@@ -6,7 +6,23 @@ app
     $scope.histogram.series = ['Frecuencia'];
 
     $scope.scatter = {};
-    $scope.pie = {};
+    //$scope.pie = {};
+    
+    $scope.pie = 
+    {
+        options: {
+            chart: {
+                type: 'pie'
+            }
+        },
+        series: [{
+            data: [10, 15, 12, 8, 7]
+        }],
+        title: {
+            text: 'Hello'
+        },
+        loading: false
+    }
 
     $http.get("/api/cat-producto").then(function(response){
         $scope.productos = response.data;
@@ -15,11 +31,20 @@ app
     $scope.gralData = {};
 
     $scope.changeSelectProducto = function (){
-        var producto = $scope.productos[$scope.slProducto].nombre;
+        var producto = $scope.productos[$scope.slProducto];
 
         var parms = "?nameProducto=" + producto.nombre; // + "&" + "atributo=" + atributo;
         $http.get("/api/atributo/" + parms).then(function(response) {
             var data = response.data;
+            $scope.options = {
+                chart: {type: 'pie'}
+            }
+            $scope.title = {text: 'Composicion quimica'}
+            $scope.pie.series[0].data = [];
+            for (var i in data){
+                $scope.pie.series[0].data.push({name: data[i].atributo, y:data[i].promedio});
+                //$scope.pie.data.push(data[i].promedio);
+            }
         });
     }
 
@@ -77,9 +102,6 @@ app
                     }]
                 }
             }
-
-            $scope.pie.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
-            $scope.pie.data = [300, 500, 100];
 
             // promedio
             $scope.gralData.promedio = estadistica.getPromedio(dataColumn);

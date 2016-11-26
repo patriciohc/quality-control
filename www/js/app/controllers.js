@@ -44,22 +44,20 @@ app.controller('uploadExcel', function($scope, $http) {
         var producto = $scope.productos[$scope.nuevProducto];
         var idenProdJson = $scope.identificaProd;
 
-        var jsonExcel = []
-        var checks = [];
-         for (var i in sheet.data) {
+        var jsonExcel = [];
+        var checks = $scope.ElementosChk.map(function(obj){
+            if(obj.selected) return obj.name;
+        });
+        checks = checks.filter(Boolean);
+        for (var i in sheet.data) {
             var item = sheet.data[i];
             var row = {
                 nombre: producto.nombre,
                 identificador: item[idenProdJson],
                 atributos: {}
             }
-            for (var j in $scope.ElementosChk) {
-                var chk = $scope.ElementosChk[j];
-                if (chk.selected){
-                    row.atributos[chk.name] = item[chk.name];
-                    checks.push(chk.name);
-                }
-            }
+            for (var j in checks) 
+                row.atributos[checks[j].name] = item[checks[j].name];
             jsonExcel.push(row);
         }
 
