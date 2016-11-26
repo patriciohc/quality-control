@@ -335,26 +335,31 @@ app.controller('uploadExcel', function($scope, $http) {
     $scope.attrsG = ["SiO2", "Al2O3", "FeO", "CaO"];
 
     $scope.changeAtribGauss = function() {
+        var indicesXY = [];
         var producto = $scope.productosG[$scope.slProductoG].nombre;
         var atributo = $scope.slAttrG;
         var parms = "?nameProducto=" + producto + "&" + "atributo=" + atributo;
         $http.get("/api/atributo" + parms).then(function(response) {
             var datosG = response.data;
-            alert(datosG);
              // promedio
                     $scope.promedio = estadistica.getPromedio(datosG);
                      //desviacion estandar
                     $scope.desviacion = estadistica.desvStd(datosG);
             var multiplicando = 1/Math.sqrt(2*Math.PI);
-
             for(var i = 0; i < datosG.length; i++)
                 {
                     var x = datosG[i];
                     var z = ($scope.promedio - x)/$scope.desviacion;
-                    var multiplicador = Math.pow(Math.E-1/2*Math.pow(z,2));
-                    var resultado = multiplicando * multiplicador;
+                    var multiplicador = Math.pow(Math.E,-1/2*Math.pow(z,2));
+                    var y = multiplicando * multiplicador;
+                    indicesXY.push({x,y});
                 }
         });
+
+        //grafica
+
+        ///termina
+
     }
 
 
