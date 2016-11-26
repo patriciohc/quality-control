@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const CatProductoSchema = Schema({
-    nombre: {type: String, unique: true}
+    nombre: {type: String, unique: true},
     atributos: []
 });
 

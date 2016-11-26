@@ -38,9 +38,9 @@ function saveCatProducto(req, res) {
 
 function updataCatProducto(req, res) {
     var id = req.body.id;
-    var atributos = res.body.atributos;
-    catProducto
-    .find({_id: id})
+    var atributos = req.body.atributos;
+    CatProducto
+    .findOne({_id: id})
     .exec(function(err, obj){
         if (err) return res.status(500).send({message: `error en el servidor ${err}`});
 
@@ -48,7 +48,7 @@ function updataCatProducto(req, res) {
 
         for (var i in atributos){
             var a = atributos[i];
-            if (obj.atributos.indexOf(a)){
+            if (obj.atributos.indexOf(a) != 0){
                 obj.atributos.push(a);
             }
         }

@@ -2,7 +2,7 @@
 
 const Producto = require('../models/producto');
 const CatProducto = require('../models/cat_producto');
-const estadistica = require('../../utilities/estadistica.js');
+const estadistica = require('../../www/utilities/estadistica.js');
 
 function getAtributo(req, res){
     var nameProducto = req.query.nameProducto;
@@ -24,25 +24,32 @@ function getAtributo(req, res){
     .select({atributos: 1, _id: 0})
     .exec(function(err, producto){
         if (err)
-            return res.status(500).send({message: `Error al realizar la peticion ${err}`});
+            return res.status(500).send({message: `Error mongo ${err}`});
         if (!producto)
             return res.status(404).send({message: "No existen productos."});
 
         if (req.query.atributo){
             var response = getValuesAtributo(producto, req.query.atributo);
+            return res.status(200).send( response );
         } else {
-            var catProducto = CatProducto.find({nombre: nameProducto});
             var response = [];
-            for (var i in catProducto.atributos) {
-                var atributo = catProducto.atributos[i];
-                var item = {};
-                item.nombreAtributo = atributo;
-                item.data = getValuesAtributo(producto, atributo);
-                response.push(item);
-            }
-        }
+            CatProducto.findOne({nombre: nameProducto},(err, catProducto)=>{
+                if (err) res.status(500).send({message: `Error mongo: ${err}`});
+                if (!catProducto) res.status(404).send({message: 'recurso no encontrado'});
 
-        return res.status(200).send( response )
+                for (var i = 0; i < catProducto.atributos.length; i++) {
+                    var atributo = catProducto.atributos[i];
+                    var item = {};
+                    item.atributo = atributo;
+                    item.data = getValuesAtributo(producto, atributo);
+                    item.promedio = estadistica.getPromedio(item.data);
+                    item.desvStd = estadistica.desvStd(item.data);
+                    item.rango = estadistica.rango(item.data);
+                    response.push(item);
+                }
+                return res.status(200).send( response );
+            });   
+        }
     });
 }
 
