@@ -1,6 +1,6 @@
 var excelInfo = null;
 
-$.getJSON("json/excel_info.json")
+$.getJSON("config/excel.txt")
 
 .done(function (json) {
     excelInfo = json;

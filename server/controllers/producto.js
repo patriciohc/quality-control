@@ -2,7 +2,7 @@
 
 const Producto = require('../models/producto');
 const CatProducto = require('../models/cat_producto');
-const estadistica = require('../../www/utilities/estadistica.js');
+const estadistica = require('../estadistica.js');
 
 function getAtributo(req, res){
     var nameProducto = req.query.nameProducto;
@@ -12,7 +12,7 @@ function getAtributo(req, res){
 
     var query = {nombre: nameProducto}
 
-    var getValuesAtributo = function (data, atributo){
+    var getValuesAtributo = function (data, atributo) {
         let values = data.map(function(obj){
             let item = {};
             item.value = obj.atributos[atributo];
@@ -24,7 +24,7 @@ function getAtributo(req, res){
 
     Producto
     .find(query)
-    .select({atributos: 1, _id: 0})
+    //.select({atributos: 1, _id: 0})
     .exec(function(err, producto){
         if (err)
             return res.status(500).send({message: `Error mongo ${err}`});

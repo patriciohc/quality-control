@@ -15,7 +15,7 @@
             </span> -->
             <label for="slAttr">Seleccione el atributo</label>
             <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
-                <option ng-repeat="item in data" value="{{ item.atributo }}">{{ item.atributo }}</option>
+                <option ng-repeat="item in data" value="{{ $index }}">{{ item.atributo }}</option>
             </select>
         </div>
 
@@ -23,8 +23,8 @@
         <div class="row">
 
             <div class="col-md-8">
-                <!--<highchart id="chart0" config="scatter"></highchart>
-                <highchart id="chart1" config="histogram"></highchart>-->
+                <highchart id="chart0" config="scatter"></highchart>
+                <highchart id="chart1" config="histogram"></highchart>
             </div>
 
             <div class="col-md-4">

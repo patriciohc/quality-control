@@ -13,9 +13,9 @@
 <!--        <span class="input-group-btn">
                 <button ng-click="changeSelectAtrr()" class="btn btn-primary glyphicon glyphicon-hand-right" type="button"></button>
             </span> -->
-            <label for="slAttrG">Seleccione el atributo</label>
-            <select id="slAttrG" ng-model="slAttrG" ng-change="changeAtribGauss()" class="form-control">
-                <option ng-repeat="name in attrsG" value="{{ name }}">{{ name }}</option>
+            <label for="slAttr">Seleccione el atributo</label>
+            <select id="slAttr" ng-model="slAttr" ng-change="changeAtribGauss()" class="form-control">
+                <option ng-repeat="item in data" value="{{ $index }}">{{ item.atributo }}</option>
             </select>
         </div>
     </div>

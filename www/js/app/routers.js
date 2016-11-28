@@ -10,10 +10,10 @@ app
             controller: 'uploadExcel',
             templateUrl: 'templates/upload_excel.html'
         }).
-        state('menu.search',{
-            url:'/search',
-            controller: 'search',
-            templateUrl: 'templates/search.html'
+        state('menu.seguimiento',{
+            url:'/seguimiento',
+            controller: 'seguimiento',
+            templateUrl: 'templates/seguimiento.html'
         })
         .state('menu.curvaNormal',{
             url:'/curva-normal',

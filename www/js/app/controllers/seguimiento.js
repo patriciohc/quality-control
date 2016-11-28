@@ -1,9 +1,9 @@
 app
 // vista search
-.controller('search', function($scope, $http) {
+.controller('seguimiento', function($scope, $http) {
 
-    //$scope.scatter = getConfigScatter();
-    //$scope.histogram = getConfigColumn();
+    $scope.scatter = getConfigScatter();
+    $scope.histogram = getConfigColumn();
     $scope.pie = getConfigPie();
     $scope.gralData = {};
 
@@ -33,18 +33,21 @@ app
     $scope.changeSelectAtrr = function () {
         var data = $scope.data[$scope.slAttr];
 
-        $scope.scatter.series[0].data = data.map(function(obj){
+        $scope.scatter.series[0].data = data.data.map(function(obj){
             return [obj.identificador, obj.value];
         });
 
-        //hidenAll();
-        //var producto = $scope.productos[$scope.slProducto].nombre;
-        //var atributo = $scope.slAttr;
-        //var parms = "?nameProducto=" + producto; // + "&" + "atributo=" + atributo;
+        var frecuencia = data.data.map(function(obj){
+            return obj.value;
+        });
+
+        frecuencia = binData(frecuencia);
+        $scope.histogram.series[0].data = frecuencia;
+
 //        $http.get("/api/atributo/" + parms).then(function(response) {
 //            if (!response.data || !response.data.length) return;
 //            // histograma de frecuencias
-//            var frecuencia = binData(response.data);
+//            
 //            $scope.histogram.labels = frecuencia.map(function(obj){
 //                return obj[0];
 //            });
@@ -52,44 +55,6 @@ app
 //                return obj[1];
 //            });
 //            $scope.histogram.data = [data];
-//
-//            // grafica de dispercion
-//            $scope.scatter.series = ['Series A', 'Series B'];
-//            $scope.scatter.data = (function (data){
-//                var array = []
-//                for (var i in data){
-//                    var item = data[i];
-//                    var point = {
-//                        x: i,
-//                        y: item
-//                    }
-//                    array.push(point);
-//                }
-//                return array;
-//            })(response.data);
-//
-//            $scope.scatter.labels = (function(data){
-//                var array = new Array(data.length);
-//                for (var i = 0; i < data.length; i++){
-//                    array[i] = i;
-//                }
-//                return array;
-//            })($scope.scatter.data);
-//
-//            //$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-//            $scope.scatter.options = {
-//                showLines: false,
-//                scales: {
-//                    yAxes: [
-//                        { type: 'linear', }
-//                    ],
-//                    xAxes: [{
-//                        //type: 'linear',
-//                        display: false,
-//                        position: 'bottom'
-//                    }]
-//                }
-//            }
 //
 //            // promedio
 //            $scope.gralData.promedio = estadistica.getPromedio(dataColumn);
@@ -270,3 +235,133 @@ app
 });
 
 
+
+// var updateSelectFiles = function(book) {
+//     var select = document.getElementById("slFile");
+//     var title = document.getElementById("labelTitle");
+//     title.innerHTML = book.name;
+//     select.innerHTML = "";
+//     var option = document.createElement("option");
+//     option.text = "seleccione el archivo";
+//     option.value = "-1";
+//     select.add(option);
+//     for (var i = 0; i < excel.books.length; i++){
+//         option = document.createElement("option");
+//         var item = excel.books[i];
+//         option.text = item.name;
+//         option.value = i;
+//         select.add(option);
+//     }
+//     //$("#slFile").slideDown();
+// }
+
+// function getResumenExcel(sheet){
+//     var grupos = [];
+//     for (var i = 0; i < excelInfo.grupos.length; i++){
+//         var includeElemt = excelInfo.grupos[i].elementos; // elementos a incluir en calculos
+//         var g = auxGetResumenExcel(sheet, includeElemt);
+//         g.name = excelInfo.grupos[i].name;
+//         grupos.push( g );
+//     }
+//     return grupos
+
+
+// }
+// // funcion axuliar a getResumenExcel
+// function auxGetResumenExcel(sheet, includeElemt) {
+//     var resumen = {
+//         name: "",
+//         data:[]
+//     };
+//      for (var i = 3; i < sheet.head.length; i++ ){
+//         if (includeElemt.indexOf(sheet.head[i].normal) == -1) continue;
+//         var column = excel.getColumn(sheet, sheet.head[i].normal);
+//         var newItem =  {
+//             name: sheet.head[i].name,
+//             value: estadistica.getPromedio(column), // promedio
+//             desvStd: estadistica.desvStd(column),
+//             rango: estadistica.rango(column),
+//         }
+//         resumen.data.push(newItem);
+//     }
+//     return resumen;
+// }
+
+// function getDataPieChart(info, includeElemt) {
+//     var data = []
+//     for (var i = 0; i < info.length; i++){
+//         if (includeElemt.indexOf(info[i].name) >= 0){
+//             var item = {};
+//             item.name = info[i].name;
+//             item.y = info[i].value;
+//             data.push(item);
+//         }
+//     }
+//     var total = 0;
+//     for (var i = 0; i < data.length; i++) {
+//         total += data[i].y;
+//     }
+//     data.push({name:"otros", y: 100 - total});
+//     return data;
+// }
+
+// function dicToArray(dic){
+//     var keys = Object.keys(dic);
+//     var array = [];
+//     for (var i = 0; i < keys.length; i++){
+//         var item = {}
+//         item.name = keys[i];
+//         item.value = dic[keys[i]];
+//         array.push(item);
+//     }
+//     return array;
+// }
+
+// function arrayDicToArray(arrayDic, campo){
+//     var array = [];
+//     for (var i = 0; i < arrayDic.length; i++){
+//         var item = arrayDic[i]
+//         var value = item[campo];
+//         array.push(value);
+//     }
+//     return array;
+// }
+
+
+
+// function getDataScatter(sheet, campo){
+//     var data = [];
+//     for (var i = 0; i < sheet.data.length; i++){
+//         var item = sheet.data[i];
+//         var dato = [item.ID_ANALISIS, item[campo]];
+//         data.push(dato);
+//     }
+//     var series =  [{
+//         name: campo,
+//         color: 'rgba(36, 43, 252, .6)',
+//         data: data
+//     }];
+//     return series;
+// }
+
+// function getPlotLinesScatter(sheets, campo){
+//     var linesPlot = [];
+//     var dataColumn = excel.getColumn(sheet, campo);
+//     // promedio
+//     var promedio = estadistica.getPromedio(dataColumn);
+//     var line = getConfigPlotLines("Promedio: " + promedio, promedio);
+//     linesPlot.push(line)
+//     // desviacion estandar
+//     var desvStd = estadistica.desvStd(dataColumn);
+//     // abajo
+//     line = getConfigPlotLines("Desviacion STD: " + desvStd, promedio - desvStd);
+//     line.color = "blue";
+//     linesPlot.push(line);
+//     // arriba
+//     line = getConfigPlotLines("Desviacion STD: " + desvStd, promedio + desvStd);
+//     line.color = "blue";
+//     linesPlot.push(line);
+
+//     //configDispersion.yAxis.plotLines = linesPlot;
+//     return linesPlot;
+// }
