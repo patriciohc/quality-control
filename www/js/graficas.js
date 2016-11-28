@@ -15,20 +15,22 @@ function getConfigPlotLines(title, value) {
 function getConfigScatter()
 {
     return {
-        credits: { enabled: false },
-        chart: {
-            type: 'scatter',
-            zoomType: 'xy'
+        //credits: { enabled: false },
+        options: {
+            chart: {
+                type: 'scatter',
+                //zoomType: 'xy'
+            },
         },
         title: { text: "Grafica de Dispersion" },
         xAxis: {
             title: {
-                enabled: true,
+                //enabled: true,
                 text: 'No Analisis'
             },
-            startOnTick: true,
-            endOnTick: true,
-            showLastLabel: true
+            //startOnTick: true,
+            //endOnTick: true,
+            //showLastLabel: true
         },
         yAxis: {
             title: { text: 'Cantidad (%)' },
@@ -59,7 +61,7 @@ function getConfigScatter()
                 }
             }
         },
-        series: null
+        series: {data: []}
     }
 };
 // configuracion para grafica de frecuencia
@@ -104,32 +106,34 @@ function getConfigColumn()
 function getConfigPie()
 {
     return {
-        credits: {
-            enabled: false
-        },
-        chart: {
-            //plotBackgroundColor:'aliceblue',
-            //plotBorderWidth: null,
-            //plotShadow: false,
-            type: 'pie'
+        //credits: {
+        //    enabled: false
+        //},
+        options: {
+            chart: {
+                //plotBackgroundColor:'aliceblue',
+                //plotBorderWidth: null,
+                //plotShadow: false,
+                type: 'pie'
+            },
         },
         title: {
             text: ''
         },
-        exporting: { enabled: false },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
+        //exporting: { enabled: false },
+        //tooltip: {
+        //    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        //},
+        /*plotOptions: {
             pie: {
                 //allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
                     //enabled: true,
                     format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    /*style: {
+                    //style: {
                         color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }*/
+                    //}
                 }
             },
             series: {
@@ -138,11 +142,11 @@ function getConfigPie()
                   events: {}
                 }
             }
-        },
+        },*/
         series: [{
             //name: 'Brands',
-            colorByPoint: true,
-            data: null,
+            //colorByPoint: true,
+            data: [],
         }]
     }
 };
@@ -194,19 +198,19 @@ function binData(data) {
     return hData;
 }
 
-function generarGraficas(arrayId, arrayConfig){
-    if (arrayId.length != arrayConfig.length) return; // datos incompletos
-    for(var i = 0; i < arrayId.length; i++){
-        $(arrayId[i]).highcharts(arrayConfig[i]);
-    }
-    //$('#divDispersion').highcharts(configDispersion);
-    //$('#divFrecuencia').highcharts(configHistograma);
-}
-
-function makeChart(id, config){
-    $(id).highcharts(config);
-}
-
-function updatePie(config){
-    $('#divCircular').highcharts(config);
-}
+//function generarGraficas(arrayId, arrayConfig){
+//    if (arrayId.length != arrayConfig.length) return; // datos incompletos
+//    for(var i = 0; i < arrayId.length; i++){
+//        $(arrayId[i]).highcharts(arrayConfig[i]);
+//    }
+//    //$('#divDispersion').highcharts(configDispersion);
+//    //$('#divFrecuencia').highcharts(configHistograma);
+//}
+//
+//function makeChart(id, config){
+//    $(id).highcharts(config);
+//}
+//
+//function updatePie(config){
+//    $('#divCircular').highcharts(config);
+//}
