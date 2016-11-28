@@ -261,10 +261,10 @@ app.controller('uploadExcel', function($scope, $http) {
         //$scope.attrs = $scope.productosG[0].atributos;
     });
 
-    $scope.dataG = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-    ];
+    //$scope.dataG = [
+       // [65, 59, 80, 81, 56, 55, 40],
+        //[28, 48, 40, 19, 86, 27, 90]
+    //];
 
     $scope.attrsG = ["SiO2", "Al2O3", "FeO", "CaO"];
 
@@ -286,12 +286,85 @@ app.controller('uploadExcel', function($scope, $http) {
                     var z = ($scope.promedio - x)/$scope.desviacion;
                     var multiplicador = Math.pow(Math.E,-1/2*Math.pow(z,2));
                     var y = multiplicando * multiplicador;
-                    indicesXY.push({x,y});
+                    indicesXY.push([x,y]);
                 }
+            //chart.series[0].setData(indicesXY);
+            $scope.normalChart.series[0].data = indicesXY;
         });
 
-        //grafica
 
+        $scope.normalChart = {
+            chart:{
+        renderTo:'container',
+        type:'column',
+        alignTicks:false,
+        marginTop:25
+    },
+    exporting:{enabled:false},
+    title:{text:'Campana de gauss.'},
+    tooltip:{
+        borderWidth:1,
+        formatter:function() {
+            return '<b>Range:</b><br/> '+ this.x +'<br/>'+
+                '<b>Count:</b> '+ this.y;
+        }
+    },
+    plotOptions:{
+        series:{
+            minPointLength:1,
+            shadow:false,
+            marker:{enabled:false}
+        },
+        area:{
+            events:{
+                legendItemClick: function() {
+                    if (this.name == 'Sigma Bands') {
+                        toggleBands(chart);
+                    }
+                }
+            }
+        }
+    },
+    xAxis: {
+        lineColor:'#999',
+        tickColor:'#ccc'
+    },
+    yAxis:{
+        title:{text:''},
+        gridLineColor:'#e9e9e9',
+        tickWidth:1,
+        tickLength:3,
+        tickColor:'#ccc',
+        lineColor:'#ccc',
+        endOnTick:false,
+    },
+            exporting: {
+            enabled: true
+        },
+    series:[{
+        type:'spline',
+        lineWidth:1,
+        name:'Curva Normal',
+        color:'rgba(90,155,212,.75)',
+        fillColor:'rgba(90,155,212,.15)',
+        data: []
+        //data:[[-3.2807020192309,0.10168053006185],[-3.0425988742109,0.23641431548771],[-2.8044957291909,0.51637633957668],[-2.5663925841709,1.0595354537927],[-2.3282894391509,2.0423080409267],[-2.0901862941309,3.6981421093266],[-1.8520831491109,6.2907516383431],[-1.6139800040909,10.052592494842],[-1.3758768590709,15.090728685704],[-1.1377737140509,21.28133847858],[-0.89967056903087,28.193192861774],[-0.66156742401087,35.086995418605],[-0.42346427899086,41.020853564556],[-0.18536113397085,45.052593912695],[0.052742011049155,46.482716760157],[0.29084515606916,45.052593912695],[0.52894830108917,41.020853564556],[0.76705144610918,35.086995418605],[1.0051545911292,28.193192861773],[1.2432577361492,21.28133847858],[1.4813608811692,15.090728685704],[1.7194640261892,10.052592494842],[1.9575671712092,6.2907516383431],[2.1956703162292,3.6981421093266],[2.4337734612492,2.0423080409267],[2.6718766062692,1.0595354537927],[2.9099797512892,0.51637633957668],[3.1480828963092,0.23641431548771]]
+    }]
+        }
+
+        //grafica
+    var chart = new Highcharts.Chart({
+
+});
+
+        function toggleBands(chart) {
+            $.each(chart.xAxis[0].plotLinesAndBands, function(index,el){
+                if(el.svgElem != undefined) {
+                    el.svgElem[ el.visible ? 'show' : 'hide' ]();
+                    el.visible = !el.visible;
+                }
+            });
+        }
         ///termina
 
     }
