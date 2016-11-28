@@ -51,7 +51,7 @@ function getAtributo(req, res){
                     response.push(item);
                 }
                 return res.status(200).send( response );
-            });   
+            });
         }
     });
 }
