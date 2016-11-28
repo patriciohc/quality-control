@@ -14,7 +14,10 @@ function getAtributo(req, res){
 
     var getValuesAtributo = function (data, atributo){
         let values = data.map(function(obj){
-            return obj.atributos[atributo];
+            let item = {};
+            item.value = obj.atributos[atributo];
+            item.identificador = obj.identificador;
+            return item;
         });
         return values;
     }
