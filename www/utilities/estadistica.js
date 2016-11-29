@@ -24,7 +24,22 @@ var estadistica = {
 
     rango: function (data) {
         return Math.round(data[0] * 100) / 100;
+    },
+
+    tablaZ: function(){
+        var c;
+        var estado;
+        var A = new Array(309);
+        var parameter;
+        var raiz_do_pi = 2.506606;
+        var inc = 0.01,
+        var c = INC/(6*raiz_do_pi);
+
+        for (var i = 0; i < 309; i++){
+            A[i] = Math.exp();
+        }
     }
+
 
 }
 

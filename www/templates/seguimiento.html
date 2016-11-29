@@ -25,53 +25,47 @@
             </div>
 
             <div class="col-md-4" ng-show="slProducto">
+
                 <highchart id="chart2" config="pie"></highchart>
                 <div ng-show="slAttr">
                     <h5>Promedio: {{datosAtributo.promedio}}</h5>
                     <h5>Desviacion estandar: {{datosAtributo.desvStd}}</h5>
                     <h5>Rango: {{datosAtributo.rango}}</h5>
                 </div>
+
+                <!--panel informacion general -->
+                <div id="divInfoGral" class="panel panel-info" ng-show="infoPoint">
+                    <div class="panel-heading">Datos Generales</div>
+                    <div class="panel-body">
+                        <table class="table table-bordered table-striped">
+                        <tbody>
+                        <tr>
+                            <th>No analisis</th>
+                            <th>{{ infoPoint.identificador }}</th>
+                        </tr>
+                        <tr>
+                            <th>Lote</th>
+                            <th>{{ infoPoint.lote }}</th>
+                        </tr>
+                        <tr>
+                            <th>Catidad</th>
+                            <th>{{ infoPoint.cantidad }}</th>
+                        </tr>
+                        <tr>
+                            <th>Certificado</th>
+                            <th>{{ infoPoint.certificado }}<a <a href="files/certificado.pdf" content="aplication/pdf" target="_blank" class="glyphicon glyphicon-eye-open" style="margin-left:20px; cursor:pointer;"></a></th>
+                        </tr>
+                        </tbody>
+                        </table>
+                        <buton type="button" class="btn btn-info">
+                            <span class="glyphicon glyphicon-eye-open"></span> Materia prima usada
+                        </buton>
+                    </div>
+                </div>
+                
             </div>
 
         </div>
 
-        <!--panel informacion general -->
-        <div id="divInfoGral" class="panel panel-info" ng-show="infoPoint">
-            <div class="panel-heading">Datos Generales</div>
-            <div class="panel-body">
-                <table class="table table-bordered table-striped">
-                <tbody>
-                <tr>
-                    <th>No analisis</th>
-                    <th>{{ infoPoint.identificador }}</th>
-                </tr>
-                <tr>
-                    <th>Lote</th>
-                    <th>{{ infoPoint.lote }}</th>
-                </tr>
-                <tr>
-                    <th>Catidad</th>
-                    <th>{{ infoPoint.cantidad }}</th>
-                </tr>
-                <tr>
-                    <th>Certificado</th>
-                    <th>{{ infoPoint.certificado }}<a <a href="files/certificado.pdf" content="aplication/pdf" target="_blank" class="glyphicon glyphicon-eye-open" style="margin-left:20px; cursor:pointer;"></a></th>
-                </tr>
-                </tbody>
-                </table>
-                <buton type="button" class="btn btn-info">
-                    <span class="glyphicon glyphicon-eye-open"></span> Materia prima usada
-                </buton>
-            </div>
-        </div>
-
-        <!-- busqueda -->
-<!--         <label>Busqueda</label>
-        <div class="input-group">
-            <span class="input-group-btn">
-                <button ng-click="BusquedaProductos()" class="btn btn-primary glyphicon glyphicon-search" type="button"></button>
-            </span>
-            <input type="text" ng-model="txtBusqueda" class="form-control"/>
-        </div> -->
     </div>
 </ul>

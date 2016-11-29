@@ -1,40 +1,82 @@
-<!-- Sidebar -->
-<div id="sidebar-wrapper">
-    <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-        <li class="active">
-            <a ui-sref="menu.uploadExcel">
-                <span class="fa-stack fa-lg pull-left"><i class="fa fa-file-excel-o fa-stack-1x "></i></span>
-                Cargar Excel
-            </a>
-        </li>
-        <li>
-            <a ui-sref="menu.seguimiento">
-                <span class="fa-stack fa-lg pull-left"><i class="fa fa-gears fa-stack-1x "></i></span> Seguimiento
-            </a>
-        </li>
-        <li>
-            <a ui-sref="menu.curvaNormal">
-                <span class="fa-stack fa-lg pull-left"><i class="fa fa-area-chart fa-stack-1x "></i></span>Curva Normal
-            </a>
-        </li>
-        <li>
-            <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Events</a>
-        </li>
-        <li>
-            <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span>About</a>
-        </li>
-        <li>
-            <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Services</a>
-        </li>
-        <li>
-            <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>Contact</a>
-        </li>
-    </ul>
-</div>
+<nav class="navbar navbar-default no-margin">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <div style="text-align:center; margin-top:25px; margin-bottom:25px;">
+            <img width="70%" height="25px" src="images/logo.png" />
+        </div>
+    </div><!-- navbar-header-->
 
-<!-- Page Content -->
-<div id="page-content-wrapper">
-    <div ui-view></div>
-    <!--<div ng-include="'content_intro.html'"></div>
-    <div ng-include="'content_main.html'" onload="initContenetMain()"></div>-->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active" >
+                <button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2">
+                    <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                </button>
+            </li>
+        </ul>
+
+        <div style="margin:10px; width: 20%" class="pull-right">
+            <div class="input-group stylish-input-group">
+                <input type="text" class="form-control"  placeholder="Search" ng-model="txtBusqueda" >
+                <span class="input-group-addon">
+                    <button ng-click="busqueda()">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>  
+                </span>
+            </div>
+        </div> 
+    </div>
+</nav>
+
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+            <li>
+                <a ui-sref="menu.home">
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>
+                    Home
+                </a>
+            </li>
+            <li class="active">
+                <a ui-sref="menu.uploadExcel">
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-file-excel-o fa-stack-1x "></i></span>
+                    Cargar Excel
+                </a>
+            </li>
+            <li>
+                <a ui-sref="menu.seguimiento">
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-gears fa-stack-1x "></i></span> 
+                    Seguimiento
+                </a>
+            </li>
+            <li>
+                <a ui-sref="menu.curvaNormal">
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-area-chart fa-stack-1x "></i></span>
+                    Curva Normal
+                </a>
+            </li>
+
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span>About</a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Services</a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>Contact</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div ui-view></div>
+        <!--<div ng-include="'content_intro.html'"></div>
+        <div ng-include="'content_main.html'" onload="initContenetMain()"></div>-->
+    </div>
+
 </div>

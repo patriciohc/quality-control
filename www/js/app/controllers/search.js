@@ -1,3 +1,9 @@
+app
+// vista search
+.controller('search', function($scope, $stateParams, $http) {
+    console.log($stateParams.texto);
+});
+
 //     $scope.exportToExcelTableSearch = function(){
 //        var c = $scope.checksTable;
 //        var arrayIds = [];

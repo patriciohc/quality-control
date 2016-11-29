@@ -1,12 +1,11 @@
 app
-// vista search
+// vista seguimiento
 .controller('seguimiento', function($scope, $http) {
 
     var clickOnPointScatter = function(evt){
-        var identificador = evt.point.name;
-        $http.get("/api/producto/"+identificador, function(response){
-            $scope.infoPoint = response.data;
-            
+        var id = evt.point.name;
+        $http.get("/api/producto/"+id).then(function(response){
+            $scope.infoPoint = response.data;     
         });
     }
 
@@ -42,7 +41,7 @@ app
         $scope.datosAtributo = $scope.datosProducto[$scope.slAttr];
 
         $scope.scatter.series[0].data = $scope.datosAtributo.data.map(function(obj){
-            return [obj.identificador, obj.value];
+            return [obj.id, obj.value];
         });
 
 

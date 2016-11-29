@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -18,42 +18,7 @@
 
 <body id="mainApp" ng-app="mainApp">
 
-    <nav class="navbar navbar-default no-margin">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header fixed-brand">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
-                <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
-            </button>
-            <div style="text-align:center; margin-top:25px; margin-bottom:25px;">
-                <img width="70%" height="25px" src="images/logo.png" />
-            </div>
-        </div><!-- navbar-header-->
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active" >
-                    <button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2">
-                        <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
-                    </button>
-                </li>
-            </ul>
-
-            <div style="margin:10px; width: 20%" class="pull-right">
-                <div class="input-group stylish-input-group">
-                    <input type="text" class="form-control"  placeholder="Search" >
-                    <span class="input-group-addon">
-                        <button type="submit">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>  
-                    </span>
-                </div>
-            </div> 
-        </div>
-    </nav>
-
-    <div id="wrapper">
-        <div ui-view></div>
-    </div>
+    <div ui-view></div>
 
     <!-- jQuery -->
     <script src="libs/jquery/dist/jquery.min.js"></script>
@@ -84,6 +49,8 @@
     <script src="js/app/controllers/seguimiento.js"></script>
     <script src="js/app/controllers/campana_gauss.js"></script>
     <script src="js/app/controllers/upload_excel.js"></script>
+    <script src="js/app/controllers/menu.js"></script>
+    <script src="js/app/controllers/search.js"></script>
 
     <script src="js/excel.js"></script>
     <script src="js/graficas.js"></script>

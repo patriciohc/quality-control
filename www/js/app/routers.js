@@ -20,8 +20,17 @@ app
             controller:'curva_Gauss',
             templateUrl: 'templates/campana_gauss.html'
         })
+        .state('menu.search',{
+            url:'/search',
+            controller:'search',
+            templateUrl: 'templates/search.html',
+            params: {
+                texto: null
+            }
+        })
         .state('menu',{
             url:'/menu',
+            controller: 'menu',
             templateUrl: 'templates/menu.html'
         });
 

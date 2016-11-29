@@ -17,6 +17,7 @@ function getAtributo(req, res){
             let item = {};
             item.value = obj.atributos[atributo];
             item.identificador = obj.identificador;
+            item.id = obj.id;
             return item;
         });
         return values;
@@ -68,10 +69,9 @@ function getProductos(req, res){
 }
 
 function getProducto(req, res){
-    let indentificador = req.params.identificador;
-    console.log(typeof(indentificador));
+    var id = req.params.id;
     Producto
-    .findOne({identificador: indentificador})
+    .findOne({_id: id})
     .exec(function(err, producto){
         if (err) return res.status(500).send({message: `Error al realizar la peticion ${err}`});
         if (!producto) return res.status(404).send({message: "No existen folios."});
