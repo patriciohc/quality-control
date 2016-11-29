@@ -48,7 +48,8 @@ function updataCatProducto(req, res) {
 
         for (var i in atributos){
             var a = atributos[i];
-            if (obj.atributos.indexOf(a) != 0){
+            var cmp = obj.atributos.indexOf(a);
+            if (obj.atributos.indexOf(a) == -1){
                 obj.atributos.push(a);
             }
         }

@@ -2,11 +2,11 @@ app
 // vista search
 .controller('seguimiento', function($scope, $http) {
 
-
     var clickOnPointScatter = function(evt){
         var identificador = evt.point.name;
         $http.get("/api/producto/"+identificador, function(response){
             $scope.infoPoint = response.data;
+            
         });
     }
 

@@ -52,6 +52,7 @@ app.controller('uploadExcel', function($scope, $http) {
             var row = {
                 nombre: producto.nombre,
                 identificador: item[idenProdJson],
+                lote: item[$scope.loteName],
                 atributos: {}
             }
             for (var j in checks)

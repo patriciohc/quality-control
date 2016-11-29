@@ -68,8 +68,10 @@ function getProductos(req, res){
 }
 
 function getProducto(req, res){
+    let indentificador = req.params.identificador;
+    console.log(typeof(indentificador));
     Producto
-    .findOne({identificador: req.params.identificador})
+    .findOne({identificador: indentificador})
     .exec(function(err, producto){
         if (err) return res.status(500).send({message: `Error al realizar la peticion ${err}`});
         if (!producto) return res.status(404).send({message: "No existen folios."});

@@ -7,6 +7,7 @@ const ProductoSchema = Schema({
     nombre: String,
     //identificador: {type: String, unique: true },
     identificador: String,
+    lote: String,
     fechaDeRegistro: { type: Date, default: Date.now },
     atributos: {}
 });
