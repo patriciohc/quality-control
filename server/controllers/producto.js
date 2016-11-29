@@ -67,9 +67,15 @@ function getProductos(req, res){
     });
 }
 
-function updateFolio(req, res){
+function getProducto(req, res){
+    Producto
+    .findOne({identificador: req.params.identificador})
+    .exec(function(err, producto){
+        if (err) return res.status(500).send({message: `Error al realizar la peticion ${err}`});
+        if (!producto) return res.status(404).send({message: "No existen folios."});
 
-
+        return res.status(200).send( producto )
+    });
 }
 
 function saveProducto(req, res){
@@ -92,8 +98,8 @@ function saveProducto(req, res){
 }
 
 module.exports = {
+    getProducto,
     getProductos,
-    updateFolio,
     saveProducto,
     getAtributo,
 }

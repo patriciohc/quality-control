@@ -12,7 +12,7 @@ function getConfigPlotLines(title, value) {
     }
 }
 // configuracion para grafica de dispercion
-function getConfigScatter()
+function getConfigScatter(functionEvtPoint)
 {
     return {
         //credits: { enabled: false },
@@ -21,6 +21,18 @@ function getConfigScatter()
                 type: 'scatter',
                 //zoomType: 'xy'
             },
+
+
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {  click: functionEvtPoint  }
+                    }
+                }
+            }
+
+
         },
         title: { text: "Grafica de Dispersion" },
         xAxis: {
@@ -57,7 +69,7 @@ function getConfigScatter()
             series: {
                 cursor: 'pointer',
                 point: {
-                    events: { }
+                    events: {  click: function(){alert("punto")} }
                 }
             }
         },

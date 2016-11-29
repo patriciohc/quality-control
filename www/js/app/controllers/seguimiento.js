@@ -2,7 +2,15 @@ app
 // vista search
 .controller('seguimiento', function($scope, $http) {
 
-    $scope.scatter = getConfigScatter();
+
+    var clickOnPointScatter = function(evt){
+        var identificador = evt.point.name;
+        $http.get("/api/producto/"+identificador, function(response){
+            $scope.infoPoint = response.data;
+        });
+    }
+
+    $scope.scatter = getConfigScatter(clickOnPointScatter);
     $scope.histogram = getConfigColumn();
     $scope.pie = getConfigPie();
     $scope.gralData = {};
@@ -16,9 +24,9 @@ app
 
         var parms = "?nameProducto=" + producto.nombre; // + "&" + "atributo=" + atributo;
         $http.get("/api/atributo/" + parms).then(function(response) {
-            $scope.data = response.data;
-            for (var i in $scope.data){
-                $scope.pie.series[0].data.push({name: $scope.data[i].atributo, y: $scope.data[i].promedio});
+            $scope.datosProducto = response.data;
+            for (var i in $scope.datosProducto){
+                $scope.pie.series[0].data.push({name: $scope.datosProducto[i].atributo, y: $scope.datosProducto[i].promedio});
             }
 
             //$scope.pie.plotOptions.series.point.events.click = function(){
@@ -31,38 +39,40 @@ app
 
 
     $scope.changeSelectAtrr = function () {
-        var data = $scope.data[$scope.slAttr];
+        $scope.datosAtributo = $scope.datosProducto[$scope.slAttr];
 
-        $scope.scatter.series[0].data = data.data.map(function(obj){
+        $scope.scatter.series[0].data = $scope.datosAtributo.data.map(function(obj){
             return [obj.identificador, obj.value];
         });
 
-        var frecuencia = data.data.map(function(obj){
+
+
+        //$scope.scatter.plotOptions.series.point.events.click = function(evt){
+        //    var evt = evt;
+        //    $http("/api/producto", function(){
+
+        //    });
+           //$scope.infoPoint = excel.getRow(sheet, this.category)[0];
+           //var dataPieCharts = [];
+           //for (var i = 0; i < excelInfo.grupos.length; i++){
+            //   var data = getDataPieChart(dicToArray($scope.informacionGral), excelInfo.grupos[i].elementos);
+            //   dataPieCharts.push(data);
+           //}
+           //$scope.$apply( function(){
+            //   makePieChart(dataPieCharts);
+            //   $scope.pieCharts = excelInfo.grupos;
+           //});
+       //}
+
+        $scope.scatter.yAxis.plotLines = getPlotLinesScatter($scope.datosAtributo.promedio, $scope.datosAtributo.desvStd);
+
+        var frecuencia = $scope.datosAtributo.data.map(function(obj){
             return obj.value;
         });
 
         frecuencia = binData(frecuencia);
         $scope.histogram.series[0].data = frecuencia;
 
-//        $http.get("/api/atributo/" + parms).then(function(response) {
-//            if (!response.data || !response.data.length) return;
-//            // histograma de frecuencias
-//            
-//            $scope.histogram.labels = frecuencia.map(function(obj){
-//                return obj[0];
-//            });
-//            var data = frecuencia.map(function(obj){
-//                return obj[1];
-//            });
-//            $scope.histogram.data = [data];
-//
-//            // promedio
-//            $scope.gralData.promedio = estadistica.getPromedio(dataColumn);
-//            // desviacion estandar
-//            $scope.gralData.desviacion = estadistica.desvStd(dataColumn);
-//            // rango
-//            $scope.gralData.rango = 232;
-        //});
     }
 
 //    makeScatterChart = function(sheet, campo){
@@ -85,10 +95,6 @@ app
 //        $scope.showGraficas = true;
 //    }
 
-
-//
-//
-//       $scope.checksTable = [];
 //
 //    /* eventos en select */
 //
@@ -184,55 +190,25 @@ app
 //
 //        $scope.pieCharts = excelInfo.grupos;
 //    }
-//
-//    function hidenAll() {
-//        $scope.showMainContent = false;
-//        $scope.showPanelDer = false;
-//        $scope.showGraficas = false;
-//        $scope.grupos = false;
-//        $scope.informacionGral = false;
-//        $scope.showPieCharts = false;
-//        $scope.resultadoBusqueda = false;
-//    }
-//
-//     $scope.exportToExcelTableSearch = function(){
-//        var c = $scope.checksTable;
-//        var arrayIds = [];
-//        for ( var index in $scope.checksTable ){
-//            arrayIds.push($scope.resultadoBusqueda[index].ID_ANALISIS);
-//        }
-//        var rows = excel.getRowsInList(arrayIds);
-//        var head = arrayDicToArray(excel.books[0].sheets[0].head, "name");
-//        var xml = excel.jsonToSsXml(rows, head);
-//        excel.download(xml, "expoert.xls", 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-//    }
-//
-//    $scope.selectAllChecks = function(){
-//        for (var i = 0; i < $scope.resultadoBusqueda.length ; i++){
-//            $scope.checksTable[i] = this.checkAll;
-//        }
-//    }
-//
-//    $scope.exportToExcelTableResumen = function(){
-//        var header = "";
-//        var body = "";
-//        for (var i = 0; i < excelInfo.grupos.length; i++){
-//            header += excel.emitXmlHeader(excelInfo.grupos[i].elementos);
-//            body += excel.jsonToSsXmlRow($scope.grupos[i].data);
-//            //var data = getDataPieChart($scope.grupos[i].data, excelInfo.grupos[i].elementos);
-//            //dataPieCharts.push(data);
-//        }
-//
-//        var xml = excel.emitXmlInfo() + header;
-//        xml += body;
-//        xml += excel.emitXmlFooter();
-//
-//        excel.download(xml, 'test.xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-//
-//
-//    }
 
 });
+
+
+function getPlotLinesScatter(promedio, desvStd){
+    var linesPlot = [];
+    var line = getConfigPlotLines("Promedio: " + promedio, promedio);
+    linesPlot.push(line)
+    // desviacion estandar abajo
+    line = getConfigPlotLines("Desviacion STD: " + desvStd, promedio - desvStd);
+    line.color = "blue";
+    linesPlot.push(line);
+    // arriba
+    line = getConfigPlotLines("Desviacion STD: " + desvStd, promedio + desvStd);
+    line.color = "blue";
+    linesPlot.push(line);
+
+    return linesPlot;
+}
 
 
 
@@ -342,26 +318,4 @@ app
 //         data: data
 //     }];
 //     return series;
-// }
-
-// function getPlotLinesScatter(sheets, campo){
-//     var linesPlot = [];
-//     var dataColumn = excel.getColumn(sheet, campo);
-//     // promedio
-//     var promedio = estadistica.getPromedio(dataColumn);
-//     var line = getConfigPlotLines("Promedio: " + promedio, promedio);
-//     linesPlot.push(line)
-//     // desviacion estandar
-//     var desvStd = estadistica.desvStd(dataColumn);
-//     // abajo
-//     line = getConfigPlotLines("Desviacion STD: " + desvStd, promedio - desvStd);
-//     line.color = "blue";
-//     linesPlot.push(line);
-//     // arriba
-//     line = getConfigPlotLines("Desviacion STD: " + desvStd, promedio + desvStd);
-//     line.color = "blue";
-//     linesPlot.push(line);
-
-//     //configDispersion.yAxis.plotLines = linesPlot;
-//     return linesPlot;
 // }
