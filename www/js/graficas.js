@@ -22,7 +22,6 @@ function getConfigScatter(functionEvtPoint)
                 //zoomType: 'xy'
             },
 
-
             plotOptions: {
                 series: {
                     cursor: 'pointer',
@@ -31,7 +30,6 @@ function getConfigScatter(functionEvtPoint)
                     }
                 }
             }
-
 
         },
         title: { text: "Grafica de Dispersion" },
@@ -180,7 +178,7 @@ function getConfigPie()
     }
 };
 
-function getNormalChart() {
+function getNormalChart(functionEvtPoint) {
 
     return {
         options: {
@@ -189,7 +187,17 @@ function getNormalChart() {
                 type:'column',
                 alignTicks:false,
                 marginTop:25
+            },
+
+            plotOptions: {
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {  click: functionEvtPoint  }
+                    }
+                }
             }
+
         },
         exporting:{enabled:false},
         title:{text:'Campana de gauss.'},
@@ -233,12 +241,23 @@ function getNormalChart() {
             enabled: true
         },
         series:[{
+            //type: 'areaspline',
             type:'area',
             lineWidth:1,
-            name:'Curva Normal',
-            color:'rgba(90,155,212,.75)',
-            fillColor:'rgba(90,155,212,.15)',
-            data: []
+            //name:'Curva Normal',
+            //color:'rgba(90,155,212,.75)',
+            //fillColor:'rgba(90,155,212,.15)',
+            data: [],
+            zoneAxis: 'x',
+            zones: [{
+                value: -Infinity,
+                color: 'green'
+            }, {
+                value: Infinity,
+                color: 'blue'
+            }, {
+                color: 'green'
+            }]
             //data:[[-3.2807020192309,0.10168053006185],[-3.0425988742109,0.23641431548771],[-2.8044957291909,0.51637633957668],[-2.5663925841709,1.0595354537927],[-2.3282894391509,2.0423080409267],[-2.0901862941309,3.6981421093266],[-1.8520831491109,6.2907516383431],[-1.6139800040909,10.052592494842],[-1.3758768590709,15.090728685704],[-1.1377737140509,21.28133847858],[-0.89967056903087,28.193192861774],[-0.66156742401087,35.086995418605],[-0.42346427899086,41.020853564556],[-0.18536113397085,45.052593912695],[0.052742011049155,46.482716760157],[0.29084515606916,45.052593912695],[0.52894830108917,41.020853564556],[0.76705144610918,35.086995418605],[1.0051545911292,28.193192861773],[1.2432577361492,21.28133847858],[1.4813608811692,15.090728685704],[1.7194640261892,10.052592494842],[1.9575671712092,6.2907516383431],[2.1956703162292,3.6981421093266],[2.4337734612492,2.0423080409267],[2.6718766062692,1.0595354537927],[2.9099797512892,0.51637633957668],[3.1480828963092,0.23641431548771]]
         }]
     }
