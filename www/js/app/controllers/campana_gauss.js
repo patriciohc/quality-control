@@ -1,36 +1,17 @@
 app
+
 //vista curvaNormal
 .controller('curva_Gauss', function($scope, $http) {
 
-    var pointClick1 = null;
-    var pointClick2 = null;
-
-    var onClickPoint = function (evt){
-        $scope.$apply(function(){
-        if (pointClick1 == null){
-            pointClick1 = evt.point.category;
-            //$scope.normalChart.series[0].zones[0].value = pointClick1;
-        }
-        else if (pointClick2 == null) {
-            pointClick2 = evt.point.category;
-            $scope.normalChart.series[0].zones[0].value = Math.min(pointClick1, pointClick2);
-            $scope.normalChart.series[0].zones[1].value = Math.max(pointClick1, pointClick2);
-        } else {
-            pointClick1 = evt.point.category;
-            pointClick2 = null;
-            $scope.normalChart.series[0].zones[0].value = pointClick1;
-        }
-        });
-    }
-
-    $scope.normalChart = getNormalChart(onClickPoint);
+    $scope.normalChart = getNormalChart();
 
     $http.get("/api/cat-producto").then(function(response){
         $scope.productosG = response.data;
         //$scope.attrs = $scope.productosG[0].atributos;
     });
 
-    $scope.seleccionPrudGauss = function () {
+
+    $scope.seleccionPrudGauss = function (){
         var producto = $scope.productosG[$scope.slProductoG];
 
         var parms = "?nameProducto=" + producto.nombre; // + "&" + "atributo=" + atributo;
@@ -70,7 +51,18 @@ app
             var y = multiplicando * multiplicador;
             indicesXY.push([x,y]);
         }
-        $scope.normalChart.series[0].data = indicesXY;
+        $scope.normalChart.series[0].data = indicesXY
+
+
+        // function toggleBands(chart) {
+        //     $.each(chart.xAxis[0].plotLinesAndBands, function(index,el){
+        //         if(el.svgElem != undefined) {
+        //             el.svgElem[ el.visible ? 'show' : 'hide' ]();
+        //             el.visible = !el.visible;
+        //         }
+        //     });
+        // }
+        ///termina
 
     }
 
