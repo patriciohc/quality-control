@@ -71,6 +71,7 @@ app
 
         frecuencia = binData(frecuencia);
         $scope.histogram.series[0].data = frecuencia;
+        $scope.histogram.options.plotLines[0].value;
 
     }
 

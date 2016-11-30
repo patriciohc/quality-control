@@ -96,22 +96,37 @@ function getConfigColumn()
         tooltip: {},
         plotOptions: {
             series: {
-                pointPadding: 0,
-                groupPadding: 0,
                 borderWidth: 0.5,
                 borderColor: 'rgba(255,255,255,0.5)',
                 color: Highcharts.getOptions().colors[1]
             }
         },
         xAxis: {
+             plotLines: [{
+                color: '#0000FF',
+                dashStyle: 'Dash',
+                label: {
+                    align: 'right',
+                    rotation: 270,
+                    x: -5,
+                    y: 40,
+                    text: '<b>Promedio '+'(11)'+'</b>'
+                },
+                //value: 2.5,
+                width: 2,
+                zIndex: 4
+            }],
             title: { text: 'Porciento en peso' }
         },
         yAxis: {
           title: { text: 'Frecuencia' }
         },
+
         series: [{
             name: 'Frecuencia',
             color: 'rgba( 0, 154, 253, 0.9 )',
+            pointPadding: 0,
+            groupPadding: 0,
             data: []
         }]
     }
