@@ -107,8 +107,8 @@ function getConfigColumn()
                     align: 'right',
                     rotation: 270,
                     x: -5,
-                    y: 40,
-                    text: '<b>Promedio '+'(11)'+'</b>'
+                    y: 40
+                    //text: '<b>Promedio: {$scope.histogram.xAxis.plotLines[0].label.text = $scope.datosAtributo.promedio}</b>'
                 },
                 //value: 2.5,
                 width: 2,

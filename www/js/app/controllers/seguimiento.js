@@ -70,7 +70,11 @@ app
 
         frecuencia = binData(frecuencia);
         $scope.histogram.series[0].data = frecuencia;
-        $scope.histogram.options.plotLines[0].value;
+        $scope.histogram.xAxis.plotLines[0].value =  $scope.datosAtributo.promedio;
+        $scope.histogram.xAxis.plotLines[0].label.text = 'Promedio: ' + $scope.datosAtributo.promedio;
+        //$scope.histogram.options.plotLines[0].value;
+
+
 
     }
 
