@@ -1,5 +1,4 @@
 app
-
 //vista curvaNormal
 .controller('curva_Gauss', function($scope, $http) {
 
@@ -89,17 +88,6 @@ app
             indicesXY.push([x,y]);
         }
         $scope.normalChart.series[0].data = indicesXY
-
-
-        // function toggleBands(chart) {
-        //     $.each(chart.xAxis[0].plotLinesAndBands, function(index,el){
-        //         if(el.svgElem != undefined) {
-        //             el.svgElem[ el.visible ? 'show' : 'hide' ]();
-        //             el.visible = !el.visible;
-        //         }
-        //     });
-        // }
-        ///termina
 
     }
 

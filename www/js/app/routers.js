@@ -28,6 +28,11 @@ app
                 texto: null
             }
         })
+        .state('menu.correlacion',{
+            url:'/correlacion',
+            controller:'correlacion',
+            templateUrl: 'templates/correlacion.html',
+        })
         .state('menu',{
             url:'/menu',
             controller: 'menu',

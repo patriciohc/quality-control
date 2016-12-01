@@ -12,7 +12,6 @@ app
     $scope.scatter = getConfigScatter(clickOnPointScatter);
     $scope.histogram = getConfigColumn();
     $scope.pie = getConfigPie();
-    $scope.gralData = {};
 
     $http.get("/api/cat-producto").then(function(response){
         $scope.productos = response.data;

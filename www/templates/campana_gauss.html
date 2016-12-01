@@ -1,32 +1,42 @@
 
 <h1>Curva Normal</h1>
 <div role="form" class="form-inline" >
-        <div class="form-group">
-            <select class="form-control" id="slProductoG" ng-model="slProductoG" ng-change="seleccionPrudGauss()" >
-                <option selected disabled value="">Seleccione un producto</option>
-                <option ng-repeat="p in productosG" value="{{ $index }}">{{ p.nombre }}</option>
-            </select>
-        </div>
-        <!-- atributo -->
-
-        <div class="form-group">
-<!--        <span class="input-group-btn">
-                <button ng-click="changeSelectAtrr()" class="btn btn-primary glyphicon glyphicon-hand-right" type="button"></button>
-            </span> -->
-            <select id="slAttr" ng-model="slAttr" ng-change="changeAtribGauss()" class="form-control">
-                <option selected disabled value="">Seleccione el atributo</option>
-                <option ng-repeat="item in data" value="{{ $index }}">{{ item.atributo }}</option>
-            </select>
-        </div>
+    <div class="form-group">
+        <select class="form-control" id="slProductoG" ng-model="slProductoG" ng-change="seleccionPrudGauss()" >
+            <option selected disabled value="">Seleccione un producto</option>
+            <option ng-repeat="p in productosG" value="{{ $index }}">{{ p.nombre }}</option>
+        </select>
     </div>
+        <!-- atributo -->
+    <div class="form-group">
+        <select id="slAttr" ng-model="slAttr" ng-change="changeAtribGauss()" class="form-control">
+            <option selected disabled value="">Seleccione el atributo</option>
+            <option ng-repeat="item in data" value="{{ $index }}">{{ item.atributo }}</option>
+        </select>
+    </div>
+</div>
 
 <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-9">
         <highchart id="normalChart" config="normalChart" ng-show="slAttr"></highchart>
     </div>
     
-    <div class="col-md-2" ng-show="probabilidad">
-        <h3>Probablidad del area selecionada: {{probabilidad * 100 | number:2}}</h3>
-        <h3>Complemento: {{(1-probabilidad) * 100 | number:2}}</h3>
+    <div ng-show="slAttr">
+        <h5>Promedio: {{datosAtributo.promedio}}</h5>
+        <h5>Desviacion estandar: {{datosAtributo.desvStd}}</h5>
+        <h5>Rango: {{datosAtributo.rango}}</h5>
+    </div>
+
+    <div class="col-md-3" ng-show="probabilidad">
+        <span ng-show="normalChart.series[0].zones[0].value && !normalChart.series[0].zones[1].value">
+            La probabilidad de que {{data[slAttr].atributo}} sea menor a {{normalChart.series[0].zones[0].value}} es de
+            {{probabilidad * 100 | number:2}}% (Complemento = {{(1-probabilidad) * 100 | number:2}}%)
+        </span>
+
+        <span ng-show="normalChart.series[0].zones[0].value && normalChart.series[0].zones[1].value">
+            La probabilidad de que {{data[slAttr].atributo}} este enter {{normalChart.series[0].zones[0].value}}
+            y {{normalChart.series[0].zones[0].value}} es de
+            {{probabilidad * 100 | number:2}}% (Complemento = {{(1-probabilidad) * 100 | number:2}}%)
+        </span>
     </div>
 </div>
