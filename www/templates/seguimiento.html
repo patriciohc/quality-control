@@ -1,44 +1,40 @@
 
-<ul class="nav-pills nav-stacked" style="list-style-type:none;">
-    <div role="form" class="form-inline" >
+<div role="form" class="form-inline" >
+    <div class="form-group">
+        <select class="form-control" id="slProducto" ng-model="slProducto" ng-change="changeSelectProducto()" >
+            <option selected disabled value="">Seleccione el producto</option>
+            <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
+        </select>
+    </div>
+    <!-- atributo -->
+    <div class="form-group">
+        <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
+            <option selected disabled value="">Seleccione el atributo</option>
+            <option ng-repeat="item in datosProducto" value="{{ $index }}">{{ item.atributo }}</option>
+        </select>
+    </div>
+</div>        
+    
+<div class="row">
+    <div class="col-md-8" ng-show="slAttr">
+        <highchart id="chart0" config="scatter"></highchart>
+        <highchart id="chart1" config="histogram"></highchart>
+    </div>
 
-        <div class="form-group">
-            <select class="form-control" id="slProducto" ng-model="slProducto" ng-change="changeSelectProducto()" >
-                <option selected disabled value="">Seleccione el producto</option>
-                <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
-            </select>
+    <div class="col-md-4" ng-show="slProducto">
+
+        <highchart id="chart2" config="pie"></highchart>
+        <div ng-show="slAttr">
+            <h5>Promedio: {{datosAtributo.promedio}}</h5>
+            <h5>Desviacion estandar: {{datosAtributo.desvStd}}</h5>
+            <h5>Rango: {{datosAtributo.rango}}</h5>
         </div>
-
-        <!-- atributo -->
-        <div class="form-group">
-            <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
-                <option selected disabled value="">Seleccione el atributo</option>
-                <option ng-repeat="item in datosProducto" value="{{ $index }}">{{ item.atributo }}</option>
-            </select>
-        </div>
-        
-        <div class="row">
-
-            <div class="col-md-8" ng-show="slAttr">
-                <highchart id="chart0" config="scatter"></highchart>
-                <highchart id="chart1" config="histogram"></highchart>
-            </div>
-
-            <div class="col-md-4" ng-show="slProducto">
-
-                <highchart id="chart2" config="pie"></highchart>
-                <div ng-show="slAttr">
-                    <h5>Promedio: {{datosAtributo.promedio}}</h5>
-                    <h5>Desviacion estandar: {{datosAtributo.desvStd}}</h5>
-                    <h5>Rango: {{datosAtributo.rango}}</h5>
-                </div>
-
-                <!--panel informacion general -->
-                <div id="divInfoGral" class="panel panel-info" ng-show="infoPoint">
-                    <div class="panel-heading">Datos Generales</div>
-                    <div class="panel-body">
-                        <table class="table table-bordered table-striped">
-                        <tbody>
+        <!--panel informacion general -->
+        <div id="divInfoGral" class="panel panel-info" ng-show="infoPoint">
+            <div class="panel-heading">Datos Generales</div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <tbody>
                         <tr>
                             <th>No analisis</th>
                             <th>{{ infoPoint.identificador }}</th>
@@ -53,19 +49,17 @@
                         </tr>
                         <tr>
                             <th>Certificado</th>
-                            <th>{{ infoPoint.certificado }}<a <a href="files/certificado.pdf" content="aplication/pdf" target="_blank" class="glyphicon glyphicon-eye-open" style="margin-left:20px; cursor:pointer;"></a></th>
+                            <th>{{ infoPoint.certificado }}<a href="files/certificado.pdf" content="aplication/pdf" target="_blank" class="glyphicon glyphicon-eye-open" style="margin-left:20px; cursor:pointer;"></a></th>
                         </tr>
-                        </tbody>
-                        </table>
-                        <buton type="button" class="btn btn-info">
-                            <span class="glyphicon glyphicon-eye-open"></span> Materia prima usada
-                        </buton>
-                    </div>
-                </div>
-                
+                    </tbody>
+                </table>
+                <buton type="button" class="btn btn-info">
+                    <span class="glyphicon glyphicon-eye-open"></span> Materia prima usada
+                </buton>
             </div>
-
         </div>
-
+        
     </div>
-</ul>
+</div>
+
+
