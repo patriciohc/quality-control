@@ -1,0 +1,19 @@
+ .trans{
+      background-color:transparent;
+      color:#CC0000;
+      position:absolute;
+      text-align:center;
+      top:50px;
+      padding:65px;
+      font-size:25px;
+      font-weight:bold;
+      width:300px;
+    }
+
+.imagenhome{
+    background-image: url('../images/logo.png');
+    width: 500px;
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
