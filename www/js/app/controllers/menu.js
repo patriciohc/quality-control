@@ -6,20 +6,25 @@ app.controller('menu', function($scope, $state) {
         $state.go("menu.search", {texto: texto});
     }
 
-
-    $(function() {
-        var offset = $("#menu").offset();
+    /* $(function() {
+        var offset = $("#sidebar-wrapper").offset();
         var topPadding = 15;
         $(window).scroll(function() {
-        if ($("#menu").height() < $(window).height() && $(window).scrollTop() > offset.top) { /* LINEA PARA NO ANIMAR SI EL Menu ES MAYOR AL TAMANO DE PANTALLA */
-        $("#menu").stop().animate({
+        if ($("#sidebar-wrapper").height() < $(window).height() && $(window).scrollTop() > offset.top) { /* LINEA PARA NO ANIMAR SI EL Menu ES MAYOR AL TAMANO DE PANTALLA
+        $("#sidebar-wrapper").stop().animate({
         marginTop: $(window).scrollTop() - offset.top + topPadding
         });
         } else {
-        $("#menu").stop().animate({
+        $("#sidebar-wrapper").stop().animate({
         marginTop: 0
         });
         };
         });
-    });
+
+    }) */
+
+    toggle();
 });
+
+
+

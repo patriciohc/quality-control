@@ -1,3 +1,4 @@
+function toggle(){
 $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
@@ -8,7 +9,7 @@ $("#menu-toggle").click(function(e) {
         $('#menu ul').hide();
     });
  
-     function initMenu() {
+    /* function initMenu() {
       $('#menu ul').hide();
       $('#menu ul').children('.current').parent().show();
       //$('#menu ul:first').show();
@@ -25,5 +26,6 @@ $("#menu-toggle").click(function(e) {
             }
           }
         );
-      }
-    $(document).ready(function() {initMenu();});
+      }*/
+    //$(document).ready(function() {initMenu();});
+}
