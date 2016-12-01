@@ -1,4 +1,5 @@
 app
+
 //vista curvaNormal
 .controller('curva_Gauss', function($scope, $http) {
 
@@ -46,7 +47,8 @@ app
         //$scope.attrs = $scope.productosG[0].atributos;
     });
 
-    $scope.seleccionPrudGauss = function () {
+
+    $scope.seleccionPrudGauss = function (){
         var producto = $scope.productosG[$scope.slProductoG];
 
         var parms = "?nameProducto=" + producto.nombre; // + "&" + "atributo=" + atributo;
@@ -86,7 +88,18 @@ app
             var y = Math.round10(multiplicando * multiplicador, -4);
             indicesXY.push([x,y]);
         }
-        $scope.normalChart.series[0].data = indicesXY;
+        $scope.normalChart.series[0].data = indicesXY
+
+
+        // function toggleBands(chart) {
+        //     $.each(chart.xAxis[0].plotLinesAndBands, function(index,el){
+        //         if(el.svgElem != undefined) {
+        //             el.svgElem[ el.visible ? 'show' : 'hide' ]();
+        //             el.visible = !el.visible;
+        //         }
+        //     });
+        // }
+        ///termina
 
     }
 
