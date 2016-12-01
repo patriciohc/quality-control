@@ -19,5 +19,14 @@
             </select>
         </div>
     </div>
-<!--<div id="container" config="highchartsNG" style="height: 500px;"></div>-->
-<highchart id="normalChart" config="normalChart" ng-show="slAttr"></highchart>
+
+<div class="row">
+    <div class="col-md-10">
+        <highchart id="normalChart" config="normalChart" ng-show="slAttr"></highchart>
+    </div>
+    
+    <div class="col-md-2" ng-show="probabilidad">
+        <h3>Probablidad del area selecionada: {{probabilidad * 100 | number:2}}</h3>
+        <h3>Complemento: {{(1-probabilidad) * 100 | number:2}}</h3>
+    </div>
+</div>
