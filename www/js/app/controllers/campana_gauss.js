@@ -3,7 +3,44 @@ app
 //vista curvaNormal
 .controller('curva_Gauss', function($scope, $http) {
 
-    $scope.normalChart = getNormalChart();
+    var pointClick1 = null;
+    var pointClick2 = null;
+
+    var onClickPoint = function (evt) {
+        var datosG = $scope.data[$scope.slAttr];
+        $scope.$apply(function(){
+            if (pointClick1 == null){
+                pointClick1 = {x: evt.point.x, y:evt.point.y};
+                $scope.normalChart.series[0].zones[0].value = pointClick1.x;
+                $scope.normalChart.series[0].zones[1].value = Infinity;
+                
+                $scope.normalChart.series[0].zones[0].color = "green";
+                $scope.normalChart.series[0].zones[1].color = "blue";
+                $scope.normalChart.series[0].zones[2].color = "blue";
+
+                var z = (datosG.promedio - pointClick1.x)/datosG.desvStd;
+                $scope.probabilidad = estadistica.areaBajoCurvaNormal(Infinity, z);
+            }
+            else if (pointClick2 == null) {
+                pointClick2 = {x: evt.point.x, y:evt.point.y};;
+                $scope.normalChart.series[0].zones[0].value = Math.min(pointClick1.x, pointClick2.x);
+                $scope.normalChart.series[0].zones[1].value = Math.max(pointClick1.x, pointClick2.x);
+                
+                $scope.normalChart.series[0].zones[0].color = "blue";
+                $scope.normalChart.series[0].zones[1].color = "green";
+                $scope.normalChart.series[0].zones[2].color = "blue";
+
+                var z1 = (datosG.promedio - pointClick1.x)/datosG.desvStd;
+                var z2 = (datosG.promedio - pointClick2.x)/datosG.desvStd;
+                $scope.probabilidad = estadistica.areaBajoCurvaNormal(z1, z2);   
+
+                pointClick1 = pointClick2 = null;
+
+            } 
+        });
+    }
+
+    $scope.normalChart = getNormalChart(onClickPoint);
 
     $http.get("/api/cat-producto").then(function(response){
         $scope.productosG = response.data;
@@ -48,7 +85,7 @@ app
             var x = dataX[i];
             var z = (datosG.promedio - x)/datosG.desvStd;
             var multiplicador = Math.pow(Math.E,-1/2*Math.pow(z,2));
-            var y = multiplicando * multiplicador;
+            var y = Math.round10(multiplicando * multiplicador, -4);
             indicesXY.push([x,y]);
         }
         $scope.normalChart.series[0].data = indicesXY
@@ -65,7 +102,6 @@ app
         ///termina
 
     }
-
 
 });
 
