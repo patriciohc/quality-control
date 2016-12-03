@@ -44,10 +44,10 @@
         </div>
     
         <div class="col-md-3">
-            <span>Coeficiones de correlacion: {{ correlacion.coeficiente }}</span>
-            <span>Funcion de correlacion: {{ correlacion.fs }}</span>
-            <input type="number" name="valueX" ng-model="valueX" placeholder="evaluar x en funcion">
-            {{ correlacion.f(valueX) }}
+            <span>Coeficiones de correlacion: {{ correlacion.r }}<br></span>
+            <span>Funcion de correlacion: {{ correlacion.fs }}<br></span>
+            <input type="number" name="valueX" ng-model="valueX" placeholder="evaluar x en funcion"><br>
+            {{ correlacion.f(valueX) | number:2 }}
         </div>
     
     </div>

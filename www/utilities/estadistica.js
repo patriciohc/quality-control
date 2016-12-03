@@ -17,7 +17,7 @@ var estadistica = {
             var x_i = data[i];
             sumatoria += Math.pow( x_i - x_p , 2);
         }
-        return sumatoria / N;
+        return Math.sqrt(sumatoria / N);
     },
 
     rango: function (data) {
@@ -85,33 +85,37 @@ var estadistica = {
         if (!X || !Y) return;
         if (X.length != Y.length) return;
 
-        var mediaX = estadistica.getPromedio(X);
-        var mediaY = estadistica.getPromedio(Y);
+        var Sx = estadistica.desvStd(X); // desviacion estandar de x
+        var Sy = estadistica.desvStd(Y); // desviacion estandar de y
+        var Sxy = estadistica.getCovarianza(X, Y); // covarianza xy
+        
+        var r = Sxy / (Sx * Sy); // coeficiente de correlacion xy
+        r = Math.round10(r, -2);
 
-        var Sxy = 0;
-        var Sx2 = 0;
-
-        for (var i = 0; i < X.length; i++) {
-            Sxy += (X[i] - mediaX) * (Y[i] - mediaY);
-            //Sxx = Math.pow(X[i] - mediaX , 2)
-        }
-
-        Sxy = Sxy / X.length;
-        var des = estadistica.desvStd(X);
-        Sx2 = Math.pow(des, 2);
-
-        var m = Sxy/Sx2;
-        var b = mediaY - (m * mediaX);
+        var m = Sxy / Math.pow(Sx, 2);
+        var b = estadistica.getPromedio(Y) - (m * estadistica.getPromedio(X));
+        m = Math.round10(m, -2);
+        b = Math.round10(b, -2);
 
         var obj = {
-            f: function(x) {
+            f: function(x) { // funcion de correlacion 
                 return m * x + b; 
             },
-            fs: "f(x) = " + m + "x + " + b,
-            //coeficiente: ,
+            fs: "f(x) = " + m + "x + " + b, // funcion de correlacion en string 
+            r:r , // coeficiente de correlacion 
         }
 
         return obj;
+    },
+    
+    getCovarianza: function(X, Y) {
+        var mediaX = estadistica.getPromedio(X);
+        var mediaY = estadistica.getPromedio(Y);
+        var Sxy = 0;
+        for (var i = 0; i < X.length; i++) {
+            Sxy += (X[i] - mediaX) * (Y[i] - mediaY);
+        }
+        return Sxy / X.length;        
     }
 
 }

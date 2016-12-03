@@ -71,7 +71,12 @@ function getConfigScatter(functionEvtPoint)
                 }
             }
         },
-        series: [{data: []}]
+        series: [{
+            data: []
+        },{
+            type:'line',
+            data: []
+        }]
     }
 };
 // configuracion para grafica de frecuencia

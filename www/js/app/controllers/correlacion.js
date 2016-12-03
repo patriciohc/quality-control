@@ -42,13 +42,17 @@ app
             return obj.value;
         });
 
-        var xy = []
+        var xy = [];
         for (var i in x){
             xy.push([x[i], y[i]]);
         }
+        
         $scope.correlacionChart.series[0].data = xy;
-
         $scope.correlacion = estadistica.getCorrelacion(x, y);
+        var minX = Math.min.apply(null, x);
+        var maxX = Math.max.apply(null, x)
+        $scope.correlacionChart.series[1].data = [[minX, $scope.correlacion.f(minX)], [maxX, $scope.correlacion.f(maxX)]];
+        
     }
 
 });
