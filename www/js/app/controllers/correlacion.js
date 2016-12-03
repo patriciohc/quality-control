@@ -2,13 +2,13 @@ app
 // vista correlacion
 .controller('correlacion', function($scope, $http) {
 
-    $scope.correlacion = getConfigScatter();
+    $scope.correlacionChart = getConfigScatter(null);
 
     $http.get("/api/cat-producto").then(function(response){
         $scope.productos = response.data;
     });
 
-    $scope.changeSelectProducto1 = function (){
+    $scope.changeSelectProducto1 = function () {
         var producto = $scope.productos[$scope.slProducto1];
 
         var parms = "?nameProducto=" + producto.nombre; // + "&" + "atributo=" + atributo;
@@ -35,18 +35,20 @@ app
         $scope.datosAtributo2 = $scope.datosProducto2[$scope.slAttr2];
 
         var x = $scope.datosAtributo1.data.map(function(obj){
-            return [obj.value];
+            return obj.value;
         });
 
         var y = $scope.datosAtributo2.data.map(function(obj){
-            return [obj.value];
+            return obj.value;
         });
 
         var xy = []
         for (var i in x){
-            xy.push(x[i], y[i]);
+            xy.push([x[i], y[i]]);
         }
-        $scope.correlacion.series[0].data = xy;
+        $scope.correlacionChart.series[0].data = xy;
+
+        $scope.correlacion = estadistica.getCorrelacion(x, y);
     }
 
 });

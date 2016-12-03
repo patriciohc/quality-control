@@ -19,7 +19,7 @@ function getConfigScatter(functionEvtPoint)
         options: {
             chart: {
                 type: 'scatter',
-                //zoomType: 'xy'
+                zoomType: 'xy'
             },
 
             plotOptions: {
@@ -35,7 +35,7 @@ function getConfigScatter(functionEvtPoint)
         title: { text: "Grafica de Dispersion" },
         xAxis: {
             title: {
-                //enabled: true,
+                enabled: true,
                 text: 'No Analisis'
             },
             //startOnTick: true,

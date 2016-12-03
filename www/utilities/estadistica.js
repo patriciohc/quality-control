@@ -6,8 +6,7 @@ var estadistica = {
         var suma = 0;
         for (var i = 0; i < data.length; i++)
             suma += data[i];
-        var promedio = suma / data.length;
-        return Math.round(promedio * 100) / 100;
+        return suma / data.length;
     },
 
     desvStd: function (data){
@@ -18,12 +17,11 @@ var estadistica = {
             var x_i = data[i];
             sumatoria += Math.pow( x_i - x_p , 2);
         }
-        var desvStd = sumatoria / N;
-        return Math.round(desvStd * 100) / 100;
+        return sumatoria / N;
     },
 
     rango: function (data) {
-        return Math.round(data[0] * 100) / 100;
+        return Math.max.apply(null, data) - Math.min.apply(null, data);
     },
 
     // Calcula el area bajo la curna normal estandar 
@@ -31,7 +29,7 @@ var estadistica = {
 
         if (value1 == "" || value2 == "") return;
         if (isNaN(value1) || isNaN(value2)) return;
-        if (value1 == value2) return;
+        if (value1 == value2) return 0;
         if (!isFinite(value1) && !isFinite(value2)) return 1;
 
         var min = Math.min(value1, value2);
@@ -80,6 +78,40 @@ var estadistica = {
         }
         
         return Math.round10(area, -4)
+    },
+
+    getCorrelacion: function(X, Y) {
+
+        if (!X || !Y) return;
+        if (X.length != Y.length) return;
+
+        var mediaX = estadistica.getPromedio(X);
+        var mediaY = estadistica.getPromedio(Y);
+
+        var Sxy = 0;
+        var Sx2 = 0;
+
+        for (var i = 0; i < X.length; i++) {
+            Sxy += (X[i] - mediaX) * (Y[i] - mediaY);
+            //Sxx = Math.pow(X[i] - mediaX , 2)
+        }
+
+        Sxy = Sxy / X.length;
+        var des = estadistica.desvStd(X);
+        Sx2 = Math.pow(des, 2);
+
+        var m = Sxy/Sx2;
+        var b = mediaY - (m * mediaX);
+
+        var obj = {
+            f: function(x) {
+                return m * x + b; 
+            },
+            fs: "f(x) = " + m + "x + " + b,
+            //coeficiente: ,
+        }
+
+        return obj;
     }
 
 }

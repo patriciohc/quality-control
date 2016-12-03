@@ -1,49 +1,54 @@
-<div role="form" class="form-inline" >
-    <h3>Elemento 1</h3>
-    <div class="form-group">
-        <select class="form-control" id="slProducto1" ng-model="slProducto1" ng-change="changeSelectProducto1()" >
-            <option selected disabled value="">Seleccione el producto</option>
-            <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
-        </select>
+<div class="container">
+    <div role="form" class="form-inline" >
+        <h3>Elemento 1</h3>
+        <div class="form-group">
+            <select class="form-control" id="slProducto1" ng-model="slProducto1" ng-change="changeSelectProducto1()" >
+                <option selected disabled value="">Seleccione el producto</option>
+                <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
+            </select>
+        </div>
+    
+        <!-- atributo -->
+        <div class="form-group">
+            <select id="slAttr1" ng-model="slAttr1" ng-change="changeSelectAtrr1()" class="form-control">
+                <option selected disabled value="">Seleccione el atributo</option>
+                <option ng-repeat="item in datosProducto1" value="{{ $index }}">{{ item.atributo }}</option>
+            </select>
+        </div>
     </div>
-
-    <!-- atributo -->
-    <div class="form-group">
-        <select id="slAttr1" ng-model="slAttr1" ng-change="changeSelectAtrr1()" class="form-control">
-            <option selected disabled value="">Seleccione el atributo</option>
-            <option ng-repeat="item in datosProducto1" value="{{ $index }}">{{ item.atributo }}</option>
-        </select>
+    
+    
+    <div role="form" class="form-inline" >
+        <h3>Elemento 2</h3>
+        <div class="form-group">
+            <select class="form-control" id="slProducto2" ng-model="slProducto2" ng-change="changeSelectProducto2()" >
+                <option selected disabled value="">Seleccione el producto</option>
+                <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
+            </select>
+        </div>
+    
+        <!-- atributo -->
+        <div class="form-group">
+            <select id="slAttr2" ng-model="slAttr2" ng-change="changeSelectAtrr2()" class="form-control">
+                <option selected disabled value="">Seleccione el atributo</option>
+                <option ng-repeat="item in datosProducto2" value="{{ $index }}">{{ item.atributo }}</option>
+            </select>
+        </div>
+    
     </div>
-</div>
-
-
-<div role="form" class="form-inline" >
-    <h3>Elemento 2</h3>
-    <div class="form-group">
-        <select class="form-control" id="slProducto2" ng-model="slProducto2" ng-change="changeSelectProducto2()" >
-            <option selected disabled value="">Seleccione el producto</option>
-            <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
-        </select>
+    
+    
+    <div class="row">
+        <div class="col-md-9">
+            <highchart id="correlacionChart" config="correlacionChart"></highchart>
+        </div>
+    
+        <div class="col-md-3">
+            <span>Coeficiones de correlacion: {{ correlacion.coeficiente }}</span>
+            <span>Funcion de correlacion: {{ correlacion.fs }}</span>
+            <input type="number" name="valueX" ng-model="valueX" placeholder="evaluar x en funcion">
+            {{ correlacion.f(valueX) }}
+        </div>
+    
     </div>
-
-    <!-- atributo -->
-    <div class="form-group">
-        <select id="slAttr2" ng-model="slAttr2" ng-change="changeSelectAtrr2()" class="form-control">
-            <option selected disabled value="">Seleccione el atributo</option>
-            <option ng-repeat="item in datosProducto2" value="{{ $index }}">{{ item.atributo }}</option>
-        </select>
-    </div>
-
-</div>
-
-
-<div class="row">
-    <div class="col-md-9">
-        <highchart id="correlacion" config="correlacion"></highchart>
-    </div>
-
-    <div>
-
-    </div>
-
 </div>
