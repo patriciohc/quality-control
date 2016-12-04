@@ -5,6 +5,11 @@ app
             url:'/home',
             templateUrl: 'templates/home.html'
         })
+        .state('menu.general', {
+            url:'/general',
+            controller: 'general',
+            templateUrl: 'templates/general.html'
+        })
         .state('menu.uploadExcel',{
             url:'/upload-excel',
             controller: 'uploadExcel',

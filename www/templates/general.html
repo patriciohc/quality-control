@@ -1,0 +1,33 @@
+<div class="container">
+    <h2>General</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <table ng-repeat="resumen in grupos" id="tbResultadoGral" class="table table-bordered table-striped table-hover" ng-show="grupos">
+                <caption>{{ resumen.name }}</caption>
+                <thead>
+                    <tr>
+                        <th>Elemento</th>
+                        <th>Promedio</th>
+                        <th>Desviacion Estandar</th>
+                        <th>Rango</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="r in resumen.data " ng-click="clickTable()" value="{{ r.name }}" style="cursor:pointer;">
+                        <th>{{ r.name }}</th>
+                        <th>{{ r.value | number:2 }}</th>
+                        <th>{{ r.desvStd | number:2 }}</th>
+                        <th>{{ r.rango | number:2}}</th>
+                    </tr>
+                </tbody>
+            </table>
+        <button type="button" class="btn btn-info" ng-show="grupos" ng-click="exportToExcelTableResumen()">
+            Exportar a PDF
+        </button>
+    
+        <div class="col-md-4">
+            <highchart id="pieChartGral" config="pieChartGral"></highchart>
+        </div>
+    
+    </div>
+</div>

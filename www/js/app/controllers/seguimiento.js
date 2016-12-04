@@ -200,12 +200,14 @@ function getPlotLinesScatter(promedio, desvStd){
     var linesPlot = [];
     var line = getConfigPlotLines("Promedio: " + promedio, promedio);
     linesPlot.push(line)
-    // desviacion estandar abajo
-    line = getConfigPlotLines("Desviacion STD: " + desvStd, promedio - desvStd);
+    // limite superior de control
+    var lcs = Math.round10(promedio + desvStd * 3, -2);
+    line = getConfigPlotLines("LCS: " + lcs, lcs);
     line.color = "blue";
     linesPlot.push(line);
-    // arriba
-    line = getConfigPlotLines("Desviacion STD: " + desvStd, promedio + desvStd);
+    // limite de inferior de control
+    var lci = Math.round10(promedio - desvStd * 3, -2);
+    line = getConfigPlotLines("LCI: " + lci, lci);
     line.color = "blue";
     linesPlot.push(line);
 
