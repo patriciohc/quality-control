@@ -72,8 +72,10 @@ function getConfigScatter(functionEvtPoint)
             }
         },
         series: [{
+            name: 'X,Y',
             data: []
         },{
+            name:'Funcion de correlacion',
             type:'line',
             data: []
         }]

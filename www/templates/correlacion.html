@@ -14,6 +14,10 @@
                 <option selected disabled value="">Seleccione el atributo</option>
                 <option ng-repeat="item in datosProducto1" value="{{ $index }}">{{ item.atributo }}</option>
             </select>
+            <label id="labelfilecorr1" class="cabinet" title="Abre el buscador de archivos">
+			   		<span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
+					<input type="file" fileread="onLoadFile" name="file" class="file" style="display: none;"/>
+            </label>
         </div>
     </div>
     
@@ -33,6 +37,10 @@
                 <option selected disabled value="">Seleccione el atributo</option>
                 <option ng-repeat="item in datosProducto2" value="{{ $index }}">{{ item.atributo }}</option>
             </select>
+            <label id="labelfilecorr2" class="cabinet" title="Abre el buscador de archivos">
+			   		<span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
+					<input type="file" fileread="onLoadFile" name="file" class="file" style="display: none;"/>
+            </label>
         </div>
     
     </div>
@@ -44,10 +52,10 @@
         </div>
     
         <div class="col-md-3">
-            <span>Coeficiones de correlacion: {{ correlacion.r }}<br></span>
-            <span>Funcion de correlacion: {{ correlacion.fs }}<br></span>
+            <span>Coeficiones de correlacion: <strong>{{ correlacion.r }}</strong><br></span>
+            <span>Funcion de correlacion: <strong>{{ correlacion.fs }}</strong><br></span>
             <input type="number" name="valueX" ng-model="valueX" placeholder="evaluar x en funcion"><br>
-            {{ correlacion.f(valueX) | number:2 }}
+            <strong>{{ correlacion.f(valueX) | number:2 }}</strong>
         </div>
     
     </div>

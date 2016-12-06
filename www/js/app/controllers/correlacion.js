@@ -52,6 +52,9 @@ app
         var minX = Math.min.apply(null, x);
         var maxX = Math.max.apply(null, x)
         $scope.correlacionChart.series[1].data = [[minX, $scope.correlacion.f(minX)], [maxX, $scope.correlacion.f(maxX)]];
+        $scope.correlacionChart.xAxis.title.text = $("#slAttr1 option:selected").html();
+        $scope.correlacionChart.yAxis.title.text = $("#slAttr2 option:selected").html();;
+
         
     }
 
