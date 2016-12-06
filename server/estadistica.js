@@ -20,7 +20,7 @@ var estadistica = {
             var x_i = data[i].value;
             sumatoria += Math.pow( x_i - x_p , 2);
         }
-        var desvStd = sumatoria / N;
+        var desvStd = Math.sqrt(sumatoria / N);
         return Math.round(desvStd * 100) / 100;
     },
 
