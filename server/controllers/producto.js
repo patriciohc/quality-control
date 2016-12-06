@@ -27,7 +27,7 @@ function getAtributo(req, res){
     Producto.find(query).exec(function(err, listProducto){
         if (err)
             return res.status(500).send({message: `Error mongo ${err}`});
-        if (!producto)
+        if (!listProducto)
             return res.status(404).send({message: "No existen productos."});
 
         if (req.query.atributo && nameProducto){
