@@ -3,6 +3,7 @@
 const Producto = require('../models/producto');
 const CatProducto = require('../models/cat_producto');
 const estadistica = require('../estadistica.js');
+const LINQ = require('node-linq').LINQ;
 
 function getAtributo(req, res){
     var nameProducto = req.query.nameProducto;
@@ -53,17 +54,17 @@ function getAtributo(req, res){
             });
         } else {
             var response = [];
-            CatProducto.find({},(err, lisCatProducto)=>{
-                if (err) res.status(500).send({message: `Error mongo: ${err}`});
-                if (!catProducto) res.status(404).send({message: 'recurso no encontrado'});
+            CatProducto.find({},(err, listCatProducto)=> {
+                if (err) return res.status(500).send({message: `Error mongo: ${err}`});
+                if (!listCatProducto) return res.status(404).send({message: 'recurso no encontrado'});
 
                 for (var i = 0; i < listCatProducto.length; i++){
                     var catProducto = listCatProducto[i];
                     var producto = {nombre: catProducto.nombre, data: []}
-                    var p = $linq(listProducto)
-                    .where(function(item){
+                    var p = new LINQ(listProducto)
+                    .Where(function(item){
                         return item.nombre == catProducto.nombre })
-                    .select(function(x){return x}).toArray();
+                    .Select(function(x){return x}).ToArray();
                     for (var i = 0; i < catProducto.atributos.length; i++) {
                         var atributo = catProducto.atributos[i];
                         var item = {};
@@ -82,7 +83,7 @@ function getAtributo(req, res){
     });
 }
 
-function getProductos(req, res){
+function getProductos(req, res) {
     Producto
     .find({})
     .exec(function(err, producto){
