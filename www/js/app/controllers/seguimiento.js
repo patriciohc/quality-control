@@ -1,6 +1,8 @@
 app
 // vista seguimiento
-.controller('seguimiento', function($scope, $http) {
+.controller('seguimiento', function($scope, $http, conceptos) {
+
+    $scope.conceptos = conceptos;
 
     var clickOnPointScatter = function(evt){
         var id = evt.point.name;

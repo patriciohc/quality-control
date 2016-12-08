@@ -1,35 +1,81 @@
 
-<div class="container" style="width: 70%; top:25px;">
-    <h1>Seleccione los siguientes datos:</h1>
-    <div role="form" class="form-inline" >
-        <div class="form-group">
-            <select class="form-control" id="slProducto" ng-model="slProducto" ng-change="changeSelectProducto()" >
-                <option selected disabled value="">Seleccione el producto</option>
-                <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
-            </select>
+<div class="container">
+    <div class="row" ng-hide="slAttr">
+        <div class="col-md-10">
+            <div class="jumbotron">
+                <h2>Grafica de Control</h2>
+                <p>Una gráfica de control indica cuando su proceso está fuera de control y le ayuda a identificar la presencia de una variación por causas especiales. Cuando está presente la variación por causas especiales, su proceso no es estable y es necesaria una acción correctiva.</p>
+          
+                <p>Las gráficas de control grafican sus datos del proceso en secuencia ordenada por tiempo. La mayoría de las gráficas de control incluye una línea central, un límite de control superior y un límite de control inferior. La línea central representa la media del proceso. Los límites de control representan la variación del proceso. Por opción predeterminada, los límites de control se fijan a distancias de 3σ por encima y por debajo de la línea central.</p>
+            </div>
         </div>
-        <!-- atributo -->
-        <div class="form-group">
-            <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
-                <option selected disabled value="">Seleccione el atributo</option>
-                <option ng-repeat="item in datosProducto" value="{{ $index }}">{{ item.atributo }}</option>
-            </select>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10">
+            <div role="form" class="form-inline" >
+                <div class="form-group">
+                    <select class="form-control" id="slProducto" ng-model="slProducto" ng-change="changeSelectProducto()" >
+                        <option selected disabled value="">Seleccione el producto</option>
+                        <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
+                    </select>
+                </div>
+                <!-- atributo -->
+                <div class="form-group">
+                    <select id="slAttr" ng-model="slAttr" ng-change="changeSelectAtrr()" class="form-control">
+                        <option selected disabled value="">Seleccione el atributo</option>
+                        <option ng-repeat="item in datosProducto" value="{{ $index }}">{{ item.atributo }}</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
     
     <div class="row">
-        <div class="col-md-8" ng-show="slAttr">
+        <div class="col-md-7" ng-show="slAttr">
             <highchart id="chart0" config="scatter"></highchart>
-            <highchart id="chart1" config="histogram"></highchart>
+                <h3>Interpretación de la grafica de control</h3>
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">Norma 1</h4>
+                        <p class="list-group-item-text"><b>Cuando un sólo punto está fuera de los límites de control</b>, puede estar señalando la ausencia de control del proceso. No obstante, esta probabilidad sería pequeña por lo que tal vez no sea oportuno efectuar cambios</p>
+                    </a>
+
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">Norma 2</h4>
+                        <p class="list-group-item-text"><b>Si al menos 2 ó 3 puntos sucesivos están en el mismo lado de la línea media</b>, y más de dos unidades sigma (dos desviaciones típicas) alejados de esta línea, estará sugerida una falta de control del proceso. Si el tercer punto consecutivo está alejado de la línea media en la medida indicada, pero en el otro lado, la misma conclusión sería válida.</p>
+                    </a>
+
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">Norma 3</h4>
+                        <p class="list-group-item-text"><b>En el caso de que 4 ó 5 valores sucesivos se situaran en el mismo lado</b>, alejados de la línea central más de 1 sigma, se apuntaría un déficit en la estabilidad o control del proceso.</p>
+                    </a>
+
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">Norma 4</h4>
+                        <p class="list-group-item-text">Igualmente, estaría indicada esta falta de control cuando <b>al menos 7 valores sucesivos estuvieran situados en el mismo lado de la línea media</b>. Esto mostraría una inadecuada distribución de esos puntos.</p>
+                    </a>
+                </div>
+            <!-- <highchart id="chart1" config="histogram"></highchart> -->
         </div>
     
-        <div class="col-md-4" ng-show="slProducto">
-    
-            <highchart id="chart2" config="pie"></highchart>
-            <div ng-show="slAttr">
-                <h5>Promedio: {{datosAtributo.promedio}}</h5>
-                <h5>Desviacion estandar: {{datosAtributo.desvStd}}</h5>
-                <h5>Rango: {{datosAtributo.rango}}</h5>
+        <div class="col-md-4" ng-show="slAttr">
+            <!-- <highchart id="chart2" config="pie"></highchart> -->
+            <div>
+                <h5>
+                    <b><span title="{{conceptos.promedio}}">Promedio</span>: {{datosAtributo.promedio | number:2}}</b>
+                </h5>
+                <h5>
+                    <b>
+                        <span title="{{conceptos.desviacionEstandar}}">Desviacion estandar</span>: {{datosAtributo.desvStd | number:2}}
+                    </b>
+                </h5>
+                <h5>
+                    <b><span title="{{conceptos.rango}}">Rango</span>: {{datosAtributo.rango | number:2}}</b>
+                </h5>
+                <h5>
+                    <b><span title="{{conceptos.moda}}">moda</span>: {{datosAtributo.moda | number:2}}</b>
+                </h5>
             </div>
             <!--panel informacion general -->
             <div id="divInfoGral" class="panel panel-info" ng-show="infoPoint">

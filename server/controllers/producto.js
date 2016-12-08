@@ -3,6 +3,7 @@
 const Producto = require('../models/producto');
 const CatProducto = require('../models/cat_producto');
 const estadistica = require('../estadistica.js');
+const LINQ = require('node-linq').LINQ;
 
 function getAtributo(req, res){
     var nameProducto = req.query.nameProducto;
@@ -14,14 +15,37 @@ function getAtributo(req, res){
     }
 
     var getValuesAtributo = function (data, atributo) {
-        let values = data.map(function(obj){
+        var datosCompletos = [];
+        var values = []
+        for (var i = 0; i < data.length; i++){
+            var obj = data[i];
             let item = {};
             item.value = obj.atributos[atributo];
             item.identificador = obj.identificador;
             item.id = obj.id;
-            return item;
-        });
-        return values;
+            
+            datosCompletos.push(item);
+            
+            values.push(item.value);
+        }       
+        return {datosCompletos, values};
+    }
+    
+    var fillPartialResponse = function(atributos, listProducto){
+        var response = [];
+        for (var i = 0; i < atributos.length; i++) {
+            var atributo = atributos[i];
+            var item = {};
+            var data = getValuesAtributo(listProducto, atributo);
+            item.atributo = atributo;
+            item.data = data.datosCompletos;
+            item.promedio = estadistica.getPromedio(data.values);
+            item.desvStd = estadistica.desvStd(data.values);
+            item.rango = estadistica.rango(data.values);
+            item.moda = estadistica.moda(data.values);
+            response.push(item);
+        }
+        return response;
     }
 
     Producto.find(query).exec(function(err, listProducto){
@@ -34,46 +58,26 @@ function getAtributo(req, res){
             var response = getValuesAtributo(listProducto, req.query.atributo);
             return res.status(200).send( response );
         } else if (nameProducto) {
-            var response = [];
             CatProducto.findOne({nombre: nameProducto},(err, catProducto)=>{
                 if (err) res.status(500).send({message: `Error mongo: ${err}`});
                 if (!catProducto) res.status(404).send({message: 'recurso no encontrado'});
-
-                for (var i = 0; i < catProducto.atributos.length; i++) {
-                    var atributo = catProducto.atributos[i];
-                    var item = {};
-                    item.atributo = atributo;
-                    item.data = getValuesAtributo(listProducto, atributo);
-                    item.promedio = estadistica.getPromedio(item.data);
-                    item.desvStd = estadistica.desvStd(item.data);
-                    item.rango = estadistica.rango(item.data);
-                    response.push(item);
-                }
+                var response = fillPartialResponse(catProducto.atributos, listProducto);
                 return res.status(200).send( response );
             });
         } else {
             var response = [];
-            CatProducto.find({},(err, lisCatProducto)=>{
-                if (err) res.status(500).send({message: `Error mongo: ${err}`});
-                if (!catProducto) res.status(404).send({message: 'recurso no encontrado'});
+            CatProducto.find({},(err, listCatProducto)=> {
+                if (err) return res.status(500).send({message: `Error mongo: ${err}`});
+                if (!listCatProducto) return res.status(404).send({message: 'recurso no encontrado'});
 
                 for (var i = 0; i < listCatProducto.length; i++){
                     var catProducto = listCatProducto[i];
-                    var producto = {nombre: catProducto.nombre, data: []}
-                    var p = $linq(listProducto)
-                    .where(function(item){
+                    var producto = {nombre: catProducto.nombre}
+                    var p = new LINQ(listProducto)
+                    .Where(function(item){
                         return item.nombre == catProducto.nombre })
-                    .select(function(x){return x}).toArray();
-                    for (var i = 0; i < catProducto.atributos.length; i++) {
-                        var atributo = catProducto.atributos[i];
-                        var item = {};
-                        item.atributo = atributo;
-                        item.data = getValuesAtributo(p, atributo);
-                        item.promedio = estadistica.getPromedio(item.data);
-                        item.desvStd = estadistica.desvStd(item.data);
-                        item.rango = estadistica.rango(item.data);
-                        producto.data.push(item);
-                    }
+                    .Select(function(x){return x}).ToArray();
+                    producto.data = fillPartialResponse(catProducto.atributos, p);
                     response.push(producto)
                 }
                 return res.status(200).send( response );
@@ -82,7 +86,7 @@ function getAtributo(req, res){
     });
 }
 
-function getProductos(req, res){
+function getProductos(req, res) {
     Producto
     .find({})
     .exec(function(err, producto){
