@@ -11,6 +11,7 @@
                         <th>Promedio</th>
                         <th>Desviacion Estandar</th>
                         <th>Rango</th>
+                        <th>Moda</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,6 +20,7 @@
                         <th>{{ parametro.promedio | number:2 }}</th>
                         <th>{{ parametro.desvStd | number:2 }}</th>
                         <th>{{ parametro.rango | number:2}}</th>
+                        <th>{{ parametro.moda | number:2}}</th>
                     </tr>
                 </tbody>
             </table>
@@ -27,8 +29,8 @@
             </button>
         </div>
 
-        <div class="col-md-4">
-            <highchart config="pieChart_"{{$index}}></highchart>
+        <div class="col-md-4" >
+            <highchart config="pieChart[$index]"></highchart>
         </div>
 
     </div>
