@@ -12,8 +12,7 @@ app
     }
 
     $scope.scatter = getConfigScatter(clickOnPointScatter);
-    $scope.histogram = getConfigColumn();
-    $scope.pie = getConfigPie();
+    //$scope.pie = getConfigPie();
 
     $http.get("/api/cat-producto").then(function(response){
         $scope.productos = response.data;
@@ -65,18 +64,6 @@ app
        //}
 
         $scope.scatter.yAxis.plotLines = getPlotLinesScatter($scope.datosAtributo.promedio, $scope.datosAtributo.desvStd);
-
-        var frecuencia = $scope.datosAtributo.data.map(function(obj){
-            return obj.value;
-        });
-
-        frecuencia = binData(frecuencia);
-        $scope.histogram.series[0].data = frecuencia;
-
-        $scope.histogram.xAxis.plotLines[0].value =  $scope.datosAtributo.promedio;
-        $scope.histogram.xAxis.plotLines[0].label.text = 'Promedio: ' + $scope.datosAtributo.promedio;
-        //$scope.histogram.options.plotLines[0].value;
-
     }
 
 //    makeScatterChart = function(sheet, campo){
