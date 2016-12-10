@@ -1,44 +1,73 @@
 
-<div class="container" style="width: 70%; top:25px;">
-    <h1>Curva Normal</h1>
-    <div role="form" class="form-inline" >
-        <div class="form-group">
-            <select class="form-control" id="slProductoG" ng-model="slProductoG" ng-change="seleccionPrudGauss()" >
-                <option selected disabled value="">Seleccione un producto</option>
-                <option ng-repeat="p in productosG" value="{{ $index }}">{{ p.nombre }}</option>
-            </select>
-        </div>
-            <!-- atributo -->
-        <div class="form-group">
-            <select id="slAttr" ng-model="slAttr" ng-change="changeAtribGauss()" class="form-control">
-                <option selected disabled value="">Seleccione el atributo</option>
-                <option ng-repeat="item in data" value="{{ $index }}">{{ item.atributo }}</option>
-            </select>
+<div class="container">
+    
+    <div class="row" ng-hide="slAttr">
+        <div class="col-md-10">
+            <div class="jumbotron">
+                <h2>Distribucion normar de probabilidad</h2>
+                <p>La  distribución  de  probabilidad  conocida  como  distribución  normal  es,  por  la  cantidad  de  fenómenos que explica, la más importante de las distribuciones estadísticas.</p>
+          
+                <p>Esta herramienta nos permite calcular la probabilidad de que ocurra un suceso, siempre que los datos sigan o se aproximen a una distribucion normal.</p>
+            </div>
         </div>
     </div>
     
     <div class="row">
-        <div class="col-md-9">
-            <highchart id="normalChart" config="normalChart" ng-show="slAttr"></highchart>
+        <div class="col-md-10">
+            <div role="form" class="form-inline" >
+                <div class="form-group">
+                    <select class="form-control" id="slProductoG" ng-model="slProductoG" ng-change="seleccionPrudGauss()" >
+                        <option selected disabled value="">Seleccione un producto</option>
+                        <option ng-repeat="p in productosG" value="{{ $index }}">{{ p.nombre }}</option>
+                    </select>
+                </div>
+                    <!-- atributo -->
+                <div class="form-group">
+                    <select id="slAttr" ng-model="slAttr" ng-change="changeAtribGauss()" class="form-control">
+                        <option selected disabled value="">Seleccione el atributo</option>
+                        <option ng-repeat="item in data" value="{{ $index }}">{{ item.atributo }}</option>
+                    </select>
+                </div>
+            </div>
         </div>
-        
-        <div ng-show="slAttr">
-            <h5>Promedio: {{datosAtributo.promedio}}</h5>
-            <h5>Desviacion estandar: {{datosAtributo.desvStd}}</h5>
-            <h5>Rango: {{datosAtributo.rango}}</h5>
+    </div>
+    
+    <div class="row" ng-show="slAttr">
+        <div class="col-md-7">
+            <highchart id="histogramChart" config="histogram"></highchart>
+            <highchart id="normalChart" config="normalChart"></highchart>
         </div>
     
-        <div class="col-md-3" ng-show="probabilidad">
-            <span ng-show="normalChart.series[0].zones[0].value && !normalChart.series[0].zones[1].value">
-                La probabilidad de que {{data[slAttr].atributo}} sea menor a {{normalChart.series[0].zones[0].value}} es de
-                {{probabilidad * 100 | number:2}}% (Complemento = {{(1-probabilidad) * 100 | number:2}}%)
-            </span>
-    
-            <span ng-show="normalChart.series[0].zones[0].value && normalChart.series[0].zones[1].value">
-                La probabilidad de que {{data[slAttr].atributo}} este enter {{normalChart.series[0].zones[0].value}}
-                y {{normalChart.series[0].zones[0].value}} es de
-                {{probabilidad * 100 | number:2}}% (Complemento = {{(1-probabilidad) * 100 | number:2}}%)
-            </span>
+        <div class="col-md-3">
+            
+            <div>
+                <h5>
+                    <b><span title="{{conceptos.promedio}}">Promedio</span>: {{datosG.promedio | number:2}}</b>
+                </h5>
+                <h5>
+                    <b>
+                        <span title="{{conceptos.desviacionEstandar}}">Desviacion estandar</span>: {{datosG.desvStd | number:2}}
+                    </b>
+                </h5>
+                <h5>
+                    <b><span title="{{conceptos.rango}}">Rango</span>: {{datosG.rango | number:2}}</b>
+                </h5>
+                <h5>
+                    <b><span title="{{conceptos.moda}}">moda</span>: {{datosG.moda | number:2}}</b>
+                </h5>
+            </div>
+            <div ng-show="probabilidad">
+                <span ng-show="normalChart.series[0].zones[0].value && !normalChart.series[0].zones[1].value">
+                    La probabilidad de que {{data[slAttr].atributo}} sea menor a {{normalChart.series[0].zones[0].value}} es de
+                    {{probabilidad * 100 | number:2}}% (Complemento = {{(1-probabilidad) * 100 | number:2}}%)
+                </span>
+
+                <span ng-show="normalChart.series[0].zones[0].value && normalChart.series[0].zones[1].value">
+                    La probabilidad de que {{data[slAttr].atributo}} este entre {{normalChart.series[0].zones[0].value | number:2}}
+                    y {{normalChart.series[0].zones[0].value | number:2}} es de
+                    {{probabilidad * 100 | number:2}}% (Complemento = {{(1-probabilidad) * 100 | number:2}}%)
+                </span>
+            </div>
         </div>
     </div>
 </div>
