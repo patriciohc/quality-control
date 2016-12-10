@@ -1,49 +1,96 @@
 <div class="container" style="width: 70%; top:25px;">
     <h1>Correlacion</h1>
     <div role="form" class="form-inline" >
-        <h3>Elemento 1</h3>
         <div class="form-group">
-            <select class="form-control" id="slProducto1" ng-model="slProducto1" ng-change="changeSelectProducto1()" >
-                <option selected disabled value="">Seleccione el producto</option>
-                <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
-            </select>
+         <h3>Elemento 1</h3>
+         <label class="switch" title="Cargar nuevo">
+              <input id="chkExcelN1" type="checkbox">
+              <div class="slider round"></div>
+          </label>
+        </div></br>
+      <div id="elementBD">
+            <div class="form-group">
+                <select class="form-control" id="slProducto1" ng-model="slProducto1" ng-change="changeSelectProducto1()" >
+                    <option selected disabled value="">Seleccione el producto</option>
+                    <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
+                </select>
+            </div>
+
+            <!-- atributo -->
+            <div class="form-group">
+                <select id="slAttr1" ng-model="slAttr1" ng-change="changeSelectAtrr1()" class="form-control">
+                    <option selected disabled value="">Seleccione el atributo</option>
+                    <option ng-repeat="item in datosProducto1" value="{{ $index }}">{{ item.atributo }}</option>
+                </select>
+            </div>
         </div>
-    
-        <!-- atributo -->
-        <div class="form-group">
-            <select id="slAttr1" ng-model="slAttr1" ng-change="changeSelectAtrr1()" class="form-control">
-                <option selected disabled value="">Seleccione el atributo</option>
-                <option ng-repeat="item in datosProducto1" value="{{ $index }}">{{ item.atributo }}</option>
-            </select>
-            <label id="labelfilecorr1" class="cabinet" title="Abre el buscador de archivos">
-			   		<span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
-					<input type="file" fileread="onLoadFile" name="file" class="file" style="display: none;"/>
-            </label>
+     <div id="elementNuevo" style="display:none;">
+            <div class="form-group">
+                <select class="form-control" id="slProducto1N" ng-model="slProducto1N" ng-change="changeSelectProducto1N()" >
+                    <option selected disabled value="">Seleccione el producto</option>
+                    <option ng-repeat="hEx in hojasEx1" value="{{ $index }}">{{ hEx.name }}</option>
+                </select>
+            </div>
+
+            <!-- atributo -->
+            <div class="form-group">
+                <select id="slAttr1" ng-model="slAttr1" ng-change="changeSelectAtrr1()" class="form-control" disabled>
+                    <option selected disabled value="">Seleccione el atributo</option>
+                    <option ng-repeat="item in datosProducto1" value="{{ $index }}">{{ item.atributo }}</option>
+                </select>
+                <label id="labelfilecorr1" class="cabinet" title="Abre el buscador de archivos">
+                        <span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
+                        <input type="file" fileread="onLoadFileExcel" name="file" class="file" style="display: none;"/>
+                </label>
+            </div>
         </div>
     </div>
     
     
     <div role="form" class="form-inline" >
-        <h3>Elemento 2</h3>
-        <div class="form-group">
-            <select class="form-control" id="slProducto2" ng-model="slProducto2" ng-change="changeSelectProducto2()" >
-                <option selected disabled value="">Seleccione el producto</option>
-                <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
-            </select>
+         <div class="form-group">
+         <h3>Elemento 2</h3>
+         <label class="switch" title="Cargar nuevo">
+              <input id="chkExcelN2" type="checkbox">
+              <div class="slider round"></div>
+          </label>
+        </div></br>
+        <div id="elementBD2">
+            <div class="form-group">
+                <select class="form-control" id="slProducto2" ng-model="slProducto2" ng-change="changeSelectProducto2()" >
+                    <option selected disabled value="">Seleccione el producto</option>
+                    <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
+                </select>
+            </div>
+
+            <!-- atributo -->
+            <div class="form-group">
+                <select id="slAttr2" ng-model="slAttr2" ng-change="changeSelectAtrr2()" class="form-control">
+                    <option selected disabled value="">Seleccione el atributo</option>
+                    <option ng-repeat="item in datosProducto2" value="{{ $index }}">{{ item.atributo }}</option>
+                </select>
+            </div>
         </div>
-    
-        <!-- atributo -->
-        <div class="form-group">
-            <select id="slAttr2" ng-model="slAttr2" ng-change="changeSelectAtrr2()" class="form-control">
-                <option selected disabled value="">Seleccione el atributo</option>
-                <option ng-repeat="item in datosProducto2" value="{{ $index }}">{{ item.atributo }}</option>
-            </select>
-            <label id="labelfilecorr2" class="cabinet" title="Abre el buscador de archivos">
-			   		<span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
-					<input type="file" fileread="onLoadFile" name="file" class="file" style="display: none;"/>
-            </label>
+        <div id="elementNuevo2" style="display:none">
+                    <div class="form-group">
+                        <select class="form-control" id="slProducto2" ng-model="slProducto2" ng-change="changeSelectProducto2()" disabled>
+                            <option selected disabled value="">Seleccione el producto</option>
+                            <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
+                        </select>
+                    </div>
+
+                    <!-- atributo -->
+                    <div class="form-group">
+                        <select id="slAttr2" ng-model="slAttr2" ng-change="changeSelectAtrr2()" class="form-control" disabled>
+                            <option selected disabled value="">Seleccione el atributo</option>
+                            <option ng-repeat="item in datosProducto2" value="{{ $index }}">{{ item.atributo }}</option>
+                        </select>
+                        <label id="labelfilecorr2" class="cabinet" title="Abre el buscador de archivos">
+                                <span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
+                                <input type="file" fileread="onLoadFile" name="file" class="file" style="display: none;"/>
+                        </label>
+                    </div>
         </div>
-    
     </div>
     
     

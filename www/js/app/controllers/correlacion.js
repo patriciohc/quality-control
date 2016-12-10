@@ -2,6 +2,12 @@ app
 // vista correlacion
 .controller('correlacion', function($scope, $http) {
 
+    var sheets;
+    $scope.onLoadFileExcel = function(fileBase64){
+        sheets = excel.readExcel(fileBase64);
+        $scope.hoja sEx1 = sheets;
+    };
+
     $scope.correlacionChart = getConfigScatter(null);
 
     $http.get("/api/cat-producto").then(function(response){
@@ -57,5 +63,34 @@ app
 
         
     }
+
+    $('#chkExcelN1').change(function() {
+        elementbd = document.getElementById("elementBD");
+        elementnew = document.getElementById("elementNuevo");
+        check = document.getElementById("chkExcelN1");
+        if (check.checked) {
+            elementbd.style.display='none';
+            elementnew.style.display='block';
+        }
+        else {
+            elementnew.style.display='none';
+            elementbd.style.display='block';
+            ('slProducto1N').empty();
+        }
+    })
+
+        $('#chkExcelN2').change(function() {
+        elementbd2 = document.getElementById("elementBD2");
+        elementnew2 = document.getElementById("elementNuevo2");
+        check2 = document.getElementById("chkExcelN2");
+        if (check2.checked) {
+            elementbd2.style.display='none';
+            elementnew2.style.display='block';
+        }
+        else {
+            elementnew2.style.display='none';
+            elementbd2.style.display='block';
+        }
+    })
 
 });
