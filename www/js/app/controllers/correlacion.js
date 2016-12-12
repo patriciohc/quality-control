@@ -3,10 +3,15 @@ app
 .controller('correlacion', function($scope, $http) {
 
     var sheets;
+    var sheets2;
     $scope.onLoadFileExcel = function(fileBase64){
         sheets = excel.readExcel(fileBase64);
-        $scope.hoja sEx1 = sheets;
-    };
+        $scope.hojasEx1 = sheets;
+    }
+     $scope.onLoadFileExcel2 = function(fileBase64){
+        sheets2 = excel.readExcel(fileBase64);
+        $scope.hojasEx2 = sheets2;
+    }
 
     $scope.correlacionChart = getConfigScatter(null);
 
@@ -64,6 +69,18 @@ app
         
     }
 
+    //agregar nuevo excel correlacion
+
+    $scope.changeProdNew1 = function (){
+        var hoj = sheets[$scope.slProducto1N];
+        $scope.datosAttribNew = hoj.head;
+    }
+
+     $scope.changeProdNew2 = function (){
+        var hoj2 = sheets2[$scope.slProducto2];
+        $scope.datosAttribNew2 = hoj2.head;
+    }
+
     $('#chkExcelN1').change(function() {
         elementbd = document.getElementById("elementBD");
         elementnew = document.getElementById("elementNuevo");
@@ -73,7 +90,7 @@ app
             elementnew.style.display='block';
         }
         else {
-            elementnew.style.display='none';
+            elementnew.style.display='none';chkExcelN1
             elementbd.style.display='block';
             ('slProducto1N').empty();
         }
