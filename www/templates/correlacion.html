@@ -1,37 +1,6 @@
-<div class="container" style="width: 70%; top:25px;">
-    <h1>Correlacion</h1>
-    <div role="form" class="form-inline" >
-        <div class="form-group">
-         <h3>Elemento 1</h3>
-         <label class="switch" title="Cargar nuevo">
-              <input id="chkExcelN1" type="checkbox">
-              <div class="slider round"></div>
-          </label>
-        </div></br>
-      <div id="elementBD">
-            <div class="form-group">
-                <select class="form-control" id="slProducto1" ng-model="slProducto1" ng-change="changeSelectProducto1()" >
-                    <option selected disabled value="">Seleccione el producto</option>
-                    <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
-                </select>
-            </div>
+<div class="container">
 
-            <!-- atributo -->
-            <div class="form-group">
-                <select id="slAttr1" ng-model="slAttr1" ng-change="changeSelectAtrr1()" class="form-control">
-                    <option selected disabled value="">Seleccione el atributo</option>
-                    <option ng-repeat="item in datosProducto1" value="{{ $index }}">{{ item.atributo }}</option>
-                </select>
-            </div>
-        </div>
-     <div id="elementNuevo" style="display:none;">
-            <div class="form-group">
-                <select class="form-control" id="slProducto1N" ng-model="slProducto1N" ng-change="changeProdNew1()" >
-                    <option selected disabled value="">Seleccione el producto</option>
-                    <option ng-repeat="hEx in hojasEx1" value="{{ $index }}">{{ hEx.name }}</option>
-                </select>
-            </div>
-
+<<<<<<< HEAD
             <!-- atributo -->
             <div class="form-group">
                 <select id="slAttr1New" ng-model="slAttr1New" ng-change="changeSelectAtribnew1()" class="form-control" >
@@ -42,68 +11,130 @@
                         <span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
                         <input type="file" fileread="onLoadFileExcel" name="file" class="file" style="display: none;"/>
                 </label>
+=======
+    <div class="row" ng-hide="slAttr1 && slAttr2">
+        <div class="col-md-10">
+            <div class="jumbotron">
+                <h2>Correlación</h2>
+                <p></p>
+>>>>>>> 1c6e78ef3e6b04654af3cba4a02a9c0720423377
             </div>
         </div>
     </div>
-    
-    
-    <div role="form" class="form-inline" >
-         <div class="form-group">
-         <h3>Elemento 2</h3>
-         <label class="switch" title="Cargar nuevo">
-              <input id="chkExcelN2" type="checkbox">
-              <div class="slider round"></div>
-          </label>
-        </div></br>
-        <div id="elementBD2">
-            <div class="form-group">
-                <select class="form-control" id="slProducto2" ng-model="slProducto2" ng-change="changeSelectProducto2()" >
-                    <option selected disabled value="">Seleccione el producto</option>
-                    <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
-                </select>
+
+    <div class="row">
+        <div class="col-md-8">
+        <!-- elemento uno -->
+            <div role="form" class="form-inline" >
+                <div class="form-group">
+                    <h3>Elemento 1</h3>
+                        <label class="switch" title="Cargar nuevo">
+                            <input id="chkExcelN1" type="checkbox" ng-model="chkExcel1">
+                            <div class="slider round"></div>
+                        </label>
+                </div></br>
+                <!-- datos DB -->
+                <div ng-hide="chkExcel1">
+                    <div class="form-group">
+                        <select class="form-control" id="slProducto1" ng-model="slProducto1" ng-change="changeSelectProducto1()" >
+                            <option selected disabled value="">Seleccione el producto</option>
+                            <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
+                        </select>
+                    </div>
+                    <!-- atributo -->
+                    <div class="form-group">
+                        <select id="slAttr1" ng-model="slAttr1" ng-change="changeSelectAtrr1()" class="form-control">
+                            <option selected disabled value="">Seleccione el atributo</option>
+                            <option ng-repeat="item in datosProducto1" value="{{ $index }}">{{ item.atributo }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- datos excel -->
+                <div ng-show="chkExcel1">
+                    <div class="form-group">
+                        <select class="form-control" id="slProducto1N" ng-model="slProducto1N" ng-change="changeProdNew1()" >
+                            <option selected disabled value="">Seleccione el producto</option>
+                            <option ng-repeat="hEx in hojasEx1" value="{{ $index }}">{{ hEx.name }}</option>
+                        </select>
+                    </div>
+                    <!-- atributo -->
+                    <div class="form-group">
+                        <select id="slAttr1New" ng-model="slAttr1" ng-change="changeSelectExcelAtrr1()" class="form-control" >
+                            <option selected disabled value="">Seleccione el atributo</option>
+                            <option ng-repeat="item in datosAttribNew" value="{{ item.name }}">{{ item.name }}</option>
+                        </select>
+                        <label id="labelfilecorr1" class="cabinet" title="Abre el buscador de archivos">
+                                <span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
+                                <input type="file" fileread="onLoadFileExcel" name="file" class="file" style="display: none;"/>
+                        </label>
+                    </div>
+                </div>
             </div>
 
-            <!-- atributo -->
-            <div class="form-group">
-                <select id="slAttr2" ng-model="slAttr2" ng-change="changeSelectAtrr2()" class="form-control">
-                    <option selected disabled value="">Seleccione el atributo</option>
-                    <option ng-repeat="item in datosProducto2" value="{{ $index }}">{{ item.atributo }}</option>
-                </select>
-            </div>
-        </div>
-        <div id="elementNuevo2" style="display:none">
+            <!-- elemento dos -->
+            <div role="form" class="form-inline" >
+                <div class="form-group">
+                    <h3>Elemento 2</h3>
+                    <label class="switch" title="Cargar nuevo">
+                        <input id="chkExcelN2" type="checkbox" ng-model="chkExcel2">
+                        <div class="slider round"></div>
+                    </label>
+                </div></br>
+
+                <!-- datos DB -->
+                <div ng-hide="chkExcel2">
+                    <div class="form-group">
+                        <select class="form-control" id="slProducto2" ng-model="slProducto2" ng-change="changeSelectProducto2()" >
+                            <option selected disabled value="">Seleccione el producto</option>
+                            <option ng-repeat="p in productos" value="{{ $index }}">{{ p.nombre }}</option>
+                        </select>
+                    </div>
+                    <!-- atributo -->
+                    <div class="form-group">
+                        <select id="slAttr2" ng-model="slAttr2" ng-change="changeSelectAtrr2()" class="form-control">
+                            <option selected disabled value="">Seleccione el atributo</option>
+                            <option ng-repeat="item in datosProducto2" value="{{ $index }}">{{ item.atributo }}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- datos excel -->
+                <div ng-show="chkExcel2">
                     <div class="form-group">
                         <select class="form-control" id="slProducto2" ng-model="slProducto2" ng-change="changeProdNew2()" >
                             <option selected disabled value="">Seleccione el producto</option>
                             <option ng-repeat="hEx2 in hojasEx2" value="{{ $index }}">{{ hEx2.name }}</option>
                         </select>
                     </div>
-
                     <!-- atributo -->
                     <div class="form-group">
-                        <select id="slAttr1New2" ng-model="slAttr1New2" ng-change="" class="form-control" >
+                        <select id="slAttr1New2" ng-model="slAttr2" ng-change="changeSelectExcelAtrr2()" class="form-control" >
                             <option selected disabled value="">Seleccione el atributo</option>
-                            <option ng-repeat="itemAt in datosAttribNew2" value="{{ $index }}">{{ itemAt.name }}</option>
+                            <option ng-repeat="itemAt in datosAttribNew2" value="{{ itemAt.name }}">{{ itemAt.name }}</option>
                         </select>
                         <label id="labelfilecorr2" class="cabinet" title="Abre el buscador de archivos">
                                 <span class="label label-warning glyphicon glyphicon-folder-open"> Cargar Excel</span>
                                 <input type="file" fileread="onLoadFileExcel2" name="file" class="file" style="display: none;"/>
                         </label>
                     </div>
+                </div>
+            </div> <!-- fin elemento dos -->
         </div>
-    </div>
+    </div> <!-- fin row -->
     
     
-    <div class="row">
-        <div class="col-md-9">
+    <div class="row" ng-show="correlacion">
+        <div class="col-md-8">
             <highchart id="correlacionChart" config="correlacionChart"></highchart>
         </div>
-    
-        <div class="col-md-3">
-            <span>Coeficiones de correlacion: <strong>{{ correlacion.r }}</strong><br></span>
-            <span>Funcion de correlacion: <strong>{{ correlacion.fs }}</strong><br></span>
-            <input type="number" name="valueX" ng-model="valueX" placeholder="evaluar x en funcion"><br>
-            <strong>{{ correlacion.f(valueX) | number:2 }}</strong>
+
+        <div class="col-md-3 infoLateral" >
+            <span>Coeficiente de correlación: <strong>{{ correlacion.r }}</strong><br></span>
+            <span>Función de correlación: <br><strong>{{ correlacion.fs }}</strong><br></span>
+            <input type="number" name="valueX" ng-model="valueX" class="form-control" placeholder="Evaluar x en funcion"><br>
+            <span>
+                <strong>{{ correlacion.f(valueX) | number:2 }}</strong>
+            </span>
         </div>
     
     </div>
