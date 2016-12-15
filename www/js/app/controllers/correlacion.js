@@ -8,7 +8,7 @@ app
         sheets = excel.readExcel(fileBase64);
         $scope.hojasEx1 = sheets;
     }
-     $scope.onLoadFileExcel2 = function(fileBase64){
+    $scope.onLoadFileExcel2 = function(fileBase64){
         sheets2 = excel.readExcel(fileBase64);
         $scope.hojasEx2 = sheets2;
     }
@@ -80,6 +80,10 @@ app
         var hoj2 = sheets2[$scope.slProducto2];
         $scope.datosAttribNew2 = hoj2.head;
     }
+
+     $scope.changeSelectAtribnew1 = function (){
+         alert("Alert");
+     }
 
     $('#chkExcelN1').change(function() {
         elementbd = document.getElementById("elementBD");
