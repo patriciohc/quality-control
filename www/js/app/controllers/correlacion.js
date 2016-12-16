@@ -8,11 +8,8 @@ app
         sheets = excel.readExcel(fileBase64);
         $scope.hojasEx1 = sheets;
     }
-<<<<<<< HEAD
-    $scope.onLoadFileExcel2 = function(fileBase64){
-=======
-     $scope.onLoadFileExcel2 = function(fileBase64) {
->>>>>>> 1c6e78ef3e6b04654af3cba4a02a9c0720423377
+    //$scope.onLoadFileExcel2 = function(fileBase64){
+    $scope.onLoadFileExcel2 = function(fileBase64) {
         sheets2 = excel.readExcel(fileBase64);
         $scope.hojasEx2 = sheets2;
     }
@@ -103,15 +100,14 @@ app
 
     }
 
-<<<<<<< HEAD
      $scope.changeProdNew2 = function (){
         var hoj2 = sheets2[$scope.slProducto2];
         $scope.datosAttribNew2 = hoj2.head;
     }
 
-     $scope.changeSelectAtribnew1 = function (){
+    /* $scope.changeSelectAtribnew1 = function (){
          alert("Alert");
-     }
+     }*/
 
     $('#chkExcelN1').change(function() {
         elementbd = document.getElementById("elementBD");
@@ -141,7 +137,6 @@ app
             elementbd2.style.display='block';
         }
     })
-=======
     // //agregar nuevo excel correlacion
     // $('#chkExcelN1').change(function() {
     //     elementbd = document.getElementById("elementBD");
@@ -171,6 +166,5 @@ app
     //         elementbd2.style.display='block';
     //     }
     // })
->>>>>>> 1c6e78ef3e6b04654af3cba4a02a9c0720423377
 
 });
