@@ -51,7 +51,7 @@ app.controller('uploadExcel', function($scope, $http) {
             var item = sheet.data[i];
             var row = {
                 nombre: producto.nombre,
-                identificador: item[idenProdJson],
+                identificador: item[idenProdJson].toString(),
                 lote: item[$scope.loteName],
                 atributos: {}
             }
@@ -65,19 +65,19 @@ app.controller('uploadExcel', function($scope, $http) {
             atributos: checks,
         }
 
-       $http.put('/api/cat-producto/', parametros)
-        .success(function(data, status) {
+        $http.put('/api/cat-producto/', parametros)
+        .then(function(data, status) {
             $scope.message = data;
         })
-        .error(function(data, status) {
+        .catch(function(data, status) {
             alert( "Fallo la insercion: " + JSON.stringify({data: data}));
         });
 
        $http.post('/api/producto/', jsonExcel)
-        .success(function(data, status, headers, config) {
+        .then(function(data, status, headers, config) {
             $scope.message = data;
         })
-        .error(function(data, status, headers, config) {
+        .catch(function(data, status, headers, config) {
             alert( "Fallo la insercion: " + JSON.stringify({data: data}));
         });
     }

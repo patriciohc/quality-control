@@ -1,0 +1,39 @@
+.container-inputs-cmb input {
+    display: inline-block;
+}
+
+.container-inputs-cmb p {
+    color: red;
+}
+
+/* .item {
+    width: 50%;
+    background: blue;
+    display: flex;
+}
+
+.item.last {
+    width: 50%;
+    background: red;
+}
+
+.resize {
+    cursor: e-resize;
+    width: 4px;
+    background: white;
+    cursor: col-resize;
+} */
+
+/* table {
+    table-layout: fixed;
+}
+
+td, th {
+    overflow: hidden;
+    white-space: nowrap;
+    -moz-text-overflow: ellipsis;        
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+} */
+

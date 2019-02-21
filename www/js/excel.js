@@ -133,7 +133,7 @@ var excel = {
         var tableOutput = [];
         var address_of_cell;
         var colInit = charToInt(excelInfo.configRead.colInitHead); // columna actual
-        var colEnd = charToInt(excelInfo.configRead.colEndHead); // columna final
+        var colEnd = colInit + head.length - 1// charToInt(excelInfo.configRead.colEndHead); // columna final
         var rowInit = excelInfo.configRead.rowHead + 1;
         var nRow = rowInit;
         var nextRow = true;

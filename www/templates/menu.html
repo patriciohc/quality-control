@@ -5,8 +5,11 @@
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
             <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
         </button>
-        <div style="text-align:center; margin-top:25px; margin-bottom:25px;">
-            <img width="70%" height="25px" src="images/logo.png" />
+        <div class="" style="text-align:center;">
+            <h4>
+                <img width="60px" src="images/logo.jpg" />
+                Control Estadistico
+            </h4>
         </div>
     </div><!-- navbar-header-->
 
@@ -33,7 +36,7 @@
 </nav>
 <div id="wrapper">
     <!-- Sidebar -->
-    <div id="sidebar-wrapper" style="position:fixed; top:76px;">
+    <div id="sidebar-wrapper" style="position:fixed; top:58px;">
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
             <li class="itemMenu">
                 <a ui-sref="menu.home">
@@ -72,7 +75,7 @@
                 </a>
             </li>
             <li class="itemMenu">
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Services</a>
+                <a ui-sref="menu.combinaciones"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Calculos</a>
             </li>
             <li>
                 <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-server fa-stack-1x "></i></span>Contact</a>
@@ -81,6 +84,6 @@
     </div>
 
     <!-- Page Content -->
-    <div id="page-content-wrapper" style="top:80px;" ui-view></div>
+    <div id="page-content-wrapper" style="top:58px;" ui-view></div>
 
 </div>

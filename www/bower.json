@@ -23,8 +23,10 @@
     "bootstrap-filestyle": "^1.2.1",
     "highcharts": "^5.0.4",
     "highcharts-ng": "^0.0.13",
-    "jquery": "^3.1.1",
+    "jquery": "^1.9.0",
     "linqjs": "jslinq#*",
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "store2": "store#^2.7.1",
+    "angular-table-resize": "^2.0.1"
   }
 }

@@ -45,15 +45,21 @@ function updataCatProducto(req, res) {
         if (err) return res.status(500).send({message: `error en el servidor ${err}`});
 
         if (!obj) return res.status(404).send({message: "no se encontro el elemento"});
-
-        for (var i in atributos){
+        
+        for (var i in atributos) {
             var a = atributos[i];
             var cmp = obj.atributos.indexOf(a);
             if (obj.atributos.indexOf(a) == -1){
                 obj.atributos.push(a);
             }
         }
-        obj.save((err, obj) =>{});
+        CatProducto.update({_id: id}, {atributos:  obj.atributos}, (err, obj) =>{
+            if (err) {
+                return res.status(500).send({message: `error en el servidor ${err}`});
+            } else {
+                return res.status(200).send({message: 'se actualizó correctamente'});
+            }
+        });
     });
 
 }

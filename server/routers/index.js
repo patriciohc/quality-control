@@ -8,6 +8,7 @@ const catProductoCtrl = require('../controllers/cat_producto');
 
 // productos
 api.get('/producto/', productoCtrl.getProductos);
+api.get('/producto/id-analisis/:id', productoCtrl.getProductosByIdAnalisis);
 api.get('/producto/:id', productoCtrl.getProducto);
 api.post('/producto/',productoCtrl.saveProducto);
 api.get('/atributo',productoCtrl.getAtributo);

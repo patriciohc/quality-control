@@ -38,6 +38,11 @@ app
             controller:'correlacion',
             templateUrl: 'templates/correlacion.html',
         })
+        .state('menu.combinaciones',{
+            url:'/combinaciones',
+            controller:'combinaciones',
+            templateUrl: 'templates/combinaciones.html',
+        })
         .state('menu',{
             url:'/menu',
             controller: 'menu',

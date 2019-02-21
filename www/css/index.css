@@ -1,9 +1,13 @@
+.container {
+    padding: 20px;
+}
 
-    .btn-file {
+.btn-file {
         position: relative;
         overflow: hidden;
     }
-    .btn-file input[type=file] {
+
+.btn-file input[type=file] {
         position: absolute;
         top: 0;
         right: 0;
