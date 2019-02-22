@@ -1,17 +1,5 @@
 
 <div class="container">
-    
-    <div class="row" ng-hide="slAttr">
-        <div class="col-md-10">
-            <div class="jumbotron">
-                <h2>Distribucion normar de probabilidad</h2>
-                <p>La  distribución  de  probabilidad  conocida  como  distribución  normal  es,  por  la  cantidad  de  fenómenos que explica, la más importante de las distribuciones estadísticas.</p>
-          
-                <p>Esta herramienta nos permite calcular la probabilidad de que ocurra un suceso, siempre que los datos sigan o se aproximen a una distribucion normal.</p>
-            </div>
-        </div>
-    </div>
-    
     <div class="row">
         <div class="col-md-10">
             <div role="form" class="form-inline" >
@@ -28,6 +16,17 @@
                         <option ng-repeat="item in data" value="{{ $index }}">{{ item.atributo }}</option>
                     </select>
                 </div>
+            </div>
+        </div>
+    </div><br>
+
+    <div class="row" ng-hide="slAttr">
+        <div class="col-md-10">
+            <div class="jumbotron">
+                <h2>Distribucion normar de probabilidad</h2>
+                <p>La  distribución  de  probabilidad  conocida  como  distribución  normal  es,  por  la  cantidad  de  fenómenos que explica, la más importante de las distribuciones estadísticas.</p>
+          
+                <p>Esta herramienta nos permite calcular la probabilidad de que ocurra un suceso, siempre que los datos sigan o se aproximen a una distribucion normal.</p>
             </div>
         </div>
     </div>

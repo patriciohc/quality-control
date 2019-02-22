@@ -118,7 +118,7 @@ app
             elementnew.style.display='block';
         }
         else {
-            elementnew.style.display='none';chkExcelN1
+            elementnew.style.display='none';
             elementbd.style.display='block';
             ('slProducto1N').empty();
         }

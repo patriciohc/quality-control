@@ -1,16 +1,5 @@
 
 <div class="container">
-    <div class="row" ng-hide="slAttr">
-        <div class="col-md-10">
-            <div class="jumbotron">
-                <h2>Grafica de Control</h2>
-                <p>Una gráfica de control indica cuando su proceso está fuera de control y le ayuda a identificar la presencia de una variación por causas especiales. Cuando está presente la variación por causas especiales, su proceso no es estable y es necesaria una acción correctiva.</p>
-          
-                <p>Las gráficas de control grafican sus datos del proceso en secuencia ordenada por tiempo. La mayoría de las gráficas de control incluye una línea central, un límite de control superior y un límite de control inferior. La línea central representa la media del proceso. Los límites de control representan la variación del proceso. Por opción predeterminada, los límites de control se fijan a distancias de 3σ por encima y por debajo de la línea central.</p>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-md-10">
             <div role="form" class="form-inline" >
@@ -27,6 +16,17 @@
                         <option ng-repeat="item in datosProducto" value="{{ $index }}">{{ item.atributo }}</option>
                     </select>
                 </div>
+            </div>
+        </div>
+    </div><br>
+
+    <div class="row" ng-hide="slAttr">
+        <div class="col-md-10">
+            <div class="jumbotron">
+                <h2>Grafica de Control</h2>
+                <p>Una gráfica de control indica cuando su proceso está fuera de control y le ayuda a identificar la presencia de una variación por causas especiales. Cuando está presente la variación por causas especiales, su proceso no es estable y es necesaria una acción correctiva.</p>
+          
+                <p>Las gráficas de control grafican sus datos del proceso en secuencia ordenada por tiempo. La mayoría de las gráficas de control incluye una línea central, un límite de control superior y un límite de control inferior. La línea central representa la media del proceso. Los límites de control representan la variación del proceso. Por opción predeterminada, los límites de control se fijan a distancias de 3σ por encima y por debajo de la línea central.</p>
             </div>
         </div>
     </div>

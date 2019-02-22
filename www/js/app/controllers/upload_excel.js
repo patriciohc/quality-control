@@ -37,7 +37,7 @@ app.controller('uploadExcel', function($scope, $http) {
     }
 
         //funcion de crear y guardar Json
-    $scope.guardarJson = function() {
+    $scope.guardarJson = async function() {
         var sheet = sheets[$scope.nameHojaExcel];
         var producto = $scope.productos[$scope.nuevProducto];
         var idenProdJson = $scope.identificaProd;
@@ -65,22 +65,24 @@ app.controller('uploadExcel', function($scope, $http) {
             atributos: checks,
         }
 
-        $http.put('/api/cat-producto/', parametros)
-        .then(function(data, status) {
-            $scope.message = data;
-        })
-        .catch(function(data, status) {
-            alert( "Fallo la insercion: " + JSON.stringify({data: data}));
-        });
+        try {
+            var message = await $http.put('/api/cat-producto/', parametros);
+            message = await $http.post('/api/producto/', jsonExcel);
+            alert('Los datos se guardaron correctamenta');
+            init();
+            console.log(message);
+        } catch (error) {
+            alert( "Fallo la insercion: " + JSON.stringify(error));
+        }
 
-       $http.post('/api/producto/', jsonExcel)
-        .then(function(data, status, headers, config) {
-            $scope.message = data;
-        })
-        .catch(function(data, status, headers, config) {
-            alert( "Fallo la insercion: " + JSON.stringify({data: data}));
-        });
     }
 
+    function init() {
+        $scope.nuevProducto = '';
+        $scope.nameHojaExcel = '';
+        $scope.identificaProd = '';
+        $scope.loteName = '';
+        $scope.ElementosChk = [];
+    }
 
 });

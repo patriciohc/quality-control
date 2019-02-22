@@ -85,6 +85,7 @@ app
             resultados.C = resultados.C + (item.porcentaje * item.atributos.C / 100);  
         });
         $scope.resultados = resultados;
+        console.log($scope.resultados);
         var config = getConfigPie();
         for (key in resultados) {
             config.series[0].data.push({name: key, y: resultados[key]});

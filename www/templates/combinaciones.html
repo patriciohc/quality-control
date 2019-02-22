@@ -26,12 +26,12 @@
                 <tr ng-repeat="p in listProducts">
                     <td>{{p.identificador}}</td>
                     <td>{{p.nombre}}</td>
-                    <td>{{p.atributos.Si}}</td>
-                    <td>{{p.atributos.Al}}</td>
-                    <td>{{p.atributos.Fe}}</td>
-                    <td>{{p.atributos.Ca}}</td>
-                    <td>{{p.atributos.Mg}}</td>
-                    <td>{{p.atributos.C}}</td>
+                    <td>{{p.atributos.Si | number:'1.3'}}</td>
+                    <td>{{p.atributos.Al | number:'1.3'}}</td>
+                    <td>{{p.atributos.Fe | number:'1.3'}}</td>
+                    <td>{{p.atributos.Ca | number:'1.3'}}</td>
+                    <td>{{p.atributos.Mg | number:'1.3'}}</td>
+                    <td>{{p.atributos.C | number:'1.3'}}</td>
                     <td>
                         <button class="btn" ng-click="decrementar(p)">-</button>
                         <button class="btn" ng-click="incrementar(p)">+</button>
@@ -53,27 +53,27 @@
                         <tbody>
                             <tr>
                                 <td>Si</td>
-                                <td>{{resultados.Si}}</td>
+                                <td>{{resultados.Si | number:'1.3'}}</td>
                             </tr>
                             <tr>
                                 <td>Al</td>
-                                <td>{{resultados.Al}}</td>
+                                <td>{{resultados.Al | number:'1.3'}}</td>
                             </tr>
                             <tr>
                                 <td>Fe</td>
-                                <td>{{resultados.Fe}}</td>
+                                <td>{{resultados.Fe | number:'1.3'}}</td>
                             </tr>
                             <tr>
                                 <td>Ca</td>
-                                <td>{{resultados.Ca}}</td>
+                                <td>{{resultados.Ca | number:'1.3'}}</td>
                             </tr>
                             <tr>
                                 <td>Mg</td>
-                                <td>{{resultados.Mg}}</td>
+                                <td>{{resultados.Mg | number:'1.3'}}</td>
                             </tr>
                             <tr>
                                 <td>C</td>
-                                <td>{{resultados.C}}</td>
+                                <td>{{resultados.C | number:'1.3'}}</td>
                             </tr>
                         </tbody>
                     </table>

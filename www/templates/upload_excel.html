@@ -1,5 +1,5 @@
 <div class="container" style="width: 70%;">
-	<h2>Llena los datos solicitados</h2>
+	<h2>Cargar un conjunto de datos</h2>
 		<div role="form">
 			<div class="form-group">
 			    <label for="newProducto">Seleccione un producto</label>
@@ -16,8 +16,8 @@
 			<div class="form-group">
 			   	<label for="pwd">Nombre de hoja:</label>
 			   	<select class="form-control" id="cargaHojaExcel" ng-model="nameHojaExcel" ng-change="ObtenerHojaexc()">
-	               	<option ng-repeat="h in hojas" value="{{ $index  }}">{{ h.name }}</option>
-	           	</select>
+	          <option ng-repeat="h in hojas" value="{{ $index  }}">{{ h.name }}</option>
+	        </select>
 			</div>
 
 			<div class="form-group">
@@ -30,16 +30,16 @@
 			<div class="form-group">
 			  	<label for="pwd">Lote:</label>
 			   	<select class="form-control" id="idLote" ng-model="loteName">
-	               	<option ng-repeat="L in lotes" value="{{ L.name }}">{{ L.name }}</option>
-	           	</select>
+	          <option ng-repeat="L in lotes" value="{{ L.name }}">{{ L.name }}</option>
+	        </select>
 			</div>
 
-           	<div class="form-group">
-              	<label for="pwd">Elementos:</label></br>
-               	<label for="fancy-checkbox-default-custom-icons" class="[ btn btn-default active ]" ng-repeat="Chk in ElementosChk">
-              	<input type="checkbox" ng-model="Chk.selected" value="{{$index}}" ng-true-value="'{{Chk.name}}'">{{Chk.name}} &nbsp;
-              	</label>
-          	</div>
+			<div class="form-group" ng-if="ElementosChk && ElementosChk.length > 0">
+					<label for="pwd">Seleccione los elementos que se quieren estudiar</label></br>
+					<label for="fancy-checkbox-default-custom-icons" class="[ btn btn-default active ]" ng-repeat="Chk in ElementosChk">
+					<input type="checkbox" ng-model="Chk.selected" value="{{$index}}" ng-true-value="'{{Chk.name}}'">{{Chk.name}} &nbsp;
+					</label>
+			</div>
 			<button type="submit" ng-model="btnsaveForm" ng-click="guardarJson()" class="btn btn-success">Guardar</button>
 		</div>
 
